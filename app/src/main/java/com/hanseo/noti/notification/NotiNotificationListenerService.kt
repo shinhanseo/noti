@@ -19,7 +19,14 @@ class NotiNotificationListenerService :
         if (sbn == null) return // 알람이 없으면 return
         if (sbn.packageName == packageName) return // noti. 자기 앱일 경우 return
 
-        Log.d(TAG, "Notification received")
+        val notificationItem = NotificationParser.parse(sbn)
+
+        Log.d(
+            TAG,
+            "Notification parsed : " +
+            "titlePresent=${notificationItem.title != null}, " +
+            "bodyPresent=${notificationItem.body != null}"
+        )
     }
 
     companion object {
