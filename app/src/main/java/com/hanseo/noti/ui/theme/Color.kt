@@ -2,10 +2,19 @@ package com.hanseo.noti.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val NotiBlue = Color(0xFF3182F6)
+val NotiBlueStrong = Color(0xFF1B64DA)
+val NotiBlueContainer = Color(0xFFE7EFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val NotiBackground = Color(0xFFF7F8FA)
+val NotiSurface = Color(0xFFFFFFFF)
+val NotiSurfaceVariant = Color(0xFFF2F4F6)
+
+val NotiTextPrimary = Color(0xFF191F28)
+val NotiTextSecondary = Color(0xFF4E5968)
+val NotiTextTertiary = Color(0xFF6B7280)
+val NotiTextDisabled = Color(0xFF8B95A1)
+
+val NotiOutline = Color(0xFFD1D6DB)
+val NotiDivider = Color(0xFFE5E8EB)
+val NotiSuccess = Color(0xFF20A464)
