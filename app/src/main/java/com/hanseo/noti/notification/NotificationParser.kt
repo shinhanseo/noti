@@ -25,7 +25,9 @@ object NotificationParser {
             title = title,
             body = body,
             postedAt = sbn.postTime,
-            isOngoing = sbn.isOngoing
+            category = notification.category,
+            isOngoing = sbn.isOngoing,
+            isGroupSummary = notification.flags and Notification.FLAG_GROUP_SUMMARY != 0
         )
     }
 }
