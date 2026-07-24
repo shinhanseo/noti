@@ -21,11 +21,22 @@ class NotiNotificationListenerService :
 
         val notificationItem = NotificationParser.parse(sbn)
 
+        val ignoreReason = NotificationFilter.findIgnoreReason(notificationItem)
+
+        if (ignoreReason != null) {
+            Log.d(
+                TAG,
+                "Notification ignored: reason=$ignoreReason"
+            )
+            return
+        }
+
         Log.d(
             TAG,
-            "Notification parsed : " +
-            "titlePresent=${notificationItem.title != null}, " +
-            "bodyPresent=${notificationItem.body != null}"
+            "Notification accepted: " +
+                    "titlePresent=${notificationItem.title != null}, " +
+                    "bodyPresent=${notificationItem.body != null}, " +
+                    "ongoing=${notificationItem.isOngoing}"
         )
     }
 
