@@ -41,4 +41,16 @@ interface NotificationDao {
         notificationKey: String,
         removedAt: Long
     ): Int
+
+    @Query(
+        """
+    DELETE FROM notifications
+    WHERE is_removed = 1
+      AND removed_at IS NOT NULL
+      AND removed_at < :cutoffTime
+    """
+    )
+    suspend fun deleteRemovedBefore(
+        cutoffTime: Long
+    ): Int
 }
