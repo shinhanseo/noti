@@ -1,4 +1,4 @@
-package com.hanseo.noti.data.entity
+package com.hanseo.noti.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
