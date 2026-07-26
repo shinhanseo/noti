@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import android.app.Notification
 
 class NotiNotificationListenerService :
     NotificationListenerService() {
@@ -65,6 +66,48 @@ class NotiNotificationListenerService :
                 Log.e(
                     TAG,
                     "Notification save failed: ${error.javaClass.simpleName}"
+                )
+            }
+        }
+    }
+
+    override fun onNotificationRemoved(
+        sbn: StatusBarNotification?
+    ) {
+        if (sbn == null) return
+        if (sbn.packageName == packageName) return
+
+        val isGroupSummary =
+            sbn.notification.flags and
+                    Notification.FLAG_GROUP_SUMMARY != 0
+
+        if (isGroupSummary) return
+
+        val notificationKey = sbn.key
+        val removedAt = System.currentTimeMillis()
+
+        serviceScope.launch {
+            try {
+                val wasUpdated =
+                    notificationRepository.markAsRemoved(
+                        notificationKey = notificationKey,
+                        removedAt = removedAt
+                    )
+
+                if (wasUpdated) {
+                    Log.d(TAG, "Notification marked as removed")
+                } else {
+                    Log.d(TAG, "Removed notification was not stored")
+                }
+
+            } catch (error: CancellationException) {
+                throw error
+
+            } catch (error: Exception) {
+                Log.e(
+                    TAG,
+                    "Notification removal update failed: " +
+                            error.javaClass.simpleName
                 )
             }
         }
