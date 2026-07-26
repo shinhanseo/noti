@@ -27,4 +27,17 @@ interface NotificationDao {
         """
     )
     suspend fun deleteByKey(notificationKey: String)
+
+    @Query(
+        """
+    UPDATE notifications
+    SET is_removed = 1,
+        removed_at = :removedAt
+    WHERE notification_key = :notificationKey
+    """
+    )
+    suspend fun markAsRemoved(
+        notificationKey: String,
+        removedAt: Long
+    ): Int
 }
