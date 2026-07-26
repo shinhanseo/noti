@@ -4,13 +4,16 @@ import android.app.Application
 import androidx.room.Room
 import com.hanseo.noti.data.local.NotiDatabase
 import com.hanseo.noti.data.repository.NotificationRepository
+import com.hanseo.noti.data.local.migration.MIGRATION_1_2
 class NotiApplication : Application() {
     val database: NotiDatabase by lazy {
         Room.databaseBuilder(
             this,
             NotiDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        )
+            .addMigrations(MIGRATION_1_2)
+            .build()
     }
 
     val notificationRepository: NotificationRepository by lazy {

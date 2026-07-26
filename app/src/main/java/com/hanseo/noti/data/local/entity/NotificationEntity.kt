@@ -23,5 +23,17 @@ data class NotificationEntity(
     val category: String?,
 
     @ColumnInfo(name = "is_ongoing")
-    val isOngoing: Boolean
+    val isOngoing: Boolean,
+
+    @ColumnInfo(
+        name = "is_removed",
+        defaultValue = "0"
+    )
+    val isRemoved: Boolean = false,
+
+    @ColumnInfo(
+        name = "removed_at",
+        defaultValue = "NULL"
+    )
+    val removedAt: Long? = null
 )

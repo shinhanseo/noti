@@ -12,6 +12,8 @@ fun NotificationItem.toEntity() : NotificationEntity {
         postedAt = postedAt,
         category = category,
         isOngoing = isOngoing,
+        isRemoved = isRemoved,
+        removedAt = removedAt
     )
 }
 
@@ -24,6 +26,8 @@ fun NotificationEntity.toDomain(): NotificationItem {
         postedAt = postedAt,
         category = category,
         isOngoing = isOngoing,
-        isGroupSummary = false
+        isGroupSummary = false,
+        isRemoved = isRemoved,
+        removedAt = removedAt
     )
 }
