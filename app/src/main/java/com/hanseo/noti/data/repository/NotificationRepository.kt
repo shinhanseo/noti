@@ -26,4 +26,16 @@ class NotificationRepository(
     suspend fun deleteByKey(notificationKey: String) {
         notificationDao.deleteByKey(notificationKey)
     }
+
+    suspend fun markAsRemoved(
+        notificationKey: String,
+        removedAt: Long
+    ): Boolean {
+        val updatedRowCount = notificationDao.markAsRemoved(
+            notificationKey = notificationKey,
+            removedAt = removedAt
+        )
+
+        return updatedRowCount > 0
+    }
 }
