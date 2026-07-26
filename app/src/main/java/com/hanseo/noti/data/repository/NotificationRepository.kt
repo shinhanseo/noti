@@ -1,0 +1,29 @@
+package com.hanseo.noti.data.repository
+
+import com.hanseo.noti.data.local.dao.NotificationDao
+import com.hanseo.noti.data.mapper.toDomain
+import com.hanseo.noti.data.mapper.toEntity
+import com.hanseo.noti.domain.model.NotificationItem
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class NotificationRepository(
+    private val notificationDao: NotificationDao
+) {
+    suspend fun save(notification: NotificationItem) {
+        notificationDao.upsert(notification.toEntity())
+    }
+
+    fun observeAll(): Flow<List<NotificationItem>> {
+        return notificationDao.observeAll()
+            .map { entities ->
+                entities.map { entity ->
+                    entity.toDomain()
+                }
+            }
+    }
+
+    suspend fun deleteByKey(notificationKey: String) {
+        notificationDao.deleteByKey(notificationKey)
+    }
+}
