@@ -11,6 +11,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import android.app.Notification
+import java.util.concurrent.TimeUnit
 
 class NotiNotificationListenerService :
     NotificationListenerService() {
@@ -26,6 +27,8 @@ class NotiNotificationListenerService :
         super.onListenerConnected()
 
         Log.d(TAG, "Notification listener connected")
+
+        cleanupOldNotifications()
     }
 
     override fun onNotificationPosted( // 알림 도착 시 콜백 확인 함수
@@ -113,6 +116,41 @@ class NotiNotificationListenerService :
         }
     }
 
+    private fun cleanupOldNotifications() {
+        val retentionMillis =
+            TimeUnit.DAYS.toMillis(
+                REMOVED_NOTIFICATION_RETENTION_DAYS
+            )
+
+        val cutoffTime =
+            System.currentTimeMillis() - retentionMillis
+
+        serviceScope.launch {
+            try {
+                val deletedCount =
+                    notificationRepository.deleteRemovedBefore(
+                        cutoffTime = cutoffTime
+                    )
+
+                Log.d(
+                    TAG,
+                    "Old notification cleanup completed: " +
+                            "deletedCount=$deletedCount"
+                )
+
+            } catch (error: CancellationException) {
+                throw error
+
+            } catch (error: Exception) {
+                Log.e(
+                    TAG,
+                    "Old notification cleanup failed: " +
+                            error.javaClass.simpleName
+                )
+            }
+        }
+    }
+
     override fun onDestroy() {
         serviceScope.cancel()
         super.onDestroy()
@@ -120,5 +158,6 @@ class NotiNotificationListenerService :
 
     companion object {
         private const val TAG = "NotiListener"
+        private const val REMOVED_NOTIFICATION_RETENTION_DAYS = 30L
     }
 }
