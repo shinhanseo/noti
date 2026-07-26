@@ -38,4 +38,12 @@ class NotificationRepository(
 
         return updatedRowCount > 0
     }
+
+    suspend fun deleteRemoveBefore(
+        cutoffTime: Long
+    ): Int {
+        return notificationDao.deleteRemovedBefore(
+            cutoffTime = cutoffTime
+        )
+    }
 }
