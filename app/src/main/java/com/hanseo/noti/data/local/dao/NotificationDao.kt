@@ -34,6 +34,7 @@ interface NotificationDao {
     SET is_removed = 1,
         removed_at = :removedAt
     WHERE notification_key = :notificationKey
+      AND is_removed = 0
     """
     )
     suspend fun markAsRemoved(
