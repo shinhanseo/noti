@@ -148,7 +148,7 @@ class ImportanceClassifier {
         )
     }
 
-    private fun calculateAutomaticScore(
+    private fun calculateAutomaticScore( // 1, 2, 3순위에 걸리지 않은 일반 앱 카테고리 기반 중요도 점수 추출 ( 4순위 )
         input: ImportanceInput,
         evaluatedAtMillis: Long
     ): ImportanceResult {

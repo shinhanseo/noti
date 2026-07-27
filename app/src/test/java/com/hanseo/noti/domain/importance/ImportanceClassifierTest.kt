@@ -2,6 +2,7 @@ package com.hanseo.noti.domain.importance
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertFalse
 import org.junit.Test
 
 class ImportanceClassifierTest {
@@ -135,5 +136,106 @@ class ImportanceClassifierTest {
             result.reasons.single().type
         )
         assertEquals(4_000L, result.evaluatedAtMillis)
+    }
+
+    @Test
+    fun callCategory_isAutomaticallyImportant() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "전화 알림",
+            body = "수신 전화가 있습니다",
+            category = "CALL",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 5_000L
+        )
+
+        assertEquals(40, result.score)
+        assertEquals(ImportanceLevel.IMPORTANT, result.level)
+        assertFalse(result.isForced)
+        assertEquals(
+            ImportanceReasonType.AUTOMATIC_RULE,
+            result.reasons.single().type
+        )
+        assertEquals(
+            "call_or_alarm",
+            result.reasons.single().ruleId
+        )
+    }
+
+    @Test
+    fun eventCategory_isAutomaticallyReview() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "일정 알림",
+            body = "등록된 일정이 있습니다",
+            category = "event",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 6_000L
+        )
+
+        assertEquals(20, result.score)
+        assertEquals(ImportanceLevel.REVIEW, result.level)
+        assertFalse(result.isForced)
+        assertEquals(
+            "event_or_reminder",
+            result.reasons.single().ruleId
+        )
+    }
+
+    @Test
+    fun messageCategory_isAutomaticallyGeneral() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "메시지 알림",
+            body = "새 메시지가 있습니다",
+            category = "msg",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 7_000L
+        )
+
+        assertEquals(5, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertFalse(result.isForced)
+        assertEquals(
+            "message_or_email",
+            result.reasons.single().ruleId
+        )
+    }
+
+    @Test
+    fun missingCategory_isZeroScoreGeneral() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "일반 상태",
+            body = "새로운 상태가 있습니다",
+            category = null,
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 8_000L
+        )
+
+        assertEquals(0, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertFalse(result.isForced)
+        assertTrue(result.reasons.isEmpty())
     }
 }
