@@ -32,6 +32,16 @@ class ImportanceClassifier {
             return globalKeywordResult
         }
 
+        val importantAppResult = classifyImportantApp(
+            input = input,
+            settings = settings,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+
+        if (importantAppResult != null) {
+            return importantAppResult
+        }
+
         return ImportanceResult(
             score = 0,
             level = ImportanceLevel.GENERAL,
@@ -42,7 +52,7 @@ class ImportanceClassifier {
         )
     }
 
-    private fun classifyAppExclusion( // 중요한 앱이지만, 제외할 단어가 있는 알림을 선별
+    private fun classifyAppExclusion( // 중요한 앱이지만, 제외할 단어가 있는 알림을 선별 ( 1순위 )
         input: ImportanceInput,
         settings: ImportanceSettings,
         normalizedText: String,
@@ -84,7 +94,7 @@ class ImportanceClassifier {
         )
     }
 
-    private fun classifyGlobalImportantKeyword(
+    private fun classifyGlobalImportantKeyword( // 중요앱, 일반앱 구분없이 중요한 키워드 ( 2순위 )
         settings: ImportanceSettings,
         normalizedText: String,
         evaluatedAtMillis: Long
@@ -109,6 +119,31 @@ class ImportanceClassifier {
                     type = ImportanceReasonType.GLOBAL_IMPORTANT_KEYWORD,
                     scoreDelta = 100,
                     description = "중요 키워드와 일치해요"
+                )
+            ),
+            isForced = true,
+            policyVersion = POLICY_VERSION,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+    }
+
+    private fun classifyImportantApp( // 중요한 앱에서 온 알림 ( 3순위 )
+        input: ImportanceInput,
+        settings: ImportanceSettings,
+        evaluatedAtMillis: Long
+    ): ImportanceResult? {
+        if (input.packageName !in settings.importantApps) {
+            return null
+        }
+
+        return ImportanceResult(
+            score = 100,
+            level = ImportanceLevel.IMPORTANT,
+            reasons = listOf(
+                ImportanceReason(
+                    type = ImportanceReasonType.IMPORTANT_APP,
+                    scoreDelta = 100,
+                    description = "중요한 앱에서 온 알림이에요"
                 )
             ),
             isForced = true,
