@@ -22,6 +22,16 @@ class ImportanceClassifier {
             return exclusionResult
         }
 
+        val globalKeywordResult = classifyGlobalImportantKeyword(
+            settings = settings,
+            normalizedText = normalizedText,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+
+        if (globalKeywordResult != null) {
+            return globalKeywordResult
+        }
+
         return ImportanceResult(
             score = 0,
             level = ImportanceLevel.GENERAL,
@@ -56,16 +66,6 @@ class ImportanceClassifier {
 
         if (!hasMatchedKeyword) {
             return null
-        }
-
-        val globalKeywordResult = classifyGlobalImportantKeyword(
-            settings = settings,
-            normalizedText = normalizedText,
-            evaluatedAtMillis = evaluatedAtMillis
-        )
-
-        if (globalKeywordResult != null) {
-            return globalKeywordResult
         }
 
         return ImportanceResult(
