@@ -30,7 +30,20 @@ object ImportanceScoreRuleCatalog {
                 "msg",
                 "email"
             )
-        )
+        ),
+
+        ImportanceScoreRule(
+            id = "security_authentication",
+            scoreDelta = 30,
+            description = "인증이나 보안과 관련된 알림이에요",
+            keywords = setOf(
+                "인증번호",
+                "보안 경고",
+                "로그인 시도",
+                "새로운 기기에서 로그인",
+                "비밀번호가 변경"
+            )
+        ),
 
 
     )
