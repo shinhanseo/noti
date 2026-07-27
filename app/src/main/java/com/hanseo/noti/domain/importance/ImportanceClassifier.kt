@@ -58,6 +58,16 @@ class ImportanceClassifier {
             return null
         }
 
+        val globalKeywordResult = classifyGlobalImportantKeyword(
+            settings = settings,
+            normalizedText = normalizedText,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+
+        if (globalKeywordResult != null) {
+            return globalKeywordResult
+        }
+
         return ImportanceResult(
             score = -100,
             level = ImportanceLevel.GENERAL,
@@ -66,6 +76,39 @@ class ImportanceClassifier {
                     type = ImportanceReasonType.APP_EXCLUSION_KEYWORD,
                     scoreDelta = -100,
                     description = "이 앱에서 제외하도록 설정한 키워드와 일치해요"
+                )
+            ),
+            isForced = true,
+            policyVersion = POLICY_VERSION,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+    }
+
+    private fun classifyGlobalImportantKeyword(
+        settings: ImportanceSettings,
+        normalizedText: String,
+        evaluatedAtMillis: Long
+    ) : ImportanceResult? {
+        val hasMatchedKeyword = settings.globalImportantKeywords.any { keyword ->
+            val normalizedKeyword =
+                ImportanceTextNormalizer.normalizeKeyword(keyword)
+
+            normalizedKeyword.isNotEmpty() &&
+                    normalizedText.contains(normalizedKeyword)
+        }
+
+        if (!hasMatchedKeyword) {
+            return null
+        }
+
+        return ImportanceResult(
+            score = 100,
+            level = ImportanceLevel.IMPORTANT,
+            reasons = listOf(
+                ImportanceReason(
+                    type = ImportanceReasonType.GLOBAL_IMPORTANT_KEYWORD,
+                    scoreDelta = 100,
+                    description = "중요 키워드와 일치해요"
                 )
             ),
             isForced = true,
