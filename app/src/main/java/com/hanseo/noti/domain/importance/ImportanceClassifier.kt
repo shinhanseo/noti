@@ -42,12 +42,8 @@ class ImportanceClassifier {
             return importantAppResult
         }
 
-        return ImportanceResult(
-            score = 0,
-            level = ImportanceLevel.GENERAL,
-            reasons = emptyList(),
-            isForced = false,
-            policyVersion = POLICY_VERSION,
+        return calculateAutomaticScore(
+            input = input,
             evaluatedAtMillis = evaluatedAtMillis
         )
     }
@@ -150,6 +146,50 @@ class ImportanceClassifier {
             policyVersion = POLICY_VERSION,
             evaluatedAtMillis = evaluatedAtMillis
         )
+    }
+
+    private fun calculateAutomaticScore(
+        input: ImportanceInput,
+        evaluatedAtMillis: Long
+    ): ImportanceResult {
+        val normalizedCategory = input.category?.lowercase()
+
+        val matchedRules = ImportanceScoreRuleCatalog.categoryRules.filter { rule ->
+            normalizedCategory != null &&
+                    normalizedCategory in rule.categories
+        }
+
+        val score = matchedRules
+            .sumOf { rule -> rule.scoreDelta }
+            .coerceIn(-100, 100)
+
+        val level = convertScoreToLevel(score)
+
+        val reasons = matchedRules.map { rule ->
+            ImportanceReason(
+                type = ImportanceReasonType.AUTOMATIC_RULE,
+                scoreDelta = rule.scoreDelta,
+                ruleId = rule.id,
+                description = rule.description
+            )
+        }
+
+        return ImportanceResult(
+            score = score,
+            level = level,
+            reasons = reasons,
+            isForced = false,
+            policyVersion = POLICY_VERSION,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+    }
+
+    private fun convertScoreToLevel(score: Int): ImportanceLevel {
+        return when {
+            score >= 40 -> ImportanceLevel.IMPORTANT
+            score >= 20 -> ImportanceLevel.REVIEW
+            else -> ImportanceLevel.GENERAL
+        }
     }
 
     private companion object {
