@@ -11,6 +11,16 @@ class ImportanceClassifier {
             body = input.body,
         )
 
+        val globalKeywordResult = classifyGlobalImportantKeyword(
+            settings = settings,
+            normalizedText = normalizedText,
+            evaluatedAtMillis = evaluatedAtMillis
+        )
+
+        if (globalKeywordResult != null) {
+            return globalKeywordResult
+        }
+
         val exclusionResult = classifyAppExclusion(
             input = input,
             settings = settings,
@@ -20,16 +30,6 @@ class ImportanceClassifier {
 
         if (exclusionResult != null) {
             return exclusionResult
-        }
-
-        val globalKeywordResult = classifyGlobalImportantKeyword(
-            settings = settings,
-            normalizedText = normalizedText,
-            evaluatedAtMillis = evaluatedAtMillis
-        )
-
-        if (globalKeywordResult != null) {
-            return globalKeywordResult
         }
 
         val importantAppResult = classifyImportantApp(
@@ -52,7 +52,7 @@ class ImportanceClassifier {
         )
     }
 
-    private fun classifyAppExclusion( // 중요한 앱이지만, 제외할 단어가 있는 알림을 선별 ( 1순위 )
+    private fun classifyAppExclusion( // 중요한 앱이지만, 제외할 단어가 있는 알림을 선별 ( 2순위 )
         input: ImportanceInput,
         settings: ImportanceSettings,
         normalizedText: String,
@@ -94,7 +94,7 @@ class ImportanceClassifier {
         )
     }
 
-    private fun classifyGlobalImportantKeyword( // 중요앱, 일반앱 구분없이 중요한 키워드 ( 2순위 )
+    private fun classifyGlobalImportantKeyword( // 중요앱, 일반앱 구분없이 중요한 키워드 ( 1순위 )
         settings: ImportanceSettings,
         normalizedText: String,
         evaluatedAtMillis: Long

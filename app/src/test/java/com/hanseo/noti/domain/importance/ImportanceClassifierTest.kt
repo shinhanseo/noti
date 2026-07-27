@@ -72,7 +72,7 @@ class ImportanceClassifierTest {
     }
 
     @Test
-    fun appExclusionKeyword_hasPriorityOverGlobalImportantKeyword() {
+    fun globalImportantKeyword_hasPriorityOverAppExclusionKeyword() {
         val input = ImportanceInput(
             packageName = "com.example.message",
             title = "MEETING EVENT",
@@ -95,11 +95,11 @@ class ImportanceClassifierTest {
             evaluatedAtMillis = 3_000L
         )
 
-        assertEquals(-100, result.score)
-        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertEquals(100, result.score)
+        assertEquals(ImportanceLevel.IMPORTANT, result.level)
         assertTrue(result.isForced)
         assertEquals(
-            ImportanceReasonType.APP_EXCLUSION_KEYWORD,
+            ImportanceReasonType.GLOBAL_IMPORTANT_KEYWORD,
             result.reasons.single().type
         )
     }
