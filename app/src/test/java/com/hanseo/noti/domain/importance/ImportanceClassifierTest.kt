@@ -183,7 +183,7 @@ class ImportanceClassifierTest {
             evaluatedAtMillis = 6_000L
         )
 
-        assertEquals(20, result.score)
+        assertEquals(25, result.score)
         assertEquals(ImportanceLevel.REVIEW, result.level)
         assertFalse(result.isForced)
         assertEquals(

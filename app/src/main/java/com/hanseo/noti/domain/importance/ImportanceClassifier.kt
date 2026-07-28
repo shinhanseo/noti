@@ -219,7 +219,7 @@ class ImportanceClassifier {
     private fun convertScoreToLevel(score: Int): ImportanceLevel {
         return when {
             score >= 40 -> ImportanceLevel.IMPORTANT
-            score >= 20 -> ImportanceLevel.REVIEW
+            score >= 25 -> ImportanceLevel.REVIEW
             else -> ImportanceLevel.GENERAL
         }
     }

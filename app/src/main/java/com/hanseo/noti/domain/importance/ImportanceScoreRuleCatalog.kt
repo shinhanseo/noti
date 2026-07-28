@@ -11,7 +11,7 @@ object ImportanceScoreRuleCatalog {
         ),
         ImportanceScoreRule(
             id = "event_or_reminder",
-            scoreDelta = 20,
+            scoreDelta = 25,
             description = "일정이나 리마인더 알림이에요",
             categories = setOf("event", "reminder")
         ),
