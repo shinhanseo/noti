@@ -156,7 +156,7 @@ class ImportanceClassifier {
     ): ImportanceResult {
         val normalizedCategory = input.category?.lowercase()
 
-        val matchedRules = ImportanceScoreRuleCatalog.categoryRules.filter { rule ->
+        val matchedRules = ImportanceScoreRuleCatalog.allRules.filter { rule ->
             val categoryMatched =
                 normalizedCategory != null &&
                         normalizedCategory in rule.categories
