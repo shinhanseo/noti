@@ -169,7 +169,26 @@ class ImportanceClassifier {
                         normalizedText.contains(normalizedKeyword)
             }
 
-            categoryMatched || keywordMatched
+            val keywordGroupsMatched =
+                rule.keywordGroups.isNotEmpty() &&
+                        rule.keywordGroups.all { group ->
+                            group.any { keyword ->
+                                val normalizedKeyword =
+                                    ImportanceTextNormalizer.normalizeKeyword(keyword)
+
+                                normalizedKeyword.isNotEmpty() &&
+                                        normalizedText.contains(normalizedKeyword)
+                            }
+                        }
+
+            val patternMatched = rule.patterns.any { pattern ->
+                pattern.containsMatchIn(normalizedText)
+            }
+
+            categoryMatched ||
+                    keywordMatched ||
+                    keywordGroupsMatched ||
+                    patternMatched
         }
 
         val score = matchedRules
