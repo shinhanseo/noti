@@ -44,6 +44,7 @@ class ImportanceClassifier {
 
         return calculateAutomaticScore(
             input = input,
+            normalizedText = normalizedText,
             evaluatedAtMillis = evaluatedAtMillis
         )
     }
@@ -150,13 +151,25 @@ class ImportanceClassifier {
 
     private fun calculateAutomaticScore( // 1, 2, 3순위에 걸리지 않은 일반 앱 카테고리 기반 중요도 점수 추출 ( 4순위 )
         input: ImportanceInput,
+        normalizedText: String,
         evaluatedAtMillis: Long
     ): ImportanceResult {
         val normalizedCategory = input.category?.lowercase()
 
         val matchedRules = ImportanceScoreRuleCatalog.categoryRules.filter { rule ->
-            normalizedCategory != null &&
-                    normalizedCategory in rule.categories
+            val categoryMatched =
+                normalizedCategory != null &&
+                        normalizedCategory in rule.categories
+
+            val keywordMatched = rule.keywords.any { keyword ->
+                val normalizedKeyword =
+                    ImportanceTextNormalizer.normalizeKeyword(keyword)
+
+                normalizedKeyword.isNotEmpty() &&
+                        normalizedText.contains(normalizedKeyword)
+            }
+
+            categoryMatched || keywordMatched
         }
 
         val score = matchedRules
