@@ -238,4 +238,35 @@ class ImportanceClassifierTest {
         assertFalse(result.isForced)
         assertTrue(result.reasons.isEmpty())
     }
+
+    @Test
+    fun messageWithSecurityKeyword_accumulatesBothScores() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "인증번호 안내",
+            body = "본인 확인을 진행해 주세요",
+            category = "msg",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 9_000L
+        )
+
+        assertEquals(35, result.score)
+        assertEquals(ImportanceLevel.REVIEW, result.level)
+        assertFalse(result.isForced)
+
+        assertEquals(
+            setOf(
+                "message_or_email",
+                "security_authentication"
+            ),
+            result.reasons
+                .mapNotNull { reason -> reason.ruleId }
+                .toSet()
+        )
+    }
 }
