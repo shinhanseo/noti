@@ -117,7 +117,11 @@ object ImportanceScoreRuleCatalog {
                 "마감",
                 "기한",
                 "예정",
-                "시작합니다"
+                "시작합니다",
+                "이번 주까지",
+                "종료됩니다",
+                "분 후",
+                "시간 후"
             ),
             patterns = listOf(
                 Regex("""\d{1,2}월\s*\d{1,2}일"""),
