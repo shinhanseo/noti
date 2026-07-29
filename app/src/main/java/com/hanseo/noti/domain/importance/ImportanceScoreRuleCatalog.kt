@@ -181,6 +181,67 @@ object ImportanceScoreRuleCatalog {
         )
     )
 
+    val negativeRules: List<ImportanceScoreRule> = listOf(
+        ImportanceScoreRule(
+            id = "promotional_content",
+            scoreDelta = -35,
+            description = "홍보성 알림으로 판단했어요",
+            keywords = setOf(
+                "[광고]",
+                "(광고)",
+                "광고성 정보",
+                "수신거부",
+                "할인 쿠폰",
+                "쿠폰이 도착",
+                "특가 상품",
+                "추천 상품",
+                "프로모션",
+                "지금 구매",
+                "혜택을 확인"
+            )
+        ),
+
+        ImportanceScoreRule(
+            id = "ongoing_progress",
+            scoreDelta = -25,
+            description = "단순 진행 상태를 알려주는 알림이에요",
+            categories = setOf(
+                "progress",
+                "service"
+            ),
+            requiresOngoing = true,
+            blockedByRuleIds = setOf(
+                "call_or_alarm",
+                "security_authentication",
+                "emergency_safety",
+                "urgent_attention",
+                "action_request"
+            )
+        ),
+
+        ImportanceScoreRule(
+            id = "passive_status",
+            scoreDelta = -10,
+            description = "별도 처리가 필요하지 않은 상태 안내예요",
+            keywords = setOf(
+                "동기화 완료",
+                "백업 완료",
+                "업데이트 완료",
+                "설치 완료",
+                "작업 완료",
+                "정상 작동 중",
+                "연결 상태 정상"
+            ),
+            blockedByRuleIds = setOf(
+                "security_authentication",
+                "critical_status_change",
+                "urgent_attention",
+                "action_request",
+                "delivery_status_change"
+            )
+        )
+    )
+
     val allRules: List<ImportanceScoreRule> =
-        categoryRules + keywordRules
+        categoryRules + keywordRules + negativeRules
 }
