@@ -149,19 +149,20 @@ class ImportanceClassifier {
         )
     }
 
-    private fun calculateAutomaticScore( // 1, 2, 3순위에 걸리지 않은 일반 앱 카테고리 기반 중요도 점수 추출 ( 4순위 )
+    private fun calculateAutomaticScore(
         input: ImportanceInput,
         normalizedText: String,
         evaluatedAtMillis: Long
     ): ImportanceResult {
         val normalizedCategory = input.category?.lowercase()
 
-        val matchedRules = ImportanceScoreRuleCatalog.allRules.filter { rule ->
-            val categoryMatched =
+        // 1. 카테고리·키워드·문맥·정규식이 일치하는 후보 규칙 찾기
+        val candidateRules = ImportanceScoreRuleCatalog.allRules.filter { rule ->
+            val categoryMatched = // 카테고리
                 normalizedCategory != null &&
                         normalizedCategory in rule.categories
 
-            val keywordMatched = rule.keywords.any { keyword ->
+            val keywordMatched = rule.keywords.any { keyword -> // 키워드
                 val normalizedKeyword =
                     ImportanceTextNormalizer.normalizeKeyword(keyword)
 
@@ -169,7 +170,7 @@ class ImportanceClassifier {
                         normalizedText.contains(normalizedKeyword)
             }
 
-            val keywordGroupsMatched =
+            val keywordGroupsMatched = // 키워드 그룹
                 rule.keywordGroups.isNotEmpty() &&
                         rule.keywordGroups.all { group ->
                             group.any { keyword ->
@@ -181,22 +182,44 @@ class ImportanceClassifier {
                             }
                         }
 
-            val patternMatched = rule.patterns.any { pattern ->
+            val patternMatched = rule.patterns.any { pattern -> // 정규식
                 pattern.containsMatchIn(normalizedText)
             }
 
-            categoryMatched ||
-                    keywordMatched ||
-                    keywordGroupsMatched ||
-                    patternMatched
+            val contentMatched =
+                categoryMatched ||
+                        keywordMatched ||
+                        keywordGroupsMatched ||
+                        patternMatched
+
+            val ongoingRequirementMatched =
+                rule.requiresOngoing == null ||
+                        rule.requiresOngoing == input.isOngoing
+
+            contentMatched && ongoingRequirementMatched
         }
 
+        // 2. 후보 규칙들 ID
+        val candidateRuleIds = candidateRules
+            .map { rule -> rule.id }
+            .toSet()
+
+        // 3. 다른 규칙 때문에 차단되는 규칙을 제거
+        val matchedRules = candidateRules.filter { rule ->
+            rule.blockedByRuleIds.none { blockedRuleId ->
+                blockedRuleId in candidateRuleIds
+            }
+        }
+
+        // 4. 긍정 및 부정 규칙 점수 합산
         val score = matchedRules
             .sumOf { rule -> rule.scoreDelta }
             .coerceIn(-100, 100)
 
+        // 5. 최종 점수를 등급으로 변환
         val level = convertScoreToLevel(score)
 
+        // 6. 일치한 규칙을 판정 이유로 변환
         val reasons = matchedRules.map { rule ->
             ImportanceReason(
                 type = ImportanceReasonType.AUTOMATIC_RULE,
@@ -206,6 +229,7 @@ class ImportanceClassifier {
             )
         }
 
+        // 7. 최종 판정 결과를 반환
         return ImportanceResult(
             score = score,
             level = level,
