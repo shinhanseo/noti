@@ -6,6 +6,7 @@ import com.hanseo.noti.data.local.NotiDatabase
 import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.data.local.migration.MIGRATION_1_2
 import com.hanseo.noti.data.local.migration.MIGRATION_2_3
+import com.hanseo.noti.data.local.migration.MIGRATION_3_4
 
 class NotiApplication : Application() {
     val database: NotiDatabase by lazy {
@@ -16,7 +17,8 @@ class NotiApplication : Application() {
         )
             .addMigrations(
                 MIGRATION_1_2,
-                MIGRATION_2_3
+                MIGRATION_2_3,
+                MIGRATION_3_4
             )
             .build()
     }

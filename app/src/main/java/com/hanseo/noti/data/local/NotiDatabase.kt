@@ -4,10 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.hanseo.noti.data.local.dao.NotificationDao
 import com.hanseo.noti.data.local.entity.NotificationEntity
+import com.hanseo.noti.data.local.entity.ImportanceReasonEntity
 
 @Database(
-    entities = [NotificationEntity::class],
-    version = 3,
+    entities = [
+        NotificationEntity::class,
+        ImportanceReasonEntity::class
+    ],
+    version = 4,
     exportSchema = false
 )
 abstract class NotiDatabase : RoomDatabase() {
