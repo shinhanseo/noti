@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import com.hanseo.noti.data.local.entity.ImportanceReasonEntity
 import com.hanseo.noti.data.local.entity.NotificationEntity
 import kotlinx.coroutines.flow.Flow
+import com.hanseo.noti.data.local.relation.NotificationWithReasons
 
 @Dao
 interface NotificationDao {
@@ -53,6 +54,16 @@ interface NotificationDao {
         """
     )
     fun observeAll(): Flow<List<NotificationEntity>>
+
+    @Transaction
+    @Query(
+        """
+    SELECT *
+    FROM notifications
+    ORDER BY posted_at DESC
+    """
+    )
+    fun observeAllWithReasons(): Flow<List<NotificationWithReasons>>
 
     @Query(
         """
