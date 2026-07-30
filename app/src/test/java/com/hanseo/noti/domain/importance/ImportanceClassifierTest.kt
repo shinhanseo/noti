@@ -311,7 +311,7 @@ class ImportanceClassifierTest {
     }
 
     @Test
-    fun advertisingConsulting_doesNotMatchPromotionalRule() {
+    fun advertisingConsultingMeeting_isImportantWithoutPromotionalPenalty() {
         val input = ImportanceInput(
             packageName = "com.example.normal",
             title = "광고 컨설팅 회의가 7시에 있습니다",
@@ -326,14 +326,23 @@ class ImportanceClassifierTest {
             evaluatedAtMillis = 11_000L
         )
 
-        assertEquals(20, result.score)
-        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertEquals(40, result.score)
+        assertEquals(ImportanceLevel.IMPORTANT, result.level)
 
         assertEquals(
-            setOf("date_or_time"),
+            setOf(
+                "date_or_time",
+                "schedule_context"
+            ),
             result.reasons
                 .mapNotNull { reason -> reason.ruleId }
                 .toSet()
+        )
+
+        assertFalse(
+            result.reasons.any { reason ->
+                reason.ruleId == "promotional_content"
+            }
         )
     }
 
