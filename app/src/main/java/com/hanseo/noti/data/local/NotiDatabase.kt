@@ -7,7 +7,7 @@ import com.hanseo.noti.data.local.entity.NotificationEntity
 
 @Database(
     entities = [NotificationEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class NotiDatabase : RoomDatabase() {
