@@ -35,5 +35,20 @@ data class NotificationEntity(
         name = "removed_at",
         defaultValue = "NULL"
     )
-    val removedAt: Long? = null
+    val removedAt: Long? = null,
+
+    @ColumnInfo(name = "importance_score")
+    val importanceScore: Int? = null,
+
+    @ColumnInfo(name = "importance_level")
+    val importanceLevel: String? = null,
+
+    @ColumnInfo(name = "importance_forced")
+    val importanceForced: Boolean? = null,
+
+    @ColumnInfo(name = "importance_policy_version")
+    val importancePolicyVersion: String? = null,
+
+    @ColumnInfo(name = "importance_evaluated_at")
+    val importanceEvaluatedAt: Long? = null
 )
