@@ -7,6 +7,7 @@ import com.hanseo.noti.domain.model.NotificationItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.hanseo.noti.domain.model.ClassifiedNotification
+import com.hanseo.noti.data.mapper.toReasonEntities
 
 class NotificationRepository(
     private val notificationDao: NotificationDao
@@ -14,8 +15,15 @@ class NotificationRepository(
     suspend fun save(
         classifiedNotification: ClassifiedNotification
     ) {
-        notificationDao.upsert(
+        val notificationEntity =
             classifiedNotification.toEntity()
+
+        val reasonEntities =
+            classifiedNotification.toReasonEntities()
+
+        notificationDao.upsertWithReasons(
+            notification = notificationEntity,
+            reasons = reasonEntities
         )
     }
 

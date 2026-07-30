@@ -3,6 +3,9 @@ package com.hanseo.noti.data.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import androidx.room.Insert
+import androidx.room.Transaction
+import com.hanseo.noti.data.local.entity.ImportanceReasonEntity
 import com.hanseo.noti.data.local.entity.NotificationEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -10,6 +13,37 @@ import kotlinx.coroutines.flow.Flow
 interface NotificationDao {
     @Upsert
     suspend fun upsert(notification: NotificationEntity)
+
+    @Insert
+    suspend fun insertReasons(
+        reasons: List<ImportanceReasonEntity>
+    )
+
+    @Query(
+        """
+    DELETE FROM importance_reasons
+    WHERE notification_key = :notificationKey
+    """
+    )
+    suspend fun deleteReasonsByNotificationKey(
+        notificationKey: String
+    )
+
+    @Transaction
+    suspend fun upsertWithReasons(
+        notification: NotificationEntity,
+        reasons: List<ImportanceReasonEntity>
+    ) {
+        upsert(notification)
+
+        deleteReasonsByNotificationKey(
+            notificationKey = notification.notificationKey
+        )
+
+        if (reasons.isNotEmpty()) {
+            insertReasons(reasons)
+        }
+    }
 
     @Query(
         """
