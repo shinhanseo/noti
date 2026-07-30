@@ -12,6 +12,10 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import android.app.Notification
 import java.util.concurrent.TimeUnit
+import com.hanseo.noti.data.mapper.toImportanceInput
+import com.hanseo.noti.domain.importance.ImportanceClassifier
+import com.hanseo.noti.domain.importance.ImportanceSettings
+import com.hanseo.noti.domain.model.ClassifiedNotification
 
 class NotiNotificationListenerService :
     NotificationListenerService() {
@@ -22,6 +26,10 @@ class NotiNotificationListenerService :
     private val notificationRepository by lazy {
         (application as NotiApplication).notificationRepository // 레파지토리
     }
+
+    private val importanceClassifier = ImportanceClassifier()
+
+    private val importanceSettings = ImportanceSettings()
 
     override fun onListenerConnected() { // 서비스 연결 함수
         super.onListenerConnected()
@@ -59,8 +67,25 @@ class NotiNotificationListenerService :
 
         serviceScope.launch {
             try {
-                notificationRepository.save(notificationItem)
-                Log.d(TAG, "Notification saved")
+                val importanceResult = importanceClassifier.classify(
+                    input = notificationItem.toImportanceInput(),
+                    settings = importanceSettings
+                )
+
+                val classifiedNotification = ClassifiedNotification(
+                    notification = notificationItem,
+                    importance = importanceResult
+                )
+
+                notificationRepository.save(classifiedNotification)
+
+                Log.d(
+                    TAG,
+                    "Notification classified and saved: " +
+                            "score=${importanceResult.score}, " +
+                            "level=${importanceResult.level}, " +
+                            "forced=${importanceResult.isForced}"
+                )
 
             } catch (error: CancellationException) {
                 throw error
