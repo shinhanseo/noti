@@ -269,4 +269,195 @@ class ImportanceClassifierTest {
                 .toSet()
         )
     }
+
+    @Test
+    fun promotionalMessage_combinesPositiveAndNegativeScores() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "[광고] 오늘까지 할인 쿠폰을 확인해 주세요",
+            body = null,
+            category = "msg",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 10_000L
+        )
+
+        assertEquals(10, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertFalse(result.isForced)
+
+        assertEquals(
+            setOf(
+                "message_or_email",
+                "date_or_time",
+                "action_request",
+                "promotional_content"
+            ),
+            result.reasons
+                .mapNotNull { reason -> reason.ruleId }
+                .toSet()
+        )
+
+        assertEquals(
+            1,
+            result.reasons.count { reason ->
+                reason.ruleId == "promotional_content"
+            }
+        )
+    }
+
+    @Test
+    fun advertisingConsulting_doesNotMatchPromotionalRule() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "광고 컨설팅 회의가 7시에 있습니다",
+            body = null,
+            category = null,
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 11_000L
+        )
+
+        assertEquals(20, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+
+        assertEquals(
+            setOf("date_or_time"),
+            result.reasons
+                .mapNotNull { reason -> reason.ruleId }
+                .toSet()
+        )
+    }
+
+    @Test
+    fun ongoingProgress_isAutomaticallyReduced() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "파일 다운로드 진행 중",
+            body = null,
+            category = "progress",
+            isOngoing = true
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 12_000L
+        )
+
+        assertEquals(-25, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertFalse(result.isForced)
+        assertEquals(
+            "ongoing_progress",
+            result.reasons.single().ruleId
+        )
+    }
+
+    @Test
+    fun nonOngoingProgress_isNotReduced() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "파일 다운로드 안내",
+            body = null,
+            category = "progress",
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 13_000L
+        )
+
+        assertEquals(0, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertTrue(result.reasons.isEmpty())
+    }
+
+    @Test
+    fun securityRule_blocksOngoingProgressReduction() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "보안 경고",
+            body = "새로운 기기에서 로그인했습니다",
+            category = "service",
+            isOngoing = true
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 14_000L
+        )
+
+        assertEquals(30, result.score)
+        assertEquals(ImportanceLevel.REVIEW, result.level)
+
+        assertEquals(
+            setOf("security_authentication"),
+            result.reasons
+                .mapNotNull { reason -> reason.ruleId }
+                .toSet()
+        )
+    }
+
+    @Test
+    fun passiveStatus_isAutomaticallyReduced() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "백업 완료",
+            body = null,
+            category = null,
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 15_000L
+        )
+
+        assertEquals(-10, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+        assertEquals(
+            "passive_status",
+            result.reasons.single().ruleId
+        )
+    }
+
+    @Test
+    fun actionRequest_blocksPassiveStatusReduction() {
+        val input = ImportanceInput(
+            packageName = "com.example.normal",
+            title = "업데이트 완료 내용을 확인해 주세요",
+            body = null,
+            category = null,
+            isOngoing = false
+        )
+
+        val result = classifier.classify(
+            input = input,
+            settings = ImportanceSettings(),
+            evaluatedAtMillis = 16_000L
+        )
+
+        assertEquals(20, result.score)
+        assertEquals(ImportanceLevel.GENERAL, result.level)
+
+        assertEquals(
+            setOf("action_request"),
+            result.reasons
+                .mapNotNull { reason -> reason.ruleId }
+                .toSet()
+        )
+    }
 }
