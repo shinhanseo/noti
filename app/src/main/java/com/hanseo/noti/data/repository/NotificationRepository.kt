@@ -6,12 +6,17 @@ import com.hanseo.noti.data.mapper.toEntity
 import com.hanseo.noti.domain.model.NotificationItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import com.hanseo.noti.domain.model.ClassifiedNotification
 
 class NotificationRepository(
     private val notificationDao: NotificationDao
 ) {
-    suspend fun save(notification: NotificationItem) {
-        notificationDao.upsert(notification.toEntity())
+    suspend fun save(
+        classifiedNotification: ClassifiedNotification
+    ) {
+        notificationDao.upsert(
+            classifiedNotification.toEntity()
+        )
     }
 
     fun observeAll(): Flow<List<NotificationItem>> {
