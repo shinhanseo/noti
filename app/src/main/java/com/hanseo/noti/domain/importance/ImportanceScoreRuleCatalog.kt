@@ -178,6 +178,24 @@ object ImportanceScoreRuleCatalog {
                     "반송"
                 )
             )
+        ),
+
+        ImportanceScoreRule(
+            id = "schedule_context",
+            scoreDelta = 20,
+            description = "회의나 일정과 관련된 알림이에요",
+            keywords = setOf(
+                "회의",
+                "미팅",
+                "면접",
+                "수업",
+                "진료 일정",
+                "발표",
+                "상담 일정"
+            ),
+            blockedByRuleIds = setOf(
+                "event_or_reminder"
+            )
         )
     )
 
