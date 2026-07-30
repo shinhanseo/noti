@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.hanseo.noti.data.local.NotiDatabase
 import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.data.local.migration.MIGRATION_1_2
+import com.hanseo.noti.data.local.migration.MIGRATION_2_3
+
 class NotiApplication : Application() {
     val database: NotiDatabase by lazy {
         Room.databaseBuilder(
@@ -12,7 +14,10 @@ class NotiApplication : Application() {
             NotiDatabase::class.java,
             DATABASE_NAME
         )
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(
+                MIGRATION_1_2,
+                MIGRATION_2_3
+            )
             .build()
     }
 
