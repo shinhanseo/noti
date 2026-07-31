@@ -7,7 +7,9 @@ import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.data.local.migration.MIGRATION_1_2
 import com.hanseo.noti.data.local.migration.MIGRATION_2_3
 import com.hanseo.noti.data.local.migration.MIGRATION_3_4
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class NotiApplication : Application() {
     val database: NotiDatabase by lazy {
         Room.databaseBuilder(
