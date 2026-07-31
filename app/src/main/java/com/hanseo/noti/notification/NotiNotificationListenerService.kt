@@ -19,14 +19,10 @@ import com.hanseo.noti.domain.importance.ImportanceClassifier
 import com.hanseo.noti.domain.importance.ImportanceSettings
 import com.hanseo.noti.domain.model.ClassifiedNotification
 
+@AndroidEntryPoint
 class NotiNotificationListenerService :
     NotificationListenerService() {
 
-    @AndroidEntryPoint
-    class NotiNotificationListenerService :
-        NotificationListenerService() {
-
-    }
     private val serviceScope =
         CoroutineScope(SupervisorJob() + Dispatchers.IO) // 코루틴 Scope
 
