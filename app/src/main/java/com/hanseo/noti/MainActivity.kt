@@ -7,41 +7,48 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hanseo.noti.ui.home.HomeScreen
+import com.hanseo.noti.ui.home.HomeViewModel
+import com.hanseo.noti.ui.home.HomeViewModelFactory
 import com.hanseo.noti.ui.theme.NotiTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val homeViewModel: HomeViewModel by lazy {
+        val notificationRepository =
+            (application as NotiApplication).notificationRepository
+
+        ViewModelProvider(
+            this,
+            HomeViewModelFactory(
+                notificationRepository = notificationRepository
+            )
+        )[HomeViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContent {
+            val uiState by
+            homeViewModel.uiState.collectAsStateWithLifecycle()
+
             NotiTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    HomeScreen(
+                        uiState = uiState,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NotiTheme {
-        Greeting("Android")
     }
 }
