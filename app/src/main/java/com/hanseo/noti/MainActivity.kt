@@ -9,26 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hanseo.noti.ui.home.HomeScreen
 import com.hanseo.noti.ui.home.HomeViewModel
-import com.hanseo.noti.ui.home.HomeViewModelFactory
 import com.hanseo.noti.ui.theme.NotiTheme
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel: HomeViewModel by lazy {
-        val notificationRepository =
-            (application as NotiApplication).notificationRepository
-
-        ViewModelProvider(
-            this,
-            HomeViewModelFactory(
-                notificationRepository = notificationRepository
-            )
-        )[HomeViewModel::class.java]
-    }
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
