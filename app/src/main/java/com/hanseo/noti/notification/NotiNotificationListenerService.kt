@@ -3,7 +3,9 @@ package com.hanseo.noti.notification
 import android.service.notification.NotificationListenerService
 import android.util.Log
 import android.service.notification.StatusBarNotification
-import com.hanseo.noti.NotiApplication
+import com.hanseo.noti.data.repository.NotificationRepository
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,12 +22,16 @@ import com.hanseo.noti.domain.model.ClassifiedNotification
 class NotiNotificationListenerService :
     NotificationListenerService() {
 
+    @AndroidEntryPoint
+    class NotiNotificationListenerService :
+        NotificationListenerService() {
+
+    }
     private val serviceScope =
         CoroutineScope(SupervisorJob() + Dispatchers.IO) // 코루틴 Scope
 
-    private val notificationRepository by lazy {
-        (application as NotiApplication).notificationRepository // 레파지토리
-    }
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
 
     private val importanceClassifier = ImportanceClassifier()
 
