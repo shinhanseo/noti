@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.data.mapper.toReasonEntities
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NotificationRepository(
+@Singleton
+class NotificationRepository @Inject constructor(
     private val notificationDao: NotificationDao
 ) {
     suspend fun save(
