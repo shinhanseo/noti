@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -19,11 +22,23 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> =
         notificationRepository.observeAll()
             .map { notifications ->
+                val zoneId = ZoneId.systemDefault()
+                val today = LocalDate.now(zoneId)
+
                 val importantNotifications =
                     notifications.filter { classifiedNotification ->
+                        val notification =
+                            classifiedNotification.notification
+
+                        val postedDate = Instant
+                            .ofEpochMilli(notification.postedAt)
+                            .atZone(zoneId)
+                            .toLocalDate()
+
                         classifiedNotification.importance.level ==
                                 ImportanceLevel.IMPORTANT &&
-                                !classifiedNotification.notification.isRemoved
+                                !notification.isRemoved &&
+                                postedDate == today
                     }
 
                 HomeUiState(
