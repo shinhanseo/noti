@@ -116,13 +116,3 @@ private fun HomeRoute(
         uiState = uiState
     )
 }
-
-@Composable
-private fun NotificationAccessPlaceholder() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "알림 접근 권한 화면")
-    }
-}
