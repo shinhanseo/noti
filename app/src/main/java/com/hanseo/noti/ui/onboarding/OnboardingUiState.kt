@@ -1,7 +1,11 @@
 package com.hanseo.noti.ui.onboarding
 
+enum class OnboardingStage {
+    INTRO,
+    NOTIFICATION_ACCESS
+}
+
 data class OnboardingUiState(
-    val currentPage: Int = 0,
-    val isPermissionStep: Boolean = false,
+    val stage: OnboardingStage = OnboardingStage.INTRO,
     val hasNotificationAccess: Boolean = false
 )
