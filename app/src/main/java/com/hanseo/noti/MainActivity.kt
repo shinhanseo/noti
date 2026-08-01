@@ -4,22 +4,27 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hanseo.noti.ui.home.HomeScreen
-import com.hanseo.noti.ui.home.HomeViewModel
+import com.hanseo.noti.ui.app.AppStartDestination
+import com.hanseo.noti.ui.app.AppViewModel
+import com.hanseo.noti.ui.navigation.NotiNavHost
 import com.hanseo.noti.ui.theme.NotiTheme
-import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val appViewModel: AppViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +32,39 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val uiState by
-            homeViewModel.uiState.collectAsStateWithLifecycle()
+            val appUiState by
+            appViewModel.uiState
+                .collectAsStateWithLifecycle()
 
             NotiTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
-                    HomeScreen(
-                        uiState = uiState,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    when (appUiState.startDestination) {
+                        AppStartDestination.LOADING -> {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(innerPadding),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        }
+
+                        AppStartDestination.ONBOARDING,
+                        AppStartDestination.HOME -> {
+                            key(appUiState.startDestination) {
+                                NotiNavHost(
+                                    startDestination =
+                                        appUiState.startDestination,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(innerPadding)
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
