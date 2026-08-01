@@ -25,12 +25,6 @@ class NotiApplication : Application() {
             .build()
     }
 
-    val notificationRepository: NotificationRepository by lazy {
-        NotificationRepository(
-            notificationDao = database.notificationDao()
-        )
-    }
-
     companion object {
         private const val DATABASE_NAME = "noti.db"
     }
