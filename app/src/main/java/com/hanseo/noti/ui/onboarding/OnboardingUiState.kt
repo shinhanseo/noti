@@ -8,6 +8,5 @@ enum class OnboardingStage {
 
 data class OnboardingUiState(
     val stage: OnboardingStage = OnboardingStage.INTRO,
-    val hasNotificationAccess: Boolean = false,
-    val isOnboardingCompleted: Boolean = false
+    val hasNotificationAccess: Boolean = false
 )
