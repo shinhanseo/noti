@@ -53,22 +53,34 @@ class OnboardingViewModel @Inject constructor(
 
     fun refreshNotificationAccess() {
         val hasAccess =
-            notificationAccessManager
-                .hasNotificationAccess()
+            notificationAccessManager.hasNotificationAccess()
 
         _uiState.update { currentState ->
             currentState.copy(
-                hasNotificationAccess = hasAccess
+                hasNotificationAccess = hasAccess,
+                stage = if (hasAccess) {
+                    OnboardingStage.IMPORTANT_APPS
+                } else {
+                    currentState.stage
+                }
             )
-        }
-
-        if (hasAccess) {
-            completeOnboarding()
         }
     }
 
     fun onNotificationAccessDeferred() {
-        completeOnboarding()
+        _uiState.update { currentState ->
+            currentState.copy(
+                stage = OnboardingStage.IMPORTANT_APPS
+            )
+        }
+    }
+
+    fun onImportantAppsCompleted() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                stage = OnboardingStage.IMPORTANT_KEYWORDS
+            )
+        }
     }
 
     private fun completeOnboarding() {
