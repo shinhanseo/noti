@@ -18,6 +18,10 @@ import com.hanseo.noti.ui.home.HomeViewModel
 import com.hanseo.noti.ui.onboarding.OnboardingScreen
 import com.hanseo.noti.ui.onboarding.OnboardingStage
 import com.hanseo.noti.ui.onboarding.OnboardingViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import com.hanseo.noti.ui.onboarding.NotificationAccessScreen
 
 @Composable
 fun NotiNavHost(
@@ -60,6 +64,19 @@ private fun OnboardingRoute(
     val uiState by
     viewModel.uiState.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
+
+    LifecycleEventEffect(
+        event = Lifecycle.Event.ON_RESUME
+    ) {
+        if (
+            uiState.stage ==
+            OnboardingStage.NOTIFICATION_ACCESS
+        ) {
+            viewModel.refreshNotificationAccess()
+        }
+    }
+
     when (uiState.stage) {
         OnboardingStage.INTRO -> {
             OnboardingScreen(
@@ -69,7 +86,21 @@ private fun OnboardingRoute(
         }
 
         OnboardingStage.NOTIFICATION_ACCESS -> {
-            NotificationAccessPlaceholder()
+            NotificationAccessScreen(
+                onBackClick =
+                    viewModel::onBackToIntro,
+
+                onRequestAccess = {
+                    val intent =
+                        viewModel
+                            .createNotificationAccessSettingsIntent()
+
+                    context.startActivity(intent)
+                },
+
+                onDefer =
+                    viewModel::onNotificationAccessDeferred
+            )
         }
     }
 }
