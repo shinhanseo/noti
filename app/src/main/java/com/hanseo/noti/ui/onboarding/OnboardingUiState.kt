@@ -3,7 +3,9 @@ package com.hanseo.noti.ui.onboarding
 
 enum class OnboardingStage {
     INTRO,
-    NOTIFICATION_ACCESS
+    NOTIFICATION_ACCESS,
+    IMPORTANT_APPS,
+    IMPORTANT_KEYWORDS
 }
 
 data class OnboardingUiState(
