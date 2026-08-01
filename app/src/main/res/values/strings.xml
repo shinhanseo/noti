@@ -11,4 +11,21 @@
 
     <string name="onboarding_personalization_title">중요한 기준을\n간단히 알려주세요</string>
     <string name="onboarding_personalization_description">중요한 앱과 단어를 선택하면\nnoti.가 나에게 맞는 순서로 정리해요.</string>
+
+    <string name="notification_access_top_title">알림 접근 권한</string>
+    <string name="notification_access_title">알림을 정리하려면\n접근 권한이 필요해요</string>
+    <string name="notification_access_description">권한을 허용하면 새로 도착한 알림을 읽고\n내 기준에 맞게 중요도를 정리할 수 있어요.</string>
+
+    <string name="notification_access_read_title">새 알림의 제목과 내용을 확인해요</string>
+    <string name="notification_access_read_description">권한 허용 이후에 도착한 알림만 수집해요.</string>
+
+    <string name="notification_access_local_title">분석과 저장은 기기 안에서만 해요</string>
+    <string name="notification_access_local_description">알림 내용은 외부 서버로 전송하지 않아요.</string>
+
+    <string name="notification_access_revoke_title">언제든지 권한을 해제할 수 있어요</string>
+    <string name="notification_access_revoke_description">Android 설정에서 직접 변경할 수 있어요.</string>
+
+    <string name="notification_access_allow">알림 접근 허용하기</string>
+    <string name="notification_access_later">나중에 할게요</string>
+    <string name="back">뒤로</string>
 </resources>
