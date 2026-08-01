@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">noti</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_start">시작하기</string>
+
+    <string name="onboarding_priority_title">쏟아지는 알림에서\n중요한 것만 먼저</string>
+    <string name="onboarding_priority_description">noti.가 알림의 문맥과 내 기준을 살펴보고\n지금 확인할 내용을 골라드려요.</string>
+
+    <string name="onboarding_privacy_title">알림은 휴대폰 안에서만\n안전하게 분석해요</string>
+    <string name="onboarding_privacy_description">알림 내용과 중요도 판정은 기기 안에서 처리하고\n외부 서버로 보내지 않아요.</string>
+
+    <string name="onboarding_personalization_title">중요한 기준을\n간단히 알려주세요</string>
+    <string name="onboarding_personalization_description">중요한 앱과 단어를 선택하면\nnoti.가 나에게 맞는 순서로 정리해요.</string>
 </resources>
