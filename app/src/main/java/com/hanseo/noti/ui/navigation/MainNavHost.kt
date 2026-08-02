@@ -16,6 +16,8 @@ import com.hanseo.noti.ui.notifications.NotificationsScreen
 @Composable
 fun MainNavHost(
     navController: NavHostController,
+    hasNotificationAccess: Boolean,
+    onRequestNotificationAccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -25,6 +27,10 @@ fun MainNavHost(
     ) {
         composable(NotiRoutes.HOME) {
             HomeRoute(
+                hasNotificationAccess =
+                    hasNotificationAccess,
+                onRequestNotificationAccess =
+                    onRequestNotificationAccess,
                 onShowAllNotifications = {
                     navController.navigate(
                         NotiRoutes.NOTIFICATIONS
@@ -47,6 +53,8 @@ fun MainNavHost(
 
 @Composable
 private fun HomeRoute(
+    hasNotificationAccess: Boolean,
+    onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -56,6 +64,10 @@ private fun HomeRoute(
 
     HomeScreen(
         uiState = uiState,
+        hasNotificationAccess =
+            hasNotificationAccess,
+        onRequestNotificationAccess =
+            onRequestNotificationAccess,
         onShowAllNotifications =
             onShowAllNotifications
     )

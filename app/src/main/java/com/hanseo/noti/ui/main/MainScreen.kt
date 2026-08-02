@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MainScreen(
+    uiState: MainUiState,
+    onRequestNotificationAccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navController =
@@ -66,6 +68,10 @@ fun MainScreen(
     ) { innerPadding ->
         MainNavHost(
             navController = navController,
+            hasNotificationAccess =
+                uiState.hasNotificationAccess,
+            onRequestNotificationAccess =
+                onRequestNotificationAccess,
             modifier = Modifier.padding(
                 innerPadding
             )

@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hanseo.noti.ui.app.AppStartDestination
 import com.hanseo.noti.ui.main.MainScreen
+import com.hanseo.noti.ui.main.MainViewModel
 import com.hanseo.noti.ui.onboarding.ImportantAppsScreen
 import com.hanseo.noti.ui.onboarding.ImportantKeywordsScreen
 import com.hanseo.noti.ui.onboarding.NotificationAccessScreen
@@ -65,9 +66,35 @@ fun NotiNavHost(
         }
 
         composable(NotiRoutes.MAIN) {
-            MainScreen()
+            MainRoute()
         }
     }
+}
+
+@Composable
+private fun MainRoute(
+    viewModel: MainViewModel = hiltViewModel()
+) {
+    val uiState by
+        viewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+
+    LifecycleEventEffect(
+        event = Lifecycle.Event.ON_RESUME
+    ) {
+        viewModel.refreshNotificationAccess()
+    }
+
+    MainScreen(
+        uiState = uiState,
+        onRequestNotificationAccess = {
+            context.startActivity(
+                viewModel
+                    .createNotificationAccessSettingsIntent()
+            )
+        }
+    )
 }
 
 @Composable
