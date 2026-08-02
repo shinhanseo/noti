@@ -3,18 +3,18 @@ package com.hanseo.noti.ui.onboarding
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hanseo.noti.data.apps.InstalledAppProvider
 import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
 import com.hanseo.noti.data.preferences.OnboardingPreferences
 import com.hanseo.noti.notification.NotificationAccessManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import com.hanseo.noti.data.apps.InstalledAppProvider
-import kotlinx.coroutines.CancellationException
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
@@ -28,13 +28,14 @@ class OnboardingViewModel @Inject constructor(
     InstalledAppProvider
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(
-        OnboardingUiState(
-            hasNotificationAccess =
-                notificationAccessManager
-                    .hasNotificationAccess()
+    private val _uiState =
+        MutableStateFlow(
+            OnboardingUiState(
+                hasNotificationAccess =
+                    notificationAccessManager
+                        .hasNotificationAccess()
+            )
         )
-    )
 
     val uiState: StateFlow<OnboardingUiState> =
         _uiState.asStateFlow()
@@ -79,6 +80,20 @@ class OnboardingViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun retryLoadingInstalledApps() {
+        loadInstalledApps()
+    }
+
+    fun onAppSearchQueryChanged(
+        query: String
+    ) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                appSearchQuery = query
+            )
         }
     }
 
@@ -260,6 +275,7 @@ class OnboardingViewModel @Inject constructor(
                     importantAppPackages =
                         currentState
                             .selectedAppPackages,
+
                     globalImportantKeywords =
                         currentState
                             .globalImportantKeywords
