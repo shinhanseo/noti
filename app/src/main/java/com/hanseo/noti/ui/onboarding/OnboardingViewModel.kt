@@ -3,6 +3,7 @@ package com.hanseo.noti.ui.onboarding
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
 import com.hanseo.noti.data.preferences.OnboardingPreferences
 import com.hanseo.noti.notification.NotificationAccessManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val notificationAccessManager: NotificationAccessManager,
-    private val onboardingPreferences: OnboardingPreferences
+    private val notificationAccessManager:
+    NotificationAccessManager,
+    private val onboardingPreferences:
+    OnboardingPreferences,
+    private val importanceSettingsPreferences:
+    ImportanceSettingsPreferences
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -32,8 +37,15 @@ class OnboardingViewModel @Inject constructor(
 
     fun onIntroCompleted() {
         _uiState.update { currentState ->
+            val nextStage =
+                if (currentState.hasNotificationAccess) {
+                    OnboardingStage.IMPORTANT_APPS
+                } else {
+                    OnboardingStage.NOTIFICATION_ACCESS
+                }
+
             currentState.copy(
-                stage = OnboardingStage.NOTIFICATION_ACCESS
+                stage = nextStage
             )
         }
     }
@@ -53,16 +65,18 @@ class OnboardingViewModel @Inject constructor(
 
     fun refreshNotificationAccess() {
         val hasAccess =
-            notificationAccessManager.hasNotificationAccess()
+            notificationAccessManager
+                .hasNotificationAccess()
 
         _uiState.update { currentState ->
             currentState.copy(
                 hasNotificationAccess = hasAccess,
-                stage = if (hasAccess) {
-                    OnboardingStage.IMPORTANT_APPS
-                } else {
-                    currentState.stage
-                }
+                stage =
+                    if (hasAccess) {
+                        OnboardingStage.IMPORTANT_APPS
+                    } else {
+                        currentState.stage
+                    }
             )
         }
     }
@@ -75,16 +89,135 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    fun onImportantAppsCompleted() {
+    fun onBackToNotificationAccess() {
         _uiState.update { currentState ->
             currentState.copy(
-                stage = OnboardingStage.IMPORTANT_KEYWORDS
+                stage = OnboardingStage.NOTIFICATION_ACCESS
             )
         }
     }
 
-    private fun completeOnboarding() {
+    fun onImportantAppToggled(
+        packageName: String
+    ) {
+        val normalizedPackageName =
+            packageName.trim()
+
+        if (normalizedPackageName.isEmpty()) {
+            return
+        }
+
+        _uiState.update { currentState ->
+            val selectedPackages =
+                currentState.selectedAppPackages
+
+            val updatedPackages =
+                if (
+                    normalizedPackageName in
+                    selectedPackages
+                ) {
+                    selectedPackages -
+                            normalizedPackageName
+                } else {
+                    selectedPackages +
+                            normalizedPackageName
+                }
+
+            currentState.copy(
+                selectedAppPackages = updatedPackages
+            )
+        }
+    }
+
+    fun onImportantAppsCompleted() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                stage =
+                    OnboardingStage.IMPORTANT_KEYWORDS
+            )
+        }
+    }
+
+    fun onBackToImportantApps() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                stage = OnboardingStage.IMPORTANT_APPS
+            )
+        }
+    }
+
+    fun onKeywordInputChanged(
+        value: String
+    ) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                keywordInput = value
+            )
+        }
+    }
+
+    fun onKeywordAdded() {
+        _uiState.update { currentState ->
+            val keyword =
+                currentState.keywordInput.trim()
+
+            if (keyword.isEmpty()) {
+                return@update currentState
+            }
+
+            val alreadyExists =
+                currentState
+                    .globalImportantKeywords
+                    .any { savedKeyword ->
+                        savedKeyword.equals(
+                            other = keyword,
+                            ignoreCase = true
+                        )
+                    }
+
+            if (alreadyExists) {
+                return@update currentState.copy(
+                    keywordInput = ""
+                )
+            }
+
+            currentState.copy(
+                globalImportantKeywords =
+                    currentState
+                        .globalImportantKeywords +
+                            keyword,
+                keywordInput = ""
+            )
+        }
+    }
+
+    fun onKeywordRemoved(
+        keyword: String
+    ) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                globalImportantKeywords =
+                    currentState
+                        .globalImportantKeywords -
+                            keyword
+            )
+        }
+    }
+
+    fun onSetupCompleted() {
+        val currentState = _uiState.value
+
         viewModelScope.launch {
+            importanceSettingsPreferences
+                .saveInitialSettings(
+                    importantAppPackages =
+                        currentState
+                            .selectedAppPackages,
+                    globalImportantKeywords =
+                        currentState
+                            .globalImportantKeywords
+                )
+
             onboardingPreferences
                 .setOnboardingCompleted(true)
         }
