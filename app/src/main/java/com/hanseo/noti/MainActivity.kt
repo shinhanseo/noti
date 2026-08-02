@@ -20,6 +20,7 @@ import com.hanseo.noti.ui.app.AppViewModel
 import com.hanseo.noti.ui.navigation.NotiNavHost
 import com.hanseo.noti.ui.theme.NotiTheme
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.compose.material3.MaterialTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -38,7 +39,16 @@ class MainActivity : ComponentActivity() {
 
             NotiTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor =
+                        when (appUiState.startDestination) {
+                            AppStartDestination.HOME ->
+                                MaterialTheme.colorScheme.surface
+
+                            AppStartDestination.LOADING,
+                            AppStartDestination.ONBOARDING ->
+                                MaterialTheme.colorScheme.background
+                        }
                 ) { innerPadding ->
                     when (appUiState.startDestination) {
                         AppStartDestination.LOADING -> {
