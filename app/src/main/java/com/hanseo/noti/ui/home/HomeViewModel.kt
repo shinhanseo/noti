@@ -30,14 +30,14 @@ class HomeViewModel @Inject constructor(
                         val notification =
                             classifiedNotification.notification
 
-                        val postedDate = Instant
-                            .ofEpochMilli(notification.postedAt)
-                            .atZone(zoneId)
-                            .toLocalDate()
+                        val postedDate =
+                            Instant
+                                .ofEpochMilli(notification.postedAt)
+                                .atZone(zoneId)
+                                .toLocalDate()
 
                         classifiedNotification.importance.level ==
                                 ImportanceLevel.IMPORTANT &&
-                                !notification.isRemoved &&
                                 postedDate == today
                     }
 
