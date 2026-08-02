@@ -139,6 +139,8 @@ fun ImportantAppsScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
             text = stringResource(R.string.important_apps_helper),
             style = MaterialTheme.typography.bodySmall,
