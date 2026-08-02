@@ -77,6 +77,20 @@ fun HomeScreen(
         mutableStateOf<String?>(null)
     }
 
+    var selectedReasonNotificationKey by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
+    val selectedReasonNotification =
+        importantNotifications.firstOrNull {
+            notificationUiModel ->
+
+            notificationUiModel
+                .classifiedNotification
+                .notification
+                .key == selectedReasonNotificationKey
+        }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -155,12 +169,29 @@ fun HomeScreen(
                         },
 
                         onReasonClick = {
-                            // 판정 이유 바텀시트 연결 예정
+                            selectedReasonNotificationKey =
+                                notificationKey
                         }
                     )
                 }
             }
         }
+    }
+
+    selectedReasonNotification?.let {
+            notificationUiModel ->
+
+        ImportanceReasonBottomSheet(
+            notificationUiModel = notificationUiModel,
+
+            onDismiss = {
+                selectedReasonNotificationKey = null
+            },
+
+            onLessImportantClick = {
+                // 사용자 피드백 저장 기능 연결 예정
+            }
+        )
     }
 }
 
