@@ -2,6 +2,9 @@ package com.hanseo.noti.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +22,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -34,11 +43,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.hanseo.noti.R
-import com.hanseo.noti.domain.model.ClassifiedNotification
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 
 @Composable
 fun HomeScreen(
@@ -61,6 +73,10 @@ fun HomeScreen(
     val importantNotifications =
         uiState.importantNotifications
 
+    var expandedNotificationKey by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -68,6 +84,10 @@ fun HomeScreen(
         HomeHeader(
             notificationCount =
                 importantNotifications.size,
+
+            totalNotificationCount =
+                uiState.todayTotalNotificationCount,
+
             modifier = Modifier.padding(
                 horizontal = 24.dp
             )
@@ -102,15 +122,41 @@ fun HomeScreen(
             ) {
                 items(
                     items = importantNotifications,
-                    key = { classifiedNotification ->
-                        classifiedNotification
+                    key = { notificationUiModel ->
+                        notificationUiModel
+                            .classifiedNotification
                             .notification
                             .key
                     }
-                ) { classifiedNotification ->
+                ) { notificationUiModel ->
+                    val notificationKey =
+                        notificationUiModel
+                            .classifiedNotification
+                            .notification
+                            .key
+
+                    val isExpanded =
+                        expandedNotificationKey ==
+                            notificationKey
+
                     NotificationCard(
-                        classifiedNotification =
-                            classifiedNotification
+                        notificationUiModel =
+                            notificationUiModel,
+
+                        isExpanded = isExpanded,
+
+                        onCardClick = {
+                            expandedNotificationKey =
+                                if (isExpanded) {
+                                    null
+                                } else {
+                                    notificationKey
+                                }
+                        },
+
+                        onReasonClick = {
+                            // 판정 이유 바텀시트 연결 예정
+                        }
                     )
                 }
             }
@@ -282,6 +328,7 @@ private fun ClockIcon() {
 @Composable
 private fun HomeHeader(
     notificationCount: Int,
+    totalNotificationCount: Int,
     modifier: Modifier = Modifier
 ) {
     val today = LocalDate.now()
@@ -300,6 +347,23 @@ private fun HomeHeader(
             "먼저 확인할 알림은\n${notificationCount}개예요."
         } else {
             "아직 확인할 알림이\n없어요."
+        }
+
+    val description =
+        when {
+            notificationCount > 0 -> {
+                "알림 ${totalNotificationCount}개 중 " +
+                        "중요한 내용만 골랐어요"
+            }
+
+            totalNotificationCount > 0 -> {
+                "오늘 도착한 ${totalNotificationCount}개 알림을 " +
+                        "모두 정리했어요"
+            }
+
+            else -> {
+                "새 알림이 오면 중요한 내용만 골라드려요"
+            }
         }
 
     Column(
@@ -335,6 +399,16 @@ private fun HomeHeader(
                 MaterialTheme.typography.headlineLarge,
             color =
                 MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(
+            modifier = Modifier.height(12.dp)
+        )
+
+        Text(
+            text = description,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -418,67 +492,235 @@ private fun HomeEmptyContent(
 
 @Composable
 private fun NotificationCard(
-    classifiedNotification:
-    ClassifiedNotification,
+    notificationUiModel: HomeNotificationUiModel,
+    isExpanded: Boolean,
+    onCardClick: () -> Unit,
+    onReasonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val classifiedNotification =
+        notificationUiModel.classifiedNotification
+
     val notification =
         classifiedNotification.notification
 
     val importance =
         classifiedNotification.importance
 
+    val containerColor by animateColorAsState(
+        targetValue =
+            if (isExpanded) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.surface
+            },
+        label = "notificationCardColor"
+    )
+
     Card(
-        modifier = modifier.fillMaxWidth()
+        onClick = onCardClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = containerColor
+        )
     ) {
-        Column(
+        Row(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement =
-                Arrangement.spacedBy(6.dp)
+            verticalAlignment = Alignment.Top
         ) {
-            Text(
-                text =
-                    notification.title
-                        ?: "제목 없음",
-                style =
-                    MaterialTheme.typography.titleMedium,
-                color =
-                    MaterialTheme.colorScheme.onSurface
+            NotificationAppIcon(
+                appIcon = notificationUiModel.appIcon
             )
 
-            notification.body?.let { body ->
+            Spacer(
+                modifier = Modifier.width(12.dp)
+            )
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement =
+                    Arrangement.spacedBy(6.dp)
+            ) {
                 Text(
-                    text = body,
+                    text = notificationUiModel.appName,
                     style =
-                        MaterialTheme.typography.bodyMedium,
+                        MaterialTheme.typography.labelMedium,
                     color =
                         MaterialTheme.colorScheme.onSurfaceVariant
                 )
-            }
 
-            Text(
-                text =
-                    "${importance.level} · " +
-                            "${importance.score}점",
-                style =
-                    MaterialTheme.typography.labelLarge,
-                color =
-                    MaterialTheme.colorScheme.primary
-            )
+                Text(
+                    text =
+                        notification.title
+                            ?: "제목 없음",
+                    style =
+                        MaterialTheme.typography.titleMedium,
+                    color =
+                        MaterialTheme.colorScheme.onSurface
+                )
 
-            importance.reasons
-                .take(3)
-                .forEach { reason ->
+                notification.body?.let { body ->
                     Text(
-                        text =
-                            "• ${reason.description} " +
-                                    "(${reason.scoreDelta})",
+                        text = body,
                         style =
-                            MaterialTheme.typography.bodySmall,
+                            MaterialTheme.typography.bodyMedium,
                         color =
                             MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+
+                AnimatedVisibility(
+                    visible = isExpanded
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp),
+                        horizontalArrangement =
+                            Arrangement.SpaceBetween,
+                        verticalAlignment =
+                            Alignment.CenterVertically
+                    ) {
+                        ReasonButton(
+                            onClick = onReasonClick
+                        )
+
+                        ClassificationSourceChip(
+                            isForced = importance.isForced
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ReasonButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        onClick = onClick,
+        modifier = modifier,
+        shape = CircleShape,
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        Row(
+            modifier = Modifier.padding(
+                horizontal = 14.dp,
+                vertical = 9.dp
+            ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(20.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "i",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = "판정 이유  ›",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}
+
+@Composable
+private fun ClassificationSourceChip(
+    isForced: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val label =
+        if (isForced) {
+            "내 기준"
+        } else {
+            "자동 판정"
+        }
+
+    val containerColor =
+        if (isForced) {
+            MaterialTheme.colorScheme.primary.copy(
+                alpha = 0.10f
+            )
+        } else {
+            MaterialTheme.colorScheme.surfaceVariant
+        }
+
+    val contentColor =
+        if (isForced) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        }
+
+    Surface(
+        modifier = modifier,
+        shape = CircleShape,
+        color = containerColor
+    ) {
+        Text(
+            text = label,
+            modifier = Modifier.padding(
+                horizontal = 16.dp,
+                vertical = 10.dp
+            ),
+            style = MaterialTheme.typography.labelLarge,
+            color = contentColor
+        )
+    }
+}
+
+@Composable
+private fun NotificationAppIcon(
+    appIcon: android.graphics.Bitmap?,
+    modifier: Modifier = Modifier
+) {
+    if (appIcon != null) {
+        Image(
+            bitmap = appIcon.asImageBitmap(),
+            contentDescription = null,
+            modifier = modifier
+                .size(48.dp)
+                .clip(CircleShape)
+        )
+    } else {
+        Box(
+            modifier = modifier
+                .size(48.dp)
+                .background(
+                    color =
+                        MaterialTheme.colorScheme.surfaceVariant,
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(
+                    R.drawable.ic_nav_notifications
+                ),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint =
+                    MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }

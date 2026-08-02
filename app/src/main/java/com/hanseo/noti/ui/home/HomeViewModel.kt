@@ -2,67 +2,103 @@ package com.hanseo.noti.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hanseo.noti.data.apps.InstalledAppProvider
 import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.domain.importance.ImportanceLevel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository
+    private val notificationRepository:
+    NotificationRepository,
+    private val installedAppProvider:
+    InstalledAppProvider
 ) : ViewModel() {
 
+    private val installedAppsByPackage = flow {
+        val appsByPackage =
+            installedAppProvider
+                .getLaunchableApps()
+                .associateBy { installedApp ->
+                    installedApp.packageName
+                }
+
+        emit(appsByPackage)
+    }
+
     val uiState: StateFlow<HomeUiState> =
-        notificationRepository.observeAll()
-            .map { notifications ->
-                val zoneId =
-                    ZoneId.systemDefault()
+        combine(
+            notificationRepository.observeAll(),
+            installedAppsByPackage
+        ) { notifications, appsByPackage ->
 
-                val today =
-                    LocalDate.now(zoneId)
+            val zoneId = ZoneId.systemDefault()
+            val today = LocalDate.now(zoneId)
 
-                val todayNotifications =
-                    notifications.filter {
-                            classifiedNotification ->
+            val todayNotifications =
+                notifications.filter {
+                        classifiedNotification ->
 
-                        val postedDate =
-                            Instant
-                                .ofEpochMilli(
-                                    classifiedNotification
-                                        .notification
-                                        .postedAt
-                                )
-                                .atZone(zoneId)
-                                .toLocalDate()
+                    val postedDate =
+                        Instant
+                            .ofEpochMilli(
+                                classifiedNotification
+                                    .notification
+                                    .postedAt
+                            )
+                            .atZone(zoneId)
+                            .toLocalDate()
 
-                        postedDate == today
-                    }
+                    postedDate == today
+                }
 
-                val importantNotifications =
-                    todayNotifications.filter {
-                            classifiedNotification ->
-
+            val importantNotifications =
+                todayNotifications
+                    .filter { classifiedNotification ->
                         classifiedNotification
                             .importance
                             .level ==
                                 ImportanceLevel.IMPORTANT
                     }
+                    .map { classifiedNotification ->
+                        val packageName =
+                            classifiedNotification
+                                .notification
+                                .packageName
 
-                HomeUiState(
-                    importantNotifications =
-                        importantNotifications,
+                        val installedApp =
+                            appsByPackage[packageName]
 
-                    todayTotalNotificationCount =
-                        todayNotifications.size
-                )
-            }
+                        HomeNotificationUiModel(
+                            classifiedNotification =
+                                classifiedNotification,
+
+                            appName =
+                                installedApp?.displayName
+                                    ?: packageName,
+
+                            appIcon =
+                                installedApp?.icon
+                        )
+                    }
+
+            HomeUiState(
+                importantNotifications =
+                    importantNotifications,
+
+                todayTotalNotificationCount =
+                    todayNotifications.size
+            )
+        }
             .stateIn(
                 scope = viewModelScope,
                 started =

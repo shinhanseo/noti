@@ -1,0 +1,80 @@
+<svg width="360" height="800" viewBox="0 0 360 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="360" height="800" fill="#F7F8FA"/>
+
+  <!-- status bar -->
+  <text x="24" y="28" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="12">9:41</text>
+  <g stroke="#4E5968" stroke-width="1.8" stroke-linecap="round">
+    <path d="M302 24H304"/>
+    <path d="M307 21H309"/>
+    <path d="M312 18H314"/>
+  </g>
+  <rect x="326" y="17" width="22" height="10" rx="3" stroke="#4E5968" stroke-width="1.5"/>
+  <rect x="329" y="20" width="15" height="4" rx="1.5" fill="#4E5968"/>
+
+  <!-- header -->
+  <text x="24" y="72" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="30" font-weight="700">noti.</text>
+  <circle cx="324" cy="62" r="22" fill="#FFFFFF"/>
+  <path d="M317 64V58.5C317 54.4 320.1 51 324 51C327.9 51 331 54.4 331 58.5V64L334 68H314L317 64Z" stroke="#4E5968" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M321 71C321.7 72.3 322.7 73 324 73C325.3 73 326.3 72.3 327 71" stroke="#4E5968" stroke-width="2" stroke-linecap="round"/>
+
+  <text x="24" y="116" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="15">8월 2일 일요일</text>
+  <text x="24" y="151" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="29" font-weight="700">먼저 확인할 알림은</text>
+  <text x="24" y="187" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="29" font-weight="700">3개예요.</text>
+  <text x="24" y="217" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="14">오늘 도착한 15개 중 중요한 내용만 골랐어요</text>
+
+  <text x="24" y="261" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="20" font-weight="700">먼저 볼 것</text>
+
+  <!-- primary notification card: neutral surface, blue only for actions -->
+  <rect x="16" y="280" width="328" height="148" rx="22" fill="#FFFFFF" stroke="#E5E8EB"/>
+  <circle cx="56" cy="324" r="24" fill="#FFE500"/>
+  <ellipse cx="56" cy="321" rx="13" ry="10" fill="#321B1B"/>
+  <path d="M48 329L46 337L55 331" fill="#321B1B"/>
+  <text x="92" y="314" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="600">회의 자료를 보내달래요</text>
+  <text x="92" y="339" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13">카카오톡 · 김팀장 · 오후 3시 전까지</text>
+  <rect x="92" y="367" width="104" height="38" rx="19" fill="#F7F8FA" stroke="#E5E8EB"/>
+  <circle cx="112" cy="386" r="10" fill="#3182F6"/>
+  <text x="109.2" y="390" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700">i</text>
+  <text x="128" y="391" fill="#3182F6" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="600">판정 이유</text>
+  <path d="M181 382L185 386L181 390" stroke="#3182F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="222" y="367" width="102" height="38" rx="19" fill="#E7EFFF"/>
+  <text x="240" y="391" fill="#1B64DA" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13" font-weight="600">2시간 남음</text>
+
+  <!-- notification card 2 -->
+  <rect x="16" y="440" width="328" height="94" rx="20" fill="#FFFFFF" stroke="#E5E8EB"/>
+  <rect x="32" y="461" width="52" height="52" rx="16" fill="#F2F4F6"/>
+  <rect x="46" y="474" width="24" height="23" rx="4" stroke="#4E5968" stroke-width="2"/>
+  <path d="M46 481H70M52 470V477M64 470V477" stroke="#4E5968" stroke-width="2" stroke-linecap="round"/>
+  <text x="100" y="475" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="600">오늘 오후 5시, 콘서트 예약이 있어요</text>
+  <text x="100" y="500" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13">캘린더 · 잠실종합운동장</text>
+  <rect x="283" y="493" width="45" height="25" rx="12.5" fill="#E7EFFF"/>
+  <text x="294" y="510" fill="#1B64DA" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="11" font-weight="600">내 기준</text>
+
+  <!-- notification card 3 -->
+  <rect x="16" y="546" width="328" height="94" rx="20" fill="#FFFFFF" stroke="#E5E8EB"/>
+  <rect x="32" y="567" width="52" height="52" rx="16" fill="#F2F4F6"/>
+  <path d="M45 580H62V595H45V580ZM62 585H69L74 591V595H62V585Z" stroke="#4E5968" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="51" cy="598" r="3" stroke="#4E5968" stroke-width="2"/>
+  <circle cx="68" cy="598" r="3" stroke="#4E5968" stroke-width="2"/>
+  <text x="100" y="581" fill="#191F28" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="600">택배가 도착했어요</text>
+  <text x="100" y="606" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13">쿠팡 · 배송 완료</text>
+  <rect x="264" y="599" width="64" height="25" rx="12.5" fill="#F2F4F6"/>
+  <text x="276" y="616" fill="#4E5968" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="11" font-weight="600">자동 판정</text>
+
+  <text x="24" y="674" fill="#6B7280" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="13">나머지 12개는 알림 탭에 정리했어요.</text>
+
+  <!-- bottom navigation -->
+  <path d="M0 724C0 706.3 14.3 692 32 692H328C345.7 692 360 706.3 360 724V800H0V724Z" fill="#FFFFFF"/>
+  <path d="M0 724C0 706.3 14.3 692 32 692H328C345.7 692 360 706.3 360 724" stroke="#E5E8EB"/>
+
+  <rect x="41" y="708" width="72" height="40" rx="20" fill="#E7EFFF"/>
+  <path d="M69 727L77 720L85 727V737H80V731H74V737H69V727Z" fill="#3182F6"/>
+  <text x="67" y="772" fill="#3182F6" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="12" font-weight="600">홈</text>
+
+  <path d="M174 734V727C174 722.6 176.7 719 181 719C185.3 719 188 722.6 188 727V734L191 738H171L174 734Z" stroke="#4E5968" stroke-width="2" stroke-linejoin="round"/>
+  <text x="169" y="772" fill="#4E5968" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="12">알림</text>
+
+  <circle cx="285" cy="728" r="11" stroke="#4E5968" stroke-width="2"/>
+  <circle cx="285" cy="725" r="3.5" stroke="#4E5968" stroke-width="1.8"/>
+  <path d="M278 735C279 731 281.5 729 285 729C288.5 729 291 731 292 735" stroke="#4E5968" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="269" y="772" fill="#4E5968" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="12">내 기준</text>
+</svg>
