@@ -9,6 +9,16 @@ enum class OnboardingStage {
 }
 
 data class OnboardingUiState(
-    val stage: OnboardingStage = OnboardingStage.INTRO,
-    val hasNotificationAccess: Boolean = false
+    val stage: OnboardingStage =
+        OnboardingStage.INTRO,
+
+    val hasNotificationAccess: Boolean = false,
+
+    val selectedAppPackages: Set<String> =
+        emptySet(),
+
+    val globalImportantKeywords: Set<String> =
+        emptySet(),
+
+    val keywordInput: String = ""
 )
