@@ -28,10 +28,12 @@ import com.hanseo.noti.domain.model.ClassifiedNotification
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import androidx.compose.material3.TextButton
 
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    onShowAllNotifications: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val importantNotifications =
@@ -55,6 +57,12 @@ fun HomeScreen(
 
         if (importantNotifications.isEmpty()) {
             HomeEmptyContent(
+                todayTotalCount =
+                    uiState.todayTotalNotificationCount,
+
+                onShowAllNotifications =
+                    onShowAllNotifications,
+
                 modifier = Modifier.weight(1f)
             )
         } else {
@@ -147,11 +155,21 @@ private fun HomeHeader(
         )
     }
 }
-
 @Composable
 private fun HomeEmptyContent(
+    todayTotalCount: Int,
+    onShowAllNotifications: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val description =
+        if (todayTotalCount > 0) {
+            "오늘 도착한 ${todayTotalCount}개 알림은\n" +
+                    "모두 일반 알림으로 정리했어요."
+        } else {
+            "아직 오늘 도착한 알림이 없어요.\n" +
+                    "새로운 알림이 오면 안전하게 정리할게요."
+        }
+
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -185,13 +203,32 @@ private fun HomeEmptyContent(
             )
 
             Text(
-                text = "알림은 기기 안에서만 안전하게 정리돼요",
+                text = description,
                 style =
                     MaterialTheme.typography.bodyLarge,
                 color =
                     MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
+
+            if (todayTotalCount > 0) {
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+
+                TextButton(
+                    onClick =
+                        onShowAllNotifications
+                ) {
+                    Text(
+                        text = "전체 알림 보기",
+                        style =
+                            MaterialTheme.typography.labelLarge,
+                        color =
+                            MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
         }
     }
 }
