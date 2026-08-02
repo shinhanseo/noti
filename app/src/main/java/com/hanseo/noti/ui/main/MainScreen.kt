@@ -11,6 +11,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hanseo.noti.ui.navigation.MainNavHost
 import com.hanseo.noti.ui.navigation.NotiBottomNavigation
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun MainScreen(
@@ -32,6 +34,12 @@ fun MainScreen(
         modifier = modifier,
         containerColor =
             MaterialTheme.colorScheme.background,
+        contentWindowInsets = WindowInsets(
+            left = 0.dp,
+            top = 0.dp,
+            right = 0.dp,
+            bottom = 0.dp
+        ),
         bottomBar = {
             NotiBottomNavigation(
                 currentRoute = currentRoute,
