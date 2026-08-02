@@ -16,8 +16,8 @@ import android.app.Notification
 import java.util.concurrent.TimeUnit
 import com.hanseo.noti.data.mapper.toImportanceInput
 import com.hanseo.noti.domain.importance.ImportanceClassifier
-import com.hanseo.noti.domain.importance.ImportanceSettings
 import com.hanseo.noti.domain.model.ClassifiedNotification
+import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
 
 @AndroidEntryPoint
 class NotiNotificationListenerService :
@@ -29,9 +29,10 @@ class NotiNotificationListenerService :
     @Inject
     lateinit var notificationRepository: NotificationRepository
 
-    private val importanceClassifier = ImportanceClassifier()
+    @Inject
+    lateinit var importanceSettingsPreferences: ImportanceSettingsPreferences
 
-    private val importanceSettings = ImportanceSettings()
+    private val importanceClassifier = ImportanceClassifier()
 
     override fun onListenerConnected() { // 서비스 연결 함수
         super.onListenerConnected()
@@ -69,10 +70,16 @@ class NotiNotificationListenerService :
 
         serviceScope.launch {
             try {
-                val importanceResult = importanceClassifier.classify(
-                    input = notificationItem.toImportanceInput(),
-                    settings = importanceSettings
-                )
+                val importanceSettings =
+                    importanceSettingsPreferences
+                        .getSettings()
+
+                val importanceResult =
+                    importanceClassifier.classify(
+                        input =
+                            notificationItem.toImportanceInput(),
+                        settings = importanceSettings
+                    )
 
                 val classifiedNotification = ClassifiedNotification(
                     notification = notificationItem,
