@@ -6,11 +6,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hanseo.noti.ui.navigation.MainNavHost
 import com.hanseo.noti.ui.navigation.NotiBottomNavigation
+import com.hanseo.noti.ui.navigation.NotiRoutes
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.ui.unit.dp
 
@@ -52,16 +52,12 @@ fun MainScreen(
                             selectedTab.route
                         ) {
                             popUpTo(
-                                navController
-                                    .graph
-                                    .findStartDestination()
-                                    .id
+                                NotiRoutes.HOME
                             ) {
-                                saveState = true
+                                inclusive = false
                             }
 
                             launchSingleTop = true
-                            restoreState = true
                         }
                     }
                 }
