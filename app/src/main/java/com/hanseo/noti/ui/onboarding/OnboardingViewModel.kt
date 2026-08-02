@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.hanseo.noti.data.apps.InstalledAppProvider
+import kotlinx.coroutines.CancellationException
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
@@ -21,7 +23,9 @@ class OnboardingViewModel @Inject constructor(
     private val onboardingPreferences:
     OnboardingPreferences,
     private val importanceSettingsPreferences:
-    ImportanceSettingsPreferences
+    ImportanceSettingsPreferences,
+    private val installedAppProvider:
+    InstalledAppProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -34,6 +38,49 @@ class OnboardingViewModel @Inject constructor(
 
     val uiState: StateFlow<OnboardingUiState> =
         _uiState.asStateFlow()
+
+    init {
+        loadInstalledApps()
+    }
+
+    private fun loadInstalledApps() {
+        if (_uiState.value.isLoadingApps) {
+            return
+        }
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                isLoadingApps = true,
+                hasAppLoadError = false
+            )
+        }
+
+        viewModelScope.launch {
+            try {
+                val installedApps =
+                    installedAppProvider
+                        .getLaunchableApps()
+
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        installedApps = installedApps,
+                        isLoadingApps = false,
+                        hasAppLoadError = false
+                    )
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        installedApps = emptyList(),
+                        isLoadingApps = false,
+                        hasAppLoadError = true
+                    )
+                }
+            }
+        }
+    }
 
     fun onIntroCompleted() {
         _uiState.update { currentState ->
