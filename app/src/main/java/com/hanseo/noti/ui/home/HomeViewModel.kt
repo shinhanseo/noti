@@ -22,34 +22,53 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> =
         notificationRepository.observeAll()
             .map { notifications ->
-                val zoneId = ZoneId.systemDefault()
-                val today = LocalDate.now(zoneId)
+                val zoneId =
+                    ZoneId.systemDefault()
 
-                val importantNotifications =
-                    notifications.filter { classifiedNotification ->
-                        val notification =
-                            classifiedNotification.notification
+                val today =
+                    LocalDate.now(zoneId)
+
+                val todayNotifications =
+                    notifications.filter {
+                            classifiedNotification ->
 
                         val postedDate =
                             Instant
-                                .ofEpochMilli(notification.postedAt)
+                                .ofEpochMilli(
+                                    classifiedNotification
+                                        .notification
+                                        .postedAt
+                                )
                                 .atZone(zoneId)
                                 .toLocalDate()
 
-                        classifiedNotification.importance.level ==
-                                ImportanceLevel.IMPORTANT &&
-                                postedDate == today
+                        postedDate == today
+                    }
+
+                val importantNotifications =
+                    todayNotifications.filter {
+                            classifiedNotification ->
+
+                        classifiedNotification
+                            .importance
+                            .level ==
+                                ImportanceLevel.IMPORTANT
                     }
 
                 HomeUiState(
-                    importantNotifications = importantNotifications
+                    importantNotifications =
+                        importantNotifications,
+
+                    todayTotalNotificationCount =
+                        todayNotifications.size
                 )
             }
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(
-                    stopTimeoutMillis = 5_000
-                ),
+                started =
+                    SharingStarted.WhileSubscribed(
+                        stopTimeoutMillis = 5_000
+                    ),
                 initialValue = HomeUiState()
             )
 }
