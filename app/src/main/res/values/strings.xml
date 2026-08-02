@@ -56,4 +56,8 @@
     <string name="important_keywords_helper">중요 단어는 선택 사항이며 마이페이지에서 언제든 수정할 수 있어요.</string>
     <string name="important_keywords_complete">설정 완료</string>
     <string name="important_keywords_save_error">설정을 저장하지 못했어요. 다시 시도해주세요.</string>
+
+    <string name="bottom_tab_home">홈</string>
+    <string name="bottom_tab_notifications">알림</string>
+    <string name="bottom_tab_my_criteria">내 기준</string>
 </resources>
