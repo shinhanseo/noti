@@ -13,8 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hanseo.noti.ui.app.AppStartDestination
-import com.hanseo.noti.ui.home.HomeScreen
-import com.hanseo.noti.ui.home.HomeViewModel
+import com.hanseo.noti.ui.main.MainScreen
 import com.hanseo.noti.ui.onboarding.ImportantAppsScreen
 import com.hanseo.noti.ui.onboarding.ImportantKeywordsScreen
 import com.hanseo.noti.ui.onboarding.NotificationAccessScreen
@@ -36,7 +35,7 @@ fun NotiNavHost(
             }
 
             AppStartDestination.HOME -> {
-                NotiRoutes.HOME
+                NotiRoutes.MAIN
             }
 
             AppStartDestination.LOADING -> {
@@ -54,7 +53,7 @@ fun NotiNavHost(
         composable(NotiRoutes.ONBOARDING) {
             OnboardingRoute(
                 onSetupCompleted = {
-                    navController.navigate(NotiRoutes.HOME) {
+                    navController.navigate(NotiRoutes.MAIN) {
                         popUpTo(NotiRoutes.ONBOARDING) {
                             inclusive = true
                         }
@@ -65,8 +64,8 @@ fun NotiNavHost(
             )
         }
 
-        composable(NotiRoutes.HOME) {
-            HomeRoute()
+        composable(NotiRoutes.MAIN) {
+            MainScreen()
         }
     }
 }
@@ -163,16 +162,4 @@ private fun OnboardingRoute(
             )
         }
     }
-}
-
-@Composable
-private fun HomeRoute(
-    viewModel: HomeViewModel = hiltViewModel()
-) {
-    val uiState by
-    viewModel.uiState.collectAsStateWithLifecycle()
-
-    HomeScreen(
-        uiState = uiState
-    )
 }
