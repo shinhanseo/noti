@@ -24,7 +24,15 @@ fun MainNavHost(
         modifier = modifier
     ) {
         composable(NotiRoutes.HOME) {
-            HomeRoute()
+            HomeRoute(
+                onShowAllNotifications = {
+                    navController.navigate(
+                        NotiRoutes.NOTIFICATIONS
+                    ) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(NotiRoutes.NOTIFICATIONS) {
@@ -39,6 +47,7 @@ fun MainNavHost(
 
 @Composable
 private fun HomeRoute(
+    onShowAllNotifications: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by
@@ -46,6 +55,8 @@ private fun HomeRoute(
         .collectAsStateWithLifecycle()
 
     HomeScreen(
-        uiState = uiState
+        uiState = uiState,
+        onShowAllNotifications =
+            onShowAllNotifications
     )
 }
