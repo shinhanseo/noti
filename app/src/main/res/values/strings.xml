@@ -41,4 +41,19 @@
     <string name="important_apps_empty">표시할 수 있는 앱이 없어요.</string>
     <string name="important_apps_load_error">설치된 앱을 불러오지 못했어요.</string>
     <string name="important_apps_retry">다시 시도</string>
+
+    <string name="important_keywords_step">2 / 2</string>
+    <string name="important_keywords_skip">건너뛰기</string>
+    <string name="important_keywords_title">놓치고 싶지 않은 단어를\n추가해주세요</string>
+    <string name="important_keywords_description">어떤 앱에서 온 알림이든 이 단어가 포함되면\n중요한 알림으로 먼저 보여드려요.</string>
+    <string name="important_keywords_input_hint">예: 과제, 마감, 배송</string>
+    <string name="important_keywords_add">추가</string>
+    <string name="important_keywords_added_title">추가한 단어</string>
+    <string name="important_keywords_count">%1$d개</string>
+    <string name="important_keywords_empty">아직 추가한 중요 단어가 없어요.</string>
+    <string name="important_keywords_exclusion_title">중요 앱별 제외 단어도 설정할 수 있어요</string>
+    <string name="important_keywords_exclusion_description">마이페이지에서 중요 앱마다 제외 단어를 추가해 불필요한 알림을 중요 알림 목록에서 걸러낼 수 있어요.</string>
+    <string name="important_keywords_helper">중요 단어는 선택 사항이며 마이페이지에서 언제든 수정할 수 있어요.</string>
+    <string name="important_keywords_complete">설정 완료</string>
+    <string name="important_keywords_save_error">설정을 저장하지 못했어요. 다시 시도해주세요.</string>
 </resources>
