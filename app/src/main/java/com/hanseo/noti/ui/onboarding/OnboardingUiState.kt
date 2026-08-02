@@ -30,7 +30,13 @@ data class OnboardingUiState(
     val globalImportantKeywords: Set<String> =
         emptySet(),
 
-    val keywordInput: String = ""
+    val keywordInput: String = "",
+
+    val isSavingSettings: Boolean = false,
+
+    val isSetupCompleted: Boolean = false,
+
+    val hasSetupSaveError: Boolean = false
 ) {
     val filteredInstalledApps: List<InstalledApp>
         get() {

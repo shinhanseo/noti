@@ -267,22 +267,55 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun onSetupCompleted() {
+        if (
+            _uiState.value.isSavingSettings ||
+            _uiState.value.isSetupCompleted
+        ) {
+            return
+        }
+
         val currentState = _uiState.value
 
+        _uiState.update { state ->
+            state.copy(
+                isSavingSettings = true,
+                hasSetupSaveError = false
+            )
+        }
+
         viewModelScope.launch {
-            importanceSettingsPreferences
-                .saveInitialSettings(
-                    importantAppPackages =
-                        currentState
-                            .selectedAppPackages,
+            try {
+                importanceSettingsPreferences
+                    .saveInitialSettings(
+                        importantAppPackages =
+                            currentState
+                                .selectedAppPackages,
 
-                    globalImportantKeywords =
-                        currentState
-                            .globalImportantKeywords
-                )
+                        globalImportantKeywords =
+                            currentState
+                                .globalImportantKeywords
+                    )
 
-            onboardingPreferences
-                .setOnboardingCompleted(true)
+                onboardingPreferences
+                    .setOnboardingCompleted(true)
+
+                _uiState.update { state ->
+                    state.copy(
+                        isSavingSettings = false,
+                        isSetupCompleted = true,
+                        hasSetupSaveError = false
+                    )
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                _uiState.update { state ->
+                    state.copy(
+                        isSavingSettings = false,
+                        hasSetupSaveError = true
+                    )
+                }
+            }
         }
     }
 }

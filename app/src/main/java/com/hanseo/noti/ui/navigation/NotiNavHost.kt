@@ -1,11 +1,8 @@
 package com.hanseo.noti.ui.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -19,6 +16,7 @@ import com.hanseo.noti.ui.app.AppStartDestination
 import com.hanseo.noti.ui.home.HomeScreen
 import com.hanseo.noti.ui.home.HomeViewModel
 import com.hanseo.noti.ui.onboarding.ImportantAppsScreen
+import com.hanseo.noti.ui.onboarding.ImportantKeywordsScreen
 import com.hanseo.noti.ui.onboarding.NotificationAccessScreen
 import com.hanseo.noti.ui.onboarding.OnboardingScreen
 import com.hanseo.noti.ui.onboarding.OnboardingStage
@@ -54,7 +52,17 @@ fun NotiNavHost(
         modifier = modifier
     ) {
         composable(NotiRoutes.ONBOARDING) {
-            OnboardingRoute()
+            OnboardingRoute(
+                onSetupCompleted = {
+                    navController.navigate(NotiRoutes.HOME) {
+                        popUpTo(NotiRoutes.ONBOARDING) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(NotiRoutes.HOME) {
@@ -65,12 +73,19 @@ fun NotiNavHost(
 
 @Composable
 private fun OnboardingRoute(
+    onSetupCompleted: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val uiState by
     viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
+
+    LaunchedEffect(uiState.isSetupCompleted) {
+        if (uiState.isSetupCompleted) {
+            onSetupCompleted()
+        }
+    }
 
     LifecycleEventEffect(
         event = Lifecycle.Event.ON_RESUME
@@ -131,8 +146,20 @@ private fun OnboardingRoute(
         }
 
         OnboardingStage.IMPORTANT_KEYWORDS -> {
-            SetupPlaceholder(
-                title = "중요 키워드 선택"
+            ImportantKeywordsScreen(
+                uiState = uiState,
+                onBackClick =
+                    viewModel::onBackToImportantApps,
+                onSkipClick =
+                    viewModel::onSetupCompleted,
+                onKeywordInputChanged =
+                    viewModel::onKeywordInputChanged,
+                onKeywordAdded =
+                    viewModel::onKeywordAdded,
+                onKeywordRemoved =
+                    viewModel::onKeywordRemoved,
+                onCompleteClick =
+                    viewModel::onSetupCompleted
             )
         }
     }
@@ -148,16 +175,4 @@ private fun HomeRoute(
     HomeScreen(
         uiState = uiState
     )
-}
-
-@Composable
-private fun SetupPlaceholder(
-    title: String
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = title)
-    }
 }
