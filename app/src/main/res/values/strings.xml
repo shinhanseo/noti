@@ -28,4 +28,17 @@
     <string name="notification_access_allow">알림 접근 허용하기</string>
     <string name="notification_access_later">나중에 할게요</string>
     <string name="back">뒤로</string>
+
+    <string name="important_apps_step">1 / 2</string>
+    <string name="important_apps_skip">건너뛰기</string>
+    <string name="important_apps_title">먼저 확인하고 싶은 앱을\n선택해주세요</string>
+    <string name="important_apps_description">선택한 앱의 알림은 중요도를 더 높게 판단해요.</string>
+    <string name="important_apps_search_hint">설치된 앱 검색</string>
+    <string name="important_apps_section_title">설치된 앱</string>
+    <string name="important_apps_selected_count">%1$d개 선택</string>
+    <string name="important_apps_helper">선택한 앱은 나중에 내 기준에서 바꿀 수 있어요.</string>
+    <string name="important_apps_next">다음</string>
+    <string name="important_apps_empty">표시할 수 있는 앱이 없어요.</string>
+    <string name="important_apps_load_error">설치된 앱을 불러오지 못했어요.</string>
+    <string name="important_apps_retry">다시 시도</string>
 </resources>
