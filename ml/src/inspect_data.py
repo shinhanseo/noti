@@ -16,6 +16,16 @@ DATA_PATH = (
 def main() -> None:
     data = pd.read_csv(DATA_PATH)
 
+    data["text"] = (
+        data["title"]
+        .fillna("")
+        .str.strip()
+        + " "
+        + data["body"]
+        .fillna("")
+        .str.strip()
+    )
+
     print("데이터 크기")
     print(data.shape)
 
@@ -50,6 +60,20 @@ def main() -> None:
                 "label",
             ]
         ].isna().sum()
+    )
+
+    print("\n모델 입력 Text")
+
+    print(
+        data[
+            [
+                "title",
+                "body",
+                "text",
+            ]
+        ]
+        .head(3)
+        .to_string(index=False)
     )
 
 
