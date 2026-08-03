@@ -6,13 +6,33 @@ Android 앱 코드는 루트의 `app/`에서 관리하고, 머신러닝 코드�
 
 ## 진행 순서
 
-1. 합성 알림 CSV 검사
-2. 제목과 본문을 모델 입력으로 결합
-3. 학습 데이터와 테스트 데이터 분리
-4. 문자 n-gram TF-IDF 생성
+1. v0.1 합성 알림으로 학습 파이프라인 검증
+2. 실제 모델 실행 구간에 맞춘 v0.2 데이터셋 설계
+3. v0.2 데이터 생성과 품질 검사
+4. 제목과 본문을 문자 n-gram TF-IDF로 변환
 5. Logistic Regression 학습
-6. 평가 결과와 오분류 분석
-7. Android 적용용 모델 변환 검토
+6. REVIEW 구간 성능과 오분류 분석
+7. 실제 익명화 알림으로 그림자 모드 검증
+8. Android 적용용 모델 변환 검토
+
+v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다.
+
+## v0.2 데이터 생성과 검사
+
+```bash
+python src/generate_dataset_v02.py
+python src/validate_dataset_v02.py
+python src/train_baseline.py
+```
+
+생성 파일:
+
+- `data/public/train_notifications_v0.2.csv`: 라벨이 있는 학습·대조 데이터 320개
+- `data/public/context_notifications_v0.2.csv`: 정답을 강제하지 않는 문맥 의존 데이터 80개
+
+검토용 워크북은 `reports/outputs/v0.2/dataset_v0.2_review.xlsx`에 생성되어 있다. 원본 CSV가 학습 데이터의 기준이다.
+
+`train_baseline.py`는 `clarity=CLEAR`이면서 `model_eligible=true`인 REVIEW 데이터만 사용하고, 같은 `template_group`이 학습과 평가에 겹치지 않는 5-Fold 교차 검증을 수행한다.
 
 ## 예정 구조
 
