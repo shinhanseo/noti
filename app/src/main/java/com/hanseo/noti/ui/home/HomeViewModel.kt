@@ -3,14 +3,18 @@ package com.hanseo.noti.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hanseo.noti.data.apps.InstalledAppProvider
+import com.hanseo.noti.data.repository.NotificationFeedbackRepository
 import com.hanseo.noti.data.repository.NotificationRepository
+import com.hanseo.noti.domain.feedback.FeedbackLabel
 import com.hanseo.noti.domain.importance.ImportanceLevel
+import com.hanseo.noti.domain.model.ClassifiedNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -20,6 +24,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val notificationRepository:
     NotificationRepository,
+
+    private val feedbackRepository:
+    NotificationFeedbackRepository,
+
     private val installedAppProvider:
     InstalledAppProvider
 ) : ViewModel() {
@@ -38,8 +46,12 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> =
         combine(
             notificationRepository.observeAll(),
-            installedAppsByPackage
-        ) { notifications, appsByPackage ->
+            installedAppsByPackage,
+            feedbackRepository.observeAllLabels()
+        ) {
+                notifications,
+                appsByPackage,
+                feedbackLabels ->
 
             val zoneId = ZoneId.systemDefault()
             val today = LocalDate.now(zoneId)
@@ -64,10 +76,29 @@ class HomeViewModel @Inject constructor(
             val importantNotifications =
                 todayNotifications
                     .filter { classifiedNotification ->
-                        classifiedNotification
-                            .importance
-                            .level ==
-                                ImportanceLevel.IMPORTANT
+                        val notificationKey =
+                            classifiedNotification
+                                .notification
+                                .key
+
+                        val feedbackLabel =
+                            feedbackLabels[
+                                notificationKey
+                            ]
+
+                        when (feedbackLabel) {
+                            FeedbackLabel.IMPORTANT ->
+                                true
+
+                            FeedbackLabel.GENERAL ->
+                                false
+
+                            null ->
+                                classifiedNotification
+                                    .importance
+                                    .level ==
+                                        ImportanceLevel.IMPORTANT
+                        }
                     }
                     .map { classifiedNotification ->
                         val packageName =
@@ -107,4 +138,40 @@ class HomeViewModel @Inject constructor(
                     ),
                 initialValue = HomeUiState()
             )
+
+    fun markAsGeneral(
+        classifiedNotification:
+        ClassifiedNotification
+    ) {
+        saveFeedback(
+            classifiedNotification =
+                classifiedNotification,
+            label = FeedbackLabel.GENERAL
+        )
+    }
+
+    fun markAsImportant(
+        classifiedNotification:
+        ClassifiedNotification
+    ) {
+        saveFeedback(
+            classifiedNotification =
+                classifiedNotification,
+            label = FeedbackLabel.IMPORTANT
+        )
+    }
+
+    private fun saveFeedback(
+        classifiedNotification:
+        ClassifiedNotification,
+        label: FeedbackLabel
+    ) {
+        viewModelScope.launch {
+            feedbackRepository.save(
+                classifiedNotification =
+                    classifiedNotification,
+                label = label
+            )
+        }
+    }
 }
