@@ -51,6 +51,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import com.hanseo.noti.domain.model.ClassifiedNotification
 
 @Composable
 fun HomeScreen(
@@ -58,6 +59,8 @@ fun HomeScreen(
     hasNotificationAccess: Boolean,
     onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
+    onLessImportant: (ClassifiedNotification) -> Unit,
+    onEditCriteria: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (!hasNotificationAccess) {
@@ -189,7 +192,19 @@ fun HomeScreen(
             },
 
             onLessImportantClick = {
-                // 사용자 피드백 저장 기능 연결 예정
+                onLessImportant(
+                    notificationUiModel
+                        .classifiedNotification
+                )
+
+                selectedReasonNotificationKey = null
+                expandedNotificationKey = null
+            },
+
+            onEditCriteriaClick = {
+                selectedReasonNotificationKey = null
+                expandedNotificationKey = null
+                onEditCriteria()
             }
         )
     }

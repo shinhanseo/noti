@@ -39,6 +39,7 @@ fun ImportanceReasonBottomSheet(
     notificationUiModel: HomeNotificationUiModel,
     onDismiss: () -> Unit,
     onLessImportantClick: () -> Unit,
+    onEditCriteriaClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val sheetState = rememberModalBottomSheetState(
@@ -48,11 +49,30 @@ fun ImportanceReasonBottomSheet(
     val classifiedNotification =
         notificationUiModel.classifiedNotification
 
-    val notification =
-        classifiedNotification.notification
-
     val importance =
         classifiedNotification.importance
+
+    val isUserCriterion =
+        importance.reasons.any { reason ->
+            reason.type ==
+                ImportanceReasonType.IMPORTANT_APP ||
+                reason.type ==
+                ImportanceReasonType.GLOBAL_IMPORTANT_KEYWORD
+        }
+
+    val secondaryActionText =
+        if (isUserCriterion) {
+            "내 기준에서 수정하기"
+        } else {
+            "덜 중요하게 보기"
+        }
+
+    val onSecondaryActionClick =
+        if (isUserCriterion) {
+            onEditCriteriaClick
+        } else {
+            onLessImportantClick
+        }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -130,7 +150,7 @@ fun ImportanceReasonBottomSheet(
             Spacer(modifier = Modifier.height(28.dp))
 
             Surface(
-                onClick = onLessImportantClick,
+                onClick = onSecondaryActionClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -141,7 +161,7 @@ fun ImportanceReasonBottomSheet(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "덜 중요하게 보기",
+                        text = secondaryActionText,
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary
                     )

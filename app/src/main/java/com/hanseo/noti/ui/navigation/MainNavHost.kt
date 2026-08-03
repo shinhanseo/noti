@@ -37,6 +37,13 @@ fun MainNavHost(
                     ) {
                         launchSingleTop = true
                     }
+                },
+                onEditCriteria = {
+                    navController.navigate(
+                        NotiRoutes.MY_CRITERIA
+                    ) {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
@@ -56,6 +63,7 @@ private fun HomeRoute(
     hasNotificationAccess: Boolean,
     onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
+    onEditCriteria: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by
@@ -64,11 +72,20 @@ private fun HomeRoute(
 
     HomeScreen(
         uiState = uiState,
+
         hasNotificationAccess =
             hasNotificationAccess,
+
         onRequestNotificationAccess =
             onRequestNotificationAccess,
+
         onShowAllNotifications =
-            onShowAllNotifications
+            onShowAllNotifications,
+
+        onLessImportant =
+            viewModel::markAsGeneral,
+
+        onEditCriteria =
+            onEditCriteria
     )
 }
