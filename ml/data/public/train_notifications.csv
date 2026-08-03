@@ -1,0 +1,201 @@
+id,title,body,label,group,template_group,clarity,reason_code,android_category,source
+TRAIN_001,인증번호 안내,은행 앱 본인 확인용 인증번호가 발급되었습니다. 3분 안에 입력해주세요.,1,security_authentication,security_authentication_template_1,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_002,본인 확인 코드,카드 앱 본인 확인용 인증번호가 발급되었습니다. 4분 안에 입력해주세요.,1,security_authentication,security_authentication_template_2,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_003,보안 인증 요청,쇼핑몰 본인 확인용 인증번호가 발급되었습니다. 5분 안에 입력해주세요.,1,security_authentication,security_authentication_template_3,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_004,일회용 코드,학교 포털 본인 확인용 인증번호가 발급되었습니다. 3분 안에 입력해주세요.,1,security_authentication,security_authentication_template_4,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_005,로그인 인증,회사 계정 본인 확인용 인증번호가 발급되었습니다. 4분 안에 입력해주세요.,1,security_authentication,security_authentication_template_5,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_006,인증번호 안내,이메일 서비스 본인 확인용 인증번호가 발급되었습니다. 5분 안에 입력해주세요.,1,security_authentication,security_authentication_template_1,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_007,본인 확인 코드,정부 서비스 본인 확인용 인증번호가 발급되었습니다. 3분 안에 입력해주세요.,1,security_authentication,security_authentication_template_2,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_008,보안 인증 요청,예약 서비스 본인 확인용 인증번호가 발급되었습니다. 4분 안에 입력해주세요.,1,security_authentication,security_authentication_template_3,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_009,일회용 코드,결제 서비스 본인 확인용 인증번호가 발급되었습니다. 5분 안에 입력해주세요.,1,security_authentication,security_authentication_template_4,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_010,로그인 인증,클라우드 계정 본인 확인용 인증번호가 발급되었습니다. 3분 안에 입력해주세요.,1,security_authentication,security_authentication_template_5,CLEAR,security_time_sensitive,msg,SYNTHETIC
+TRAIN_011,계정 보안 알림,새로운 기기에서 로그인이 감지되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_1,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_012,로그인 차단,비밀번호가 방금 변경되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_2,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_013,비밀번호 변경,반복된 로그인 실패로 계정이 잠겼습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_3,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_014,새 기기 로그인,해외 위치에서 접속이 감지되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_4,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_015,의심스러운 활동,등록하지 않은 기기가 추가되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_5,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_016,계정 보안 알림,보안 설정이 변경되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_1,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_017,로그인 차단,계정 복구 요청이 접수되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_2,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_018,비밀번호 변경,2단계 인증이 해제되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_3,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_019,새 기기 로그인,의심스러운 결제 로그인이 차단되었습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_4,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_020,의심스러운 활동,알 수 없는 브라우저에서 접속했습니다. 본인이 아니라면 지금 계정을 확인해주세요.,1,account_security,account_security_template_5,CLEAR,account_risk,status,SYNTHETIC
+TRAIN_021,결제 실패,온라인 주문 결제가 승인되지 않았습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_1,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_022,카드 승인 거절,정기 구독 결제가 실패했습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_2,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_023,자동이체 오류,등록한 카드의 승인이 거절되었습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_3,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_024,납부 처리 실패,월세 자동이체를 완료하지 못했습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_4,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_025,결제 수단 확인,통신요금 납부가 처리되지 않았습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_5,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_026,결제 실패,보험료 자동 결제에 실패했습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_1,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_027,카드 승인 거절,교통카드 자동 충전이 실패했습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_2,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_028,자동이체 오류,예약금 결제가 취소되었습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_3,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_029,납부 처리 실패,공과금 자동 납부가 실패했습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_4,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_030,결제 수단 확인,교육비 카드 결제가 거절되었습니다. 결제 수단을 확인하고 다시 시도해주세요.,1,payment_failure,payment_failure_template_5,CLEAR,financial_action_required,status,SYNTHETIC
+TRAIN_031,제출 마감 안내,회의 자료를 오늘 오후 3시까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_1,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_032,회신 요청,프로젝트 검토 의견을 오늘 안으로 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_2,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_033,자료 제출 요청,장학금 신청서를 내일 오전까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_3,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_034,기한 임박,근무 일정 확인서를 오늘까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_4,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_035,오늘까지 처리,계약 관련 서류를 내일 오후 2시까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_5,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_036,제출 마감 안내,과제 파일을 오늘 자정까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_1,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_037,회신 요청,설문 응답을 내일 업무 시작 전까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_2,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_038,자료 제출 요청,출장 신청서를 오늘 오후 5시까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_3,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_039,기한 임박,수정된 발표 자료를 내일 정오까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_4,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_040,오늘까지 처리,비용 정산 내역을 이번 주 금요일까지 제출하거나 회신해주세요.,1,deadline_action,deadline_action_template_5,CLEAR,deadline_action_required,email,SYNTHETIC
+TRAIN_041,승인 요청,휴가 신청에 대한 승인이 필요합니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_1,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_042,서명 필요,전자 계약서 서명이 대기 중입니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_2,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_043,검토 대기,구매 요청서 결재가 필요합니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_3,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_044,결재 요청,프로젝트 변경안 검토가 대기 중입니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_4,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_045,동의 요청,개인정보 이용 동의가 필요합니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_5,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_046,승인 요청,지출 품의서 승인이 필요합니다. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_1,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_047,서명 필요,근무 시간 변경 요청을 확인해주세요. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_2,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_048,검토 대기,계약 갱신 문서에 서명해주세요. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_3,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_049,결재 요청,배포 요청에 대한 승인을 완료해주세요. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_4,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_050,동의 요청,수강 변경 신청을 검토해주세요. 처리 기한을 확인해주세요.,1,approval_signature,approval_signature_template_5,CLEAR,approval_required,email,SYNTHETIC
+TRAIN_051,예약 변경,내일 항공편 출발 시간이 2시간 늦춰졌습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_1,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_052,예약 취소,예약한 숙소가 운영 사정으로 취소되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_2,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_053,일정 변경 안내,병원 진료 시간이 오전 10시로 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_3,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_054,운항 시간 변경,열차 출발 플랫폼이 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_4,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_055,방문 일정 확인,식당 예약 인원이 변경되어 확인이 필요합니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_5,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_056,예약 변경,공연 시작 시간이 오후 7시로 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_1,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_057,예약 취소,렌터카 수령 장소가 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_2,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_058,일정 변경 안내,면접 일정이 내일 오후로 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_3,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_059,운항 시간 변경,미용실 예약이 매장 사정으로 취소되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_4,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_060,방문 일정 확인,상담 예약 장소가 다른 지점으로 변경되었습니다. 변경된 내용을 확인해주세요.,1,reservation_change,reservation_change_template_5,CLEAR,reservation_changed,event,SYNTHETIC
+TRAIN_061,진료 확인 필요,검사 결과에 대한 의사 상담이 필요합니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_1,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_062,검사 결과 안내,처방전 유효 기간이 오늘 만료됩니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_2,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_063,처방 확인,예약한 진료가 내일 오전으로 변경되었습니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_3,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_064,병원 일정 변경,추가 검사를 위해 병원에 연락해주세요. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_4,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_065,건강검진 후속 안내,복용 중인 약의 재처방이 필요합니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_5,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_066,진료 확인 필요,건강검진 결과 확인 예약이 잡혔습니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_1,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_067,검사 결과 안내,예방접종 예약 시간이 변경되었습니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_2,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_068,처방 확인,진료 전 문진표를 오늘까지 작성해주세요. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_3,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_069,병원 일정 변경,검사 준비 사항이 변경되어 확인이 필요합니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_4,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_070,건강검진 후속 안내,진료비 미납으로 예약 확정이 보류되었습니다. 의료기관의 안내를 확인해주세요.,1,medical_action,medical_action_template_5,CLEAR,medical_follow_up,event,SYNTHETIC
+TRAIN_071,긴급 업무 요청,운영 서버 오류가 발생해 담당자 확인이 필요합니다. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_1,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_072,즉시 확인 요청,오늘 배포가 실패해 롤백 승인이 필요합니다. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_2,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_073,서비스 장애,주요 고객 문의에 오후 1시까지 답변해주세요. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_3,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_074,배포 중단,결제 서비스 장애가 감지되었습니다. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_4,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_075,고객 대응 필요,보안 취약점 대응 여부를 즉시 회신해주세요. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_5,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_076,긴급 업무 요청,데이터 백업 실패 원인을 확인해주세요. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_1,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_077,즉시 확인 요청,생산 장비가 중단되어 담당자 호출이 필요합니다. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_2,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_078,서비스 장애,긴급 회의 참석 가능 여부를 알려주세요. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_3,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_079,배포 중단,계약 마감 전 수정본 확인이 필요합니다. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_4,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_080,고객 대응 필요,앱 로그인 장애가 발생해 대응을 시작해주세요. 가능한 한 빨리 확인해주세요.,1,urgent_work,urgent_work_template_5,CLEAR,urgent_work_action,msg,SYNTHETIC
+TRAIN_081,배송 보류,주소 정보가 정확하지 않아 배송이 보류되었습니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_1,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_082,주소 확인 필요,수취인 부재로 배송하지 못했습니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_2,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_083,수령 실패,통관 서류가 누락되어 확인이 필요합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_3,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_084,통관 문제,보관 기한이 지나면 상품이 반송될 예정입니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_4,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_085,반송 예정,배송 중 상품이 파손되어 재배송 선택이 필요합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_5,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_086,배송 보류,연락처 오류로 기사님이 연락하지 못했습니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_1,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_087,주소 확인 필요,무인 보관함이 가득 차 수령 장소를 변경해야 합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_2,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_088,수령 실패,해외 배송 관세 납부가 필요합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_3,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_089,통관 문제,신선 식품 배송 시간이 변경되어 확인이 필요합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_4,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_090,반송 예정,택배가 잘못된 주소로 배정되어 수정이 필요합니다. 배송 정보를 확인해주세요.,1,delivery_problem,delivery_problem_template_5,CLEAR,delivery_action_required,status,SYNTHETIC
+TRAIN_091,납부 기한 안내,전기요금 납부 기한이 오늘까지입니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_1,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_092,요금 미납,통신요금이 미납되어 서비스가 정지될 수 있습니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_2,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_093,자동 납부 실패,관리비 자동 납부가 실패했습니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_3,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_094,연체 예정,대출 이자 납부일이 내일입니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_4,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_095,서비스 정지 예정,보험료가 미납되어 계약 효력이 중지될 수 있습니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_5,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_096,납부 기한 안내,수업료 납부 기한이 이번 주 금요일입니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_1,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_097,요금 미납,렌탈 요금 연체로 이용이 제한될 수 있습니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_2,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_098,자동 납부 실패,가스요금 납부 기한이 하루 남았습니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_3,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_099,연체 예정,구독료 결제 실패로 계정이 중지될 예정입니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_4,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_100,서비스 정지 예정,주차 정기권 갱신 비용을 오늘까지 납부해야 합니다. 납부 상태를 확인해주세요.,1,billing_overdue,billing_overdue_template_5,CLEAR,payment_deadline,status,SYNTHETIC
+TRAIN_101,할인 쿠폰 도착,의류 상품 20% 할인 쿠폰이 발급되었습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_1,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_102,오늘의 특가,오늘만 사용할 수 있는 무료 배송 쿠폰입니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_2,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_103,회원 전용 혜택,신규 회원을 위한 첫 구매 혜택이 도착했습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_3,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_104,주말 할인,주말 카페 음료 할인 쿠폰을 확인해보세요. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_4,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_105,쿠폰 만료 안내,장바구니 상품에 적용 가능한 쿠폰이 있습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_5,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_106,할인 쿠폰 도착,뷰티 상품 추가 할인 혜택을 준비했습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_1,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_107,오늘의 특가,여행 상품 예약 할인 코드가 발급되었습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_2,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_108,회원 전용 혜택,배달 주문에 사용할 수 있는 쿠폰이 곧 만료됩니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_3,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_109,주말 할인,전자제품 특별 할인 쿠폰을 받아보세요. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_4,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_110,쿠폰 만료 안내,멤버십 고객 전용 할인 혜택이 열렸습니다. 앱에서 혜택을 확인해보세요.,0,promotion_coupon,promotion_coupon_template_5,CLEAR,promotional_content,promo,SYNTHETIC
+TRAIN_111,맞춤 상품 추천,최근 본 상품과 비슷한 의류를 추천합니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_1,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_112,이 상품은 어떠세요,관심 목록을 바탕으로 새로운 책을 골랐습니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_2,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_113,오늘의 추천,구매 이력에 맞는 생활용품을 확인해보세요. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_3,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_114,인기 상품 안내,요즘 인기 있는 노트북을 추천합니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_4,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_115,취향 저격 상품,취향에 맞는 향수 상품을 준비했습니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_5,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_116,맞춤 상품 추천,최근 검색한 지역의 숙소를 추천합니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_1,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_117,이 상품은 어떠세요,자주 주문한 메뉴와 비슷한 음식을 골랐습니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_2,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_118,오늘의 추천,관심 카테고리의 새 상품이 등록되었습니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_3,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_119,인기 상품 안내,많은 사용자가 구매한 건강용품을 소개합니다. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_4,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_120,취향 저격 상품,이번 주 인기 있는 인테리어 상품을 확인해보세요. 지금 둘러보세요.,0,product_recommendation,product_recommendation_template_5,CLEAR,recommendation_content,recommendation,SYNTHETIC
+TRAIN_121,이벤트 안내,매일 출석하면 포인트를 드리는 행사가 시작됐습니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_1,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_122,경품 행사,친구를 초대하면 쿠폰을 받을 수 있습니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_2,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_123,출석 이벤트,리뷰 작성 고객을 위한 경품 행사를 진행합니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_3,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_124,한정 프로모션,주말 한정 타임 세일이 열렸습니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_4,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_125,친구 초대 혜택,신상품 출시 기념 이벤트에 참여해보세요. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_5,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_126,이벤트 안내,결제 고객 대상 추첨 행사가 시작됐습니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_1,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_127,경품 행사,앱 방문 고객에게 랜덤 포인트를 제공합니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_2,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_128,출석 이벤트,여름 시즌 프로모션 상품을 공개했습니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_3,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_129,한정 프로모션,SNS 공유 이벤트에 참여하면 선물을 드립니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_4,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_130,친구 초대 혜택,멤버십 가입 고객을 위한 행사를 진행합니다. 자세한 내용은 이벤트 페이지에서 확인하세요.,0,event_marketing,event_marketing_template_5,CLEAR,marketing_event,promo,SYNTHETIC
+TRAIN_131,다운로드 중,동영상 파일을 다운로드하고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_1,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_132,파일 저장 중,오프라인 지도를 저장하고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_2,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_133,설치 진행 중,게임 리소스 설치가 진행 중입니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_3,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_134,업데이트 다운로드,소프트웨어 업데이트 파일을 받고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_4,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_135,콘텐츠 준비 중,음악 재생목록을 오프라인으로 저장 중입니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_5,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_136,다운로드 중,첨부 파일 다운로드가 60% 완료되었습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_1,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_137,파일 저장 중,사진 원본을 기기에 저장하고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_2,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_138,설치 진행 중,전자책 콘텐츠를 준비하고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_3,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_139,업데이트 다운로드,언어 데이터를 다운로드하고 있습니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_4,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_140,콘텐츠 준비 중,강의 영상을 저장하는 중입니다. 완료되면 다시 알려드릴게요.,0,download_progress,download_progress_template_5,CLEAR,passive_progress,progress,SYNTHETIC
+TRAIN_141,동기화 중,사진을 클라우드와 동기화하고 있습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_1,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_142,백업 진행,메모 백업이 정상적으로 완료되었습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_2,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_143,업로드 완료,문서 업로드를 완료했습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_3,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_144,데이터 정리,저장 공간 정리를 진행하고 있습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_4,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_145,클라우드 연결,연락처 동기화가 완료되었습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_5,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_146,동기화 중,운동 기록을 서버에 저장했습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_1,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_147,백업 진행,브라우저 북마크를 동기화하고 있습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_2,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_148,업로드 완료,채팅 내역 백업이 진행 중입니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_3,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_149,데이터 정리,캘린더 동기화를 완료했습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_4,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_150,클라우드 연결,기기 설정 백업이 정상적으로 끝났습니다. 별도의 작업은 필요하지 않습니다.,0,sync_status,sync_status_template_5,CLEAR,passive_status,service,SYNTHETIC
+TRAIN_151,업데이트 완료,지도 앱이 최신 버전으로 업데이트되었습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_1,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_152,새 버전 설치,음악 앱 새 버전 설치가 완료되었습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_2,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_153,앱 최적화,메신저 앱 최적화를 완료했습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_3,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_154,업데이트 준비,쇼핑 앱 업데이트가 준비되었습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_4,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_155,설치 완료,게임 앱의 추가 콘텐츠 설치가 끝났습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_5,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_156,업데이트 완료,브라우저 보안 업데이트를 설치했습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_1,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_157,새 버전 설치,사진 편집 앱 업데이트가 완료되었습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_2,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_158,앱 최적화,문서 앱의 새 기능이 설치되었습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_3,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_159,업데이트 준비,날씨 앱 데이터 업데이트가 끝났습니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_4,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_160,설치 완료,동영상 앱이 최신 상태입니다. 앱을 평소처럼 사용할 수 있습니다.,0,app_update,app_update_template_5,CLEAR,routine_app_status,status,SYNTHETIC
+TRAIN_161,새 콘텐츠 추천,취향에 맞는 새로운 영상을 추천합니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_1,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_162,오늘 볼 영상,오늘 듣기 좋은 음악을 모았습니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_2,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_163,추천 플레이리스트,관심 주제의 인기 글을 확인해보세요. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_3,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_164,관심 글 안내,최근 시청한 작품과 비슷한 드라마를 골랐습니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_4,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_165,새 에피소드 추천,이번 주 인기 있는 팟캐스트를 소개합니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_5,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_166,새 콘텐츠 추천,팔로우한 주제의 새 게시물을 추천합니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_1,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_167,오늘 볼 영상,출퇴근할 때 듣기 좋은 재생목록을 준비했습니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_2,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_168,추천 플레이리스트,새로 공개된 예능 영상을 확인해보세요. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_3,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_169,관심 글 안내,많이 읽은 뉴스 모음을 추천합니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_4,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_170,새 에피소드 추천,관심 작가의 다른 작품을 소개합니다. 여유가 있을 때 확인해보세요.,0,content_recommendation,content_recommendation_template_5,CLEAR,recommended_content,recommendation,SYNTHETIC
+TRAIN_171,배송 시작,주문한 상품이 판매처에서 출발했습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_1,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_172,상품 이동 중,택배가 지역 물류센터로 이동 중입니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_2,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_173,택배 접수,보낸 상품이 택배사에 접수되었습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_3,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_174,배송 예정,상품이 내일 배송될 예정입니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_4,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_175,물류센터 도착,택배가 물류센터에 도착했습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_5,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_176,배송 시작,해외 주문 상품이 항공 운송을 시작했습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_1,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_177,상품 이동 중,주문 상품의 포장이 완료되었습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_2,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_178,택배 접수,배송 기사가 상품을 인수했습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_3,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_179,배송 예정,상품이 다음 배송 지점으로 이동했습니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_4,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_180,물류센터 도착,예약 배송 상품이 출고 대기 중입니다. 현재 정상적으로 배송 중입니다.,0,routine_delivery,routine_delivery_template_5,CLEAR,routine_delivery_status,status,SYNTHETIC
+TRAIN_181,포인트 적립,구매 포인트 100점이 적립되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_1,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_182,멤버십 혜택,이번 달 멤버십 혜택을 확인해보세요. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_2,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_183,등급 안내,회원 등급별 쿠폰이 발급되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_3,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_184,스탬프 적립,카페 스탬프가 한 개 적립되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_4,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_185,보너스 포인트,이벤트 참여 보너스 포인트가 지급되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_5,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_186,포인트 적립,출석 포인트가 적립되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_1,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_187,멤버십 혜택,멤버십 등급 유지 혜택을 안내합니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_2,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_188,등급 안내,제휴 매장에서 사용할 수 있는 포인트가 있습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_3,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_189,스탬프 적립,리뷰 작성 포인트가 지급되었습니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_4,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_190,보너스 포인트,이번 주 추가 적립 상품을 소개합니다. 다음 이용 시 사용할 수 있습니다.,0,loyalty_points,loyalty_points_template_5,CLEAR,loyalty_marketing,promo,SYNTHETIC
+TRAIN_191,구독 혜택 안내,프리미엄 요금제를 한 달 무료로 이용해보세요. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_1,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_192,무료 체험 추천,음악 서비스 무료 체험을 시작할 수 있습니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_2,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_193,프리미엄 이용권,광고 없는 이용권을 할인된 가격에 제공합니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_3,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_194,구독 업그레이드,클라우드 저장 공간 업그레이드 혜택을 확인하세요. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_4,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_195,회원 전용 콘텐츠,유료 회원 전용 콘텐츠가 공개되었습니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_5,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_196,구독 혜택 안내,연간 구독 전환 시 추가 할인을 제공합니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_1,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_197,무료 체험 추천,영상 서비스 가족 요금제를 추천합니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_2,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_198,프리미엄 이용권,전자책 무제한 이용권을 체험해보세요. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_3,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_199,구독 업그레이드,배송 구독 회원을 위한 혜택이 준비되었습니다. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_4,CLEAR,subscription_promotion,promo,SYNTHETIC
+TRAIN_200,회원 전용 콘텐츠,운동 앱 프리미엄 기능을 무료로 사용해보세요. 원하면 구독 페이지에서 확인할 수 있습니다.,0,subscription_marketing,subscription_marketing_template_5,CLEAR,subscription_promotion,promo,SYNTHETIC

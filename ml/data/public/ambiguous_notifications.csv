@@ -1,0 +1,51 @@
+id,title,body,label,group,template_group,clarity,reason_code,android_category,source
+AMB_001,새 메시지,친구가 메시지를 보냈습니다.,,personal_message,personal_message_template_1,AMBIGUOUS,relationship_dependent,msg,SYNTHETIC
+AMB_002,답장이 도착했어요,지인이 보낸 새 답장이 있습니다.,,personal_message,personal_message_template_2,AMBIGUOUS,relationship_dependent,msg,SYNTHETIC
+AMB_003,사진을 보냈어요,친구가 사진 한 장을 공유했습니다.,,personal_message,personal_message_template_3,AMBIGUOUS,relationship_dependent,msg,SYNTHETIC
+AMB_004,안부 메시지,오랜만에 연락한 사람이 메시지를 남겼습니다.,,personal_message,personal_message_template_4,AMBIGUOUS,relationship_dependent,msg,SYNTHETIC
+AMB_005,채팅 알림,개인 채팅방에 새 메시지가 있습니다.,,personal_message,personal_message_template_5,AMBIGUOUS,relationship_dependent,msg,SYNTHETIC
+AMB_006,단체 채팅,동아리 채팅방에 새 메시지 3개가 있습니다.,,group_chat,group_chat_template_1,AMBIGUOUS,group_relevance_dependent,msg,SYNTHETIC
+AMB_007,새 대화,가족 채팅방에 새 대화가 올라왔습니다.,,group_chat,group_chat_template_2,AMBIGUOUS,group_relevance_dependent,msg,SYNTHETIC
+AMB_008,팀 채팅,프로젝트 채팅방에서 새 메시지가 왔습니다.,,group_chat,group_chat_template_3,AMBIGUOUS,group_relevance_dependent,msg,SYNTHETIC
+AMB_009,모임 채팅,주말 모임 채팅방에 새 글이 있습니다.,,group_chat,group_chat_template_4,AMBIGUOUS,group_relevance_dependent,msg,SYNTHETIC
+AMB_010,학급 채팅,학급 단체방에 새 메시지가 도착했습니다.,,group_chat,group_chat_template_5,AMBIGUOUS,group_relevance_dependent,msg,SYNTHETIC
+AMB_011,배송 예정,주문한 상품이 오늘 오후 도착할 예정입니다.,,delivery_arrival,delivery_arrival_template_1,AMBIGUOUS,delivery_preference_dependent,status,SYNTHETIC
+AMB_012,배송 완료,상품이 문 앞에 배송되었습니다.,,delivery_arrival,delivery_arrival_template_2,AMBIGUOUS,delivery_preference_dependent,status,SYNTHETIC
+AMB_013,택배 도착,무인 보관함에 택배가 도착했습니다.,,delivery_arrival,delivery_arrival_template_3,AMBIGUOUS,delivery_preference_dependent,status,SYNTHETIC
+AMB_014,배달 출발,주문한 음식이 매장에서 출발했습니다.,,delivery_arrival,delivery_arrival_template_4,AMBIGUOUS,delivery_preference_dependent,status,SYNTHETIC
+AMB_015,수령 안내,편의점 택배를 수령할 수 있습니다.,,delivery_arrival,delivery_arrival_template_5,AMBIGUOUS,delivery_preference_dependent,status,SYNTHETIC
+AMB_016,경기 시작,관심 팀의 경기가 10분 후 시작됩니다.,,hobby_event,hobby_event_template_1,AMBIGUOUS,interest_dependent,event,SYNTHETIC
+AMB_017,방송 시작,구독한 스트리머가 방송을 시작했습니다.,,hobby_event,hobby_event_template_2,AMBIGUOUS,interest_dependent,event,SYNTHETIC
+AMB_018,게임 이벤트,길드전이 오늘 오후 8시에 시작됩니다.,,hobby_event,hobby_event_template_3,AMBIGUOUS,interest_dependent,event,SYNTHETIC
+AMB_019,공연 알림,관심 등록한 온라인 공연이 곧 시작됩니다.,,hobby_event,hobby_event_template_4,AMBIGUOUS,interest_dependent,event,SYNTHETIC
+AMB_020,새 에피소드,구독 중인 웹툰의 새 에피소드가 공개됐습니다.,,hobby_event,hobby_event_template_5,AMBIGUOUS,interest_dependent,event,SYNTHETIC
+AMB_021,새 댓글,작성한 게시물에 댓글이 달렸습니다.,,social_reaction,social_reaction_template_1,AMBIGUOUS,social_preference_dependent,social,SYNTHETIC
+AMB_022,좋아요 알림,사진에 새로운 좋아요가 추가되었습니다.,,social_reaction,social_reaction_template_2,AMBIGUOUS,social_preference_dependent,social,SYNTHETIC
+AMB_023,새 팔로워,새로운 사용자가 회원님을 팔로우합니다.,,social_reaction,social_reaction_template_3,AMBIGUOUS,social_preference_dependent,social,SYNTHETIC
+AMB_024,답글 알림,남긴 댓글에 답글이 등록되었습니다.,,social_reaction,social_reaction_template_4,AMBIGUOUS,social_preference_dependent,social,SYNTHETIC
+AMB_025,게시물 언급,친구가 게시물에서 회원님을 언급했습니다.,,social_reaction,social_reaction_template_5,AMBIGUOUS,social_preference_dependent,social,SYNTHETIC
+AMB_026,학교 공지,이번 주 학교 소식이 등록되었습니다.,,school_notice,school_notice_template_1,AMBIGUOUS,role_dependent,email,SYNTHETIC
+AMB_027,강의 안내,수강 중인 과목에 새 공지가 있습니다.,,school_notice,school_notice_template_2,AMBIGUOUS,role_dependent,email,SYNTHETIC
+AMB_028,동아리 안내,동아리 주간 활동 안내가 올라왔습니다.,,school_notice,school_notice_template_3,AMBIGUOUS,role_dependent,email,SYNTHETIC
+AMB_029,도서관 안내,도서관 운영 시간 변경 안내입니다.,,school_notice,school_notice_template_4,AMBIGUOUS,role_dependent,email,SYNTHETIC
+AMB_030,학사 소식,이번 달 학사 일정이 공개되었습니다.,,school_notice,school_notice_template_5,AMBIGUOUS,role_dependent,email,SYNTHETIC
+AMB_031,새 게시물,가입한 커뮤니티에 새 글이 올라왔습니다.,,community_post,community_post_template_1,AMBIGUOUS,community_interest_dependent,social,SYNTHETIC
+AMB_032,관심 주제,구독한 게시판에 새로운 글이 등록되었습니다.,,community_post,community_post_template_2,AMBIGUOUS,community_interest_dependent,social,SYNTHETIC
+AMB_033,동네 소식,우리 동네 새 소식이 등록되었습니다.,,community_post,community_post_template_3,AMBIGUOUS,community_interest_dependent,social,SYNTHETIC
+AMB_034,질문 답변,관심 질문에 새로운 답변이 달렸습니다.,,community_post,community_post_template_4,AMBIGUOUS,community_interest_dependent,social,SYNTHETIC
+AMB_035,모임 공지,가입한 모임에 새 공지가 등록되었습니다.,,community_post,community_post_template_5,AMBIGUOUS,community_interest_dependent,social,SYNTHETIC
+AMB_036,업무 공지,팀의 주간 업무 공지가 등록되었습니다.,,work_information,work_information_template_1,AMBIGUOUS,job_context_dependent,email,SYNTHETIC
+AMB_037,회의 기록,어제 회의록이 공유되었습니다.,,work_information,work_information_template_2,AMBIGUOUS,job_context_dependent,email,SYNTHETIC
+AMB_038,프로젝트 소식,프로젝트 상태가 업데이트되었습니다.,,work_information,work_information_template_3,AMBIGUOUS,job_context_dependent,email,SYNTHETIC
+AMB_039,사내 소식,새로운 사내 뉴스가 게시되었습니다.,,work_information,work_information_template_4,AMBIGUOUS,job_context_dependent,email,SYNTHETIC
+AMB_040,문서 공유,동료가 참고 문서를 공유했습니다.,,work_information,work_information_template_5,AMBIGUOUS,job_context_dependent,email,SYNTHETIC
+AMB_041,일정 알림,등록한 일정이 한 시간 후 시작됩니다.,,calendar_reminder,calendar_reminder_template_1,AMBIGUOUS,schedule_preference_dependent,event,SYNTHETIC
+AMB_042,생일 알림,오늘은 연락처에 저장된 지인의 생일입니다.,,calendar_reminder,calendar_reminder_template_2,AMBIGUOUS,schedule_preference_dependent,event,SYNTHETIC
+AMB_043,운동 알림,저녁 운동 시간이 되었습니다.,,calendar_reminder,calendar_reminder_template_3,AMBIGUOUS,schedule_preference_dependent,event,SYNTHETIC
+AMB_044,독서 알림,설정한 독서 시간이 시작됩니다.,,calendar_reminder,calendar_reminder_template_4,AMBIGUOUS,schedule_preference_dependent,event,SYNTHETIC
+AMB_045,습관 알림,오늘의 물 마시기 목표를 확인해보세요.,,calendar_reminder,calendar_reminder_template_5,AMBIGUOUS,schedule_preference_dependent,event,SYNTHETIC
+AMB_046,비 예보,오후부터 비가 내릴 가능성이 있습니다.,,weather_context,weather_context_template_1,AMBIGUOUS,location_activity_dependent,status,SYNTHETIC
+AMB_047,미세먼지 안내,현재 미세먼지 농도가 나쁨 수준입니다.,,weather_context,weather_context_template_2,AMBIGUOUS,location_activity_dependent,status,SYNTHETIC
+AMB_048,기온 변화,내일 아침 기온이 오늘보다 낮겠습니다.,,weather_context,weather_context_template_3,AMBIGUOUS,location_activity_dependent,status,SYNTHETIC
+AMB_049,바람 안내,오후에 바람이 강하게 불 수 있습니다.,,weather_context,weather_context_template_4,AMBIGUOUS,location_activity_dependent,status,SYNTHETIC
+AMB_050,자외선 안내,오늘 자외선 지수가 높을 예정입니다.,,weather_context,weather_context_template_5,AMBIGUOUS,location_activity_dependent,status,SYNTHETIC
