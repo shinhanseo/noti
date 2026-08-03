@@ -13,7 +13,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
+import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
+import com.hanseo.noti.data.local.migration.MIGRATION_4_5
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -31,7 +32,8 @@ object DatabaseModule {
             .addMigrations(
                 MIGRATION_1_2,
                 MIGRATION_2_3,
-                MIGRATION_3_4
+                MIGRATION_3_4,
+                MIGRATION_4_5
             )
             .build()
     }
@@ -41,6 +43,13 @@ object DatabaseModule {
         database: NotiDatabase
     ): NotificationDao {
         return database.notificationDao()
+    }
+
+    @Provides
+    fun provideNotificationFeedbackDao(
+        database: NotiDatabase
+    ): NotificationFeedbackDao {
+        return database.notificationFeedbackDao()
     }
 
     private const val DATABASE_NAME = "noti.db"

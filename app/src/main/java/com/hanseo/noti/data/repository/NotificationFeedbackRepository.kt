@@ -1,0 +1,100 @@
+package com.hanseo.noti.data.repository
+
+import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
+import com.hanseo.noti.data.local.entity.NotificationFeedbackEntity
+import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.model.ClassifiedNotification
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class NotificationFeedbackRepository @Inject constructor(
+    private val feedbackDao: NotificationFeedbackDao
+) {
+
+    suspend fun save(
+        classifiedNotification: ClassifiedNotification,
+        label: FeedbackLabel,
+        feedbackAt: Long = System.currentTimeMillis()
+    ) {
+        val notification =
+            classifiedNotification.notification
+
+        val importance =
+            classifiedNotification.importance
+
+        val feedbackEntity =
+            NotificationFeedbackEntity(
+                notificationKey =
+                    notification.key,
+
+                userLabel =
+                    label.name,
+
+                originalLevel =
+                    importance.level.name,
+
+                originalScore =
+                    importance.score,
+
+                policyVersion =
+                    importance.policyVersion,
+
+                feedbackAt =
+                    feedbackAt
+            )
+
+        feedbackDao.upsert(
+            feedback = feedbackEntity
+        )
+    }
+
+    fun observeAllLabels():
+            Flow<Map<String, FeedbackLabel>> {
+
+        return feedbackDao
+            .observeAll()
+            .map { feedbackEntities ->
+                feedbackEntities.mapNotNull { entity ->
+                    val label =
+                        FeedbackLabel.entries
+                            .firstOrNull { label ->
+                                label.name ==
+                                        entity.userLabel
+                            }
+                            ?: return@mapNotNull null
+
+                    entity.notificationKey to label
+                }.toMap()
+            }
+    }
+
+    fun observeLabel(
+        notificationKey: String
+    ): Flow<FeedbackLabel?> {
+
+        return feedbackDao
+            .observeByNotificationKey(
+                notificationKey = notificationKey
+            )
+            .map { entity ->
+                entity?.let {
+                    FeedbackLabel.entries
+                        .firstOrNull { label ->
+                            label.name ==
+                                    it.userLabel
+                        }
+                }
+            }
+    }
+
+    suspend fun delete(
+        notificationKey: String
+    ) {
+        feedbackDao.deleteByNotificationKey(
+            notificationKey = notificationKey
+        )
+    }
+}

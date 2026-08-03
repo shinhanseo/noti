@@ -92,3 +92,26 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
         )
     }
 }
+
+val MIGRATION_4_5 = object : Migration(4, 5) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS notification_feedback (
+                notification_key TEXT NOT NULL,
+                user_label TEXT NOT NULL,
+                original_level TEXT NOT NULL,
+                original_score INTEGER NOT NULL,
+                policy_version TEXT NOT NULL,
+                feedback_at INTEGER NOT NULL,
+                PRIMARY KEY(notification_key),
+                FOREIGN KEY(notification_key)
+                    REFERENCES notifications(notification_key)
+                    ON UPDATE NO ACTION
+                    ON DELETE CASCADE
+            )
+            """.trimIndent()
+        )
+    }
+}
