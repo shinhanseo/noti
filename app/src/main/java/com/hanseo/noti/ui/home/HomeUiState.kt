@@ -1,8 +1,10 @@
 package com.hanseo.noti.ui.home
 
+import com.hanseo.noti.ui.model.NotificationUiModel
+
 data class HomeUiState(
     val importantNotifications:
-    List<HomeNotificationUiModel> = emptyList(),
+    List<NotificationUiModel> = emptyList(),
 
     val todayTotalNotificationCount: Int = 0,
 

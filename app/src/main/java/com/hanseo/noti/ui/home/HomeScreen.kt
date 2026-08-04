@@ -62,6 +62,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import com.hanseo.noti.domain.model.ClassifiedNotification
+import com.hanseo.noti.ui.model.NotificationUiModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -671,7 +672,7 @@ private fun SwipeableNotificationCard(
 
 @Composable
 private fun NotificationCard(
-    notificationUiModel: HomeNotificationUiModel,
+    notificationUiModel: NotificationUiModel,
     isExpanded: Boolean,
     onCardClick: () -> Unit,
     onReasonClick: () -> Unit,

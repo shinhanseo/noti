@@ -1,5 +1,7 @@
 package com.hanseo.noti.ui.home
 
+import com.hanseo.noti.ui.model.NotificationUiModel
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +38,7 @@ import com.hanseo.noti.domain.importance.ImportanceReasonType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImportanceReasonBottomSheet(
-    notificationUiModel: HomeNotificationUiModel,
+    notificationUiModel: NotificationUiModel,
     onDismiss: () -> Unit,
     onLessImportantClick: () -> Unit,
     onEditCriteriaClick: () -> Unit,
@@ -188,7 +190,7 @@ fun ImportanceReasonBottomSheet(
 
 @Composable
 private fun NotificationSummary(
-    notificationUiModel: HomeNotificationUiModel,
+    notificationUiModel: NotificationUiModel,
     modifier: Modifier = Modifier
 ) {
     val notification =
@@ -252,7 +254,7 @@ private fun NotificationSummary(
 
 @Composable
 private fun BottomSheetAppIcon(
-    notificationUiModel: HomeNotificationUiModel,
+    notificationUiModel: NotificationUiModel,
     modifier: Modifier = Modifier
 ) {
     val appIcon = notificationUiModel.appIcon

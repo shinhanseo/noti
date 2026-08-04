@@ -8,6 +8,7 @@ import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.domain.feedback.FeedbackLabel
 import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.model.ClassifiedNotification
+import com.hanseo.noti.ui.model.NotificationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -121,7 +122,7 @@ class HomeViewModel @Inject constructor(
                         val installedApp =
                             appsByPackage[packageName]
 
-                        HomeNotificationUiModel(
+                        NotificationUiModel(
                             classifiedNotification =
                                 classifiedNotification,
 
