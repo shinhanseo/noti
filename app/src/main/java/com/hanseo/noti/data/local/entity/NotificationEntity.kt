@@ -37,6 +37,12 @@ data class NotificationEntity(
     )
     val removedAt: Long? = null,
 
+    @ColumnInfo(
+        name = "read_at",
+        defaultValue = "NULL"
+    )
+    val readAt: Long? = null,
+
     @ColumnInfo(name = "importance_score")
     val importanceScore: Int? = null,
 

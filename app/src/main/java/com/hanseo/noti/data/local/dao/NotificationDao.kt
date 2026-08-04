@@ -89,6 +89,46 @@ interface NotificationDao {
 
     @Query(
         """
+    UPDATE notifications
+    SET read_at = :readAt
+    WHERE notification_key = :notificationKey
+      AND read_at IS NULL
+    """
+    )
+    suspend fun markAsRead(
+        notificationKey: String,
+        readAt: Long
+    ): Int
+
+    @Query(
+        """
+    UPDATE notifications
+    SET read_at = NULL
+    WHERE notification_key = :notificationKey
+      AND read_at IS NOT NULL
+    """
+    )
+    suspend fun markAsUnread(
+        notificationKey: String
+    ): Int
+
+    @Query(
+        """
+    UPDATE notifications
+    SET read_at = :readAt
+    WHERE posted_at >= :startMillis
+      AND posted_at < :endMillis
+      AND read_at IS NULL
+    """
+    )
+    suspend fun markAllAsReadBetween(
+        startMillis: Long,
+        endMillis: Long,
+        readAt: Long
+    ): Int
+
+    @Query(
+        """
     DELETE FROM notifications
     WHERE is_removed = 1
       AND removed_at IS NOT NULL

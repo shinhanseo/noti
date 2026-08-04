@@ -54,6 +54,40 @@ class NotificationRepository @Inject constructor(
         return updatedRowCount > 0
     }
 
+    suspend fun markAsRead(
+        notificationKey: String,
+        readAt: Long = System.currentTimeMillis()
+    ): Boolean {
+        val updatedRowCount = notificationDao.markAsRead(
+            notificationKey = notificationKey,
+            readAt = readAt
+        )
+
+        return updatedRowCount > 0
+    }
+
+    suspend fun markAsUnread(
+        notificationKey: String
+    ): Boolean {
+        val updatedRowCount = notificationDao.markAsUnread(
+            notificationKey = notificationKey
+        )
+
+        return updatedRowCount > 0
+    }
+
+    suspend fun markAllAsReadBetween(
+        startMillis: Long,
+        endMillis: Long,
+        readAt: Long = System.currentTimeMillis()
+    ): Int {
+        return notificationDao.markAllAsReadBetween(
+            startMillis = startMillis,
+            endMillis = endMillis,
+            readAt = readAt
+        )
+    }
+
     suspend fun deleteRemovedBefore(
         cutoffTime: Long
     ): Int {

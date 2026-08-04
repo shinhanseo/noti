@@ -15,6 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
 import com.hanseo.noti.data.local.migration.MIGRATION_4_5
+import com.hanseo.noti.data.local.migration.MIGRATION_5_6
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
@@ -33,7 +34,8 @@ object DatabaseModule {
                 MIGRATION_1_2,
                 MIGRATION_2_3,
                 MIGRATION_3_4,
-                MIGRATION_4_5
+                MIGRATION_4_5,
+                MIGRATION_5_6
             )
             .build()
     }

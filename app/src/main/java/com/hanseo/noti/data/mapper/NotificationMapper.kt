@@ -21,7 +21,8 @@ fun NotificationEntity.toDomain(): NotificationItem {
         isOngoing = isOngoing,
         isGroupSummary = false,
         isRemoved = isRemoved,
-        removedAt = removedAt
+        removedAt = removedAt,
+        readAt = readAt
     )
 }
 
@@ -36,6 +37,7 @@ fun ClassifiedNotification.toEntity(): NotificationEntity {
         isOngoing = notification.isOngoing,
         isRemoved = notification.isRemoved,
         removedAt = notification.removedAt,
+        readAt = notification.readAt,
 
         importanceScore = importance.score,
         importanceLevel = importance.level.name,

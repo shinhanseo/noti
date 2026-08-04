@@ -10,6 +10,6 @@ data class NotificationItem(
     val isOngoing: Boolean, // 다운로드 음악 재생처럼 계속 유지되는 알람인지 여부
     val isGroupSummary: Boolean, // 여러 알림을 묶어 보여주는 대표 알림인지 여부
     val isRemoved: Boolean = false, // Soft Delete
-    val removedAt: Long? = null // 삭제 시각
+    val removedAt: Long? = null, // 삭제 시각
+    val readAt: Long? = null // noti 앱에서 확인한 시각
 )
-
