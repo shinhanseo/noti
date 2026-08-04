@@ -72,7 +72,9 @@ private fun NotificationsRoute(
         onFilterSelected =
             viewModel::onFilterSelected,
         onMarkAsRead =
-            viewModel::markAsRead
+            viewModel::markAsRead,
+        onMarkAllAsRead =
+            viewModel::markAllAsRead
     )
 }
 

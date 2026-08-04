@@ -26,6 +26,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +53,7 @@ fun NotificationsScreen(
     uiState: NotificationsUiState,
     onFilterSelected: (NotificationFilter) -> Unit,
     onMarkAsRead: (String) -> Unit,
+    onMarkAllAsRead: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expandedNotificationKey by rememberSaveable {
@@ -116,6 +118,8 @@ fun NotificationsScreen(
                         selectedReasonNotificationKey =
                             notificationKey
                     },
+                onMarkAllAsRead =
+                    onMarkAllAsRead,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -239,6 +243,7 @@ private fun NotificationList(
     expandedNotificationKey: String?,
     onNotificationClick: (String) -> Unit,
     onReasonClick: (String) -> Unit,
+    onMarkAllAsRead: (LocalDate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val listEntries = remember(notifications) {
@@ -264,7 +269,12 @@ private fun NotificationList(
             when (entry) {
                 is NotificationListEntry.DateHeader -> {
                     DateSectionHeader(
-                        date = entry.date
+                        date = entry.date,
+                        hasUnreadNotifications =
+                            entry.hasUnreadNotifications,
+                        onMarkAllAsRead = {
+                            onMarkAllAsRead(entry.date)
+                        }
                     )
                 }
 
@@ -300,6 +310,8 @@ private fun NotificationList(
 @Composable
 private fun DateSectionHeader(
     date: LocalDate,
+    hasUnreadNotifications: Boolean,
+    onMarkAllAsRead: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val today = LocalDate.now()
@@ -318,16 +330,39 @@ private fun DateSectionHeader(
         }
     }
 
-    Text(
-        text = label,
-        modifier = modifier.padding(
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
             top = 8.dp,
             bottom = 2.dp
         ),
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
-    )
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        if (hasUnreadNotifications) {
+            TextButton(
+                onClick = onMarkAllAsRead,
+                contentPadding = PaddingValues(
+                    horizontal = 8.dp,
+                    vertical = 4.dp
+                )
+            ) {
+                Text(
+                    text = "모두 읽음",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -625,37 +660,48 @@ private fun buildNotificationListEntries(
     notifications: List<NotificationUiModel>,
     zoneId: ZoneId
 ): List<NotificationListEntry> {
-    return buildList {
-        var previousDate: LocalDate? = null
-
-        notifications.forEach { notificationUiModel ->
+    val notificationsByDate =
+        notifications.groupBy { notificationUiModel ->
             val notification =
                 notificationUiModel
                     .classifiedNotification
                     .notification
 
-            val postedDate =
-                Instant
-                    .ofEpochMilli(notification.postedAt)
-                    .atZone(zoneId)
-                    .toLocalDate()
+            Instant
+                .ofEpochMilli(notification.postedAt)
+                .atZone(zoneId)
+                .toLocalDate()
+        }
 
-            if (postedDate != previousDate) {
-                add(
-                    NotificationListEntry.DateHeader(
-                        date = postedDate
-                    )
-                )
-
-                previousDate = postedDate
-            }
+    return buildList {
+        notificationsByDate.forEach {
+                (date, notificationsForDate) ->
 
             add(
-                NotificationListEntry.Notification(
-                    notificationUiModel =
-                        notificationUiModel
+                NotificationListEntry.DateHeader(
+                    date = date,
+                    hasUnreadNotifications =
+                        notificationsForDate.any {
+                                notificationUiModel ->
+
+                            notificationUiModel
+                                .classifiedNotification
+                                .notification
+                                .readAt == null
+                        }
                 )
             )
+
+            notificationsForDate.forEach {
+                    notificationUiModel ->
+
+                add(
+                    NotificationListEntry.Notification(
+                        notificationUiModel =
+                            notificationUiModel
+                    )
+                )
+            }
         }
     }
 }
@@ -664,7 +710,8 @@ private sealed interface NotificationListEntry {
     val key: String
 
     data class DateHeader(
-        val date: LocalDate
+        val date: LocalDate,
+        val hasUnreadNotifications: Boolean
     ) : NotificationListEntry {
         override val key: String =
             "date-${date.toEpochDay()}"

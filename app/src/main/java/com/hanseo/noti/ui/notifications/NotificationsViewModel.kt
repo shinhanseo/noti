@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -180,6 +182,30 @@ class NotificationsViewModel @Inject constructor(
         viewModelScope.launch {
             notificationRepository.markAsRead(
                 notificationKey = notificationKey
+            )
+        }
+    }
+
+    fun markAllAsRead(date: LocalDate) {
+        viewModelScope.launch {
+            val zoneId = ZoneId.systemDefault()
+
+            val startMillis =
+                date
+                    .atStartOfDay(zoneId)
+                    .toInstant()
+                    .toEpochMilli()
+
+            val endMillis =
+                date
+                    .plusDays(1)
+                    .atStartOfDay(zoneId)
+                    .toInstant()
+                    .toEpochMilli()
+
+            notificationRepository.markAllAsReadBetween(
+                startMillis = startMillis,
+                endMillis = endMillis
             )
         }
     }
