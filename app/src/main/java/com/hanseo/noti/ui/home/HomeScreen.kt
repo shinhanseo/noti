@@ -45,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
@@ -620,8 +621,25 @@ private fun SwipeableNotificationCard(
             SwipeToDismissBoxValue.EndToStart
         ) {
             onMarkAsRead()
+
+            dismissState.snapTo(
+                SwipeToDismissBoxValue.Settled
+            )
         }
     }
+
+    val swipeBackgroundColor by animateColorAsState(
+        targetValue =
+            if (
+                dismissState.dismissDirection ==
+                SwipeToDismissBoxValue.EndToStart
+            ) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                Color.Transparent
+            },
+        label = "swipeBackgroundColor"
+    )
 
     SwipeToDismissBox(
         state = dismissState,
@@ -633,7 +651,7 @@ private fun SwipeableNotificationCard(
                     .fillMaxSize()
                     .clip(RoundedCornerShape(20.dp))
                     .background(
-                        MaterialTheme.colorScheme.primary
+                        swipeBackgroundColor
                     )
                     .padding(horizontal = 20.dp),
                 contentAlignment = Alignment.CenterEnd
