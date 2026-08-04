@@ -23,6 +23,8 @@ v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/datas
 python src/generate_dataset_v02.py
 python src/validate_dataset_v02.py
 python src/train_baseline.py
+python src/analyze_baseline_errors.py
+python src/evaluate_stability.py
 ```
 
 생성 파일:
@@ -33,6 +35,12 @@ python src/train_baseline.py
 검토용 워크북은 `reports/outputs/v0.2/dataset_v0.2_review.xlsx`에 생성되어 있다. 원본 CSV가 학습 데이터의 기준이다.
 
 `train_baseline.py`는 `clarity=CLEAR`이면서 `model_eligible=true`인 REVIEW 데이터만 사용하고, 같은 `template_group`이 학습과 평가에 겹치지 않는 5-Fold 교차 검증을 수행한다.
+
+`analyze_baseline_errors.py`는 동일한 교차 검증의 오분류를 Fold, 문장 템플릿, 알림 유형, 앱별로 분해하고 `reports/v0.2_error_analysis.md`를 생성한다.
+
+`evaluate_stability.py`는 같은 모델을 20개의 `random_state`로 반복 평가하고 `reports/v0.2_stability_evaluation.md`를 생성한다. 현재 평균 정확도는 91.7%, 반복별 표준편차는 0.026, 범위는 83.3%~95.0%다.
+
+일정형 문장을 중요·일반 라벨별 2개에서 5개 구조로 확장한 뒤, 동일한 모델의 정확도는 76.7%에서 87.9%로 상승했고 오분류는 56개에서 29개로 감소했다. 합성 데이터 안에서의 비교 결과이므로 실제 알림에 대한 성능으로 해석하지 않는다.
 
 ## 예정 구조
 

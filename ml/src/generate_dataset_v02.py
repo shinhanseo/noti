@@ -281,10 +281,7 @@ def promote_body(subject: str, scenario: int, variant: int) -> str:
             f"{subject} 처리가 정상적으로 완료되지 않았습니다.",
             f"{subject} 처리 중 문제가 발생했습니다.",
         ),
-        (
-            f"{subject}: 오늘 오후 6시로 변경되었습니다.",
-            f"{subject}: 예정 시간이 내일 오전 9시로 바뀌었습니다.",
-        ),
+        ("", ""),
         (
             f"확인이 필요합니다: {subject}",
             f"{subject} 관련 확인이 필요합니다.",
@@ -299,10 +296,7 @@ def keep_body(subject: str, scenario: int, variant: int) -> str:
             f"{subject}: 이번 주 요약이 도착했습니다.",
             f"{subject} 세부 내용을 확인해주세요.",
         ),
-        (
-            f"{subject} 관련 새 내용이 오늘 오후 3시에 공개됩니다.",
-            f"{subject} 관련 내용이 내일 오전 10시에 업데이트됩니다.",
-        ),
+        ("", ""),
         (
             f"{subject} 참여 요청이 도착했습니다.",
             f"{subject} 관련 의견을 남겨주세요.",
@@ -311,11 +305,33 @@ def keep_body(subject: str, scenario: int, variant: int) -> str:
     return bodies[scenario][variant]
 
 
+def promote_schedule_body(subject: str, pattern: int) -> str:
+    bodies = (
+        f"{subject}: 오늘 오후 6시로 변경되었습니다.",
+        f"{subject}: 내일 오전 9시로 변경되었습니다.",
+        f"{subject} 변경 안내입니다. 기존 일정과 달라졌습니다.",
+        f"{subject}: 기존 시간이 취소되고 새 시간이 등록되었습니다.",
+        f"{subject}: 예정보다 2시간 앞당겨졌습니다.",
+    )
+    return bodies[pattern]
+
+
+def optional_schedule_body(subject: str, pattern: int) -> str:
+    bodies = (
+        f"{subject} 관련 새 내용이 오늘 오후 3시에 공개됩니다.",
+        f"{subject} 관련 내용이 내일 오전 10시에 업데이트됩니다.",
+        f"관심 등록한 {subject} 소식이 이번 주 공개될 예정입니다.",
+        f"{subject} 공개 시간이 정해졌습니다.",
+        f"{subject} 관련 알림이 곧 시작됩니다.",
+    )
+    return bodies[pattern]
+
+
 def build_train_rows() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     row_number = 1
 
-    for app in APP_PROFILES:
+    for app_index, app in enumerate(APP_PROFILES):
         for scenario, subject in enumerate(app.critical):
             for variant in range(2):
                 titles = (app.name, f"{subject} 안내")
@@ -327,17 +343,23 @@ def build_train_rows() -> list[dict[str, object]]:
                     "concrete_user_confirmation",
                 )
 
+                if scenario == 1:
+                    pattern = (app_index * 2 + variant) % 5
+                    body = promote_schedule_body(subject, pattern)
+                    template_group = f"eligible_promote_schedule_{pattern}"
+                else:
+                    body = promote_body(subject, scenario, variant)
+                    template_group = f"eligible_promote_{scenario}_{variant}"
+
                 rows.append(
                     create_row(
                         row_id=f"V02_TRAIN_{row_number:03d}",
                         app=app,
                         title=titles[variant],
-                        body=promote_body(subject, scenario, variant),
+                        body=body,
                         label=1,
                         notification_type=types[scenario],
-                        template_group=(
-                            f"eligible_promote_{scenario}_{variant}"
-                        ),
+                        template_group=template_group,
                         clarity="CLEAR",
                         reason_code=reasons[scenario],
                         android_category="msg",
@@ -356,15 +378,23 @@ def build_train_rows() -> list[dict[str, object]]:
                     "optional_participation_request",
                 )
 
+                if scenario == 1:
+                    pattern = (app_index * 2 + variant) % 5
+                    body = optional_schedule_body(subject, pattern)
+                    template_group = f"eligible_keep_schedule_{pattern}"
+                else:
+                    body = keep_body(subject, scenario, variant)
+                    template_group = f"eligible_keep_{scenario}_{variant}"
+
                 rows.append(
                     create_row(
                         row_id=f"V02_TRAIN_{row_number:03d}",
                         app=app,
                         title=titles[variant],
-                        body=keep_body(subject, scenario, variant),
+                        body=body,
                         label=0,
                         notification_type=types[scenario],
-                        template_group=f"eligible_keep_{scenario}_{variant}",
+                        template_group=template_group,
                         clarity="CLEAR",
                         reason_code=reasons[scenario],
                         android_category=(

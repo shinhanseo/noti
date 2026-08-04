@@ -52,7 +52,7 @@ def create_model() -> LogisticRegression:
     )
 
 
-def main() -> None:
+def load_training_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     all_data = pd.read_csv(DATA_PATH)
 
     model_eligible = (
@@ -69,6 +69,12 @@ def main() -> None:
 
     data["text"] = make_text(data)
     data = data.reset_index(drop=True)
+
+    return all_data, data
+
+
+def main() -> None:
+    all_data, data = load_training_data()
 
     print("v0.2 전체 학습·대조 데이터")
     print(all_data.shape)

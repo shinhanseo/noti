@@ -1,14 +1,14 @@
 ﻿id,app_name,package_name,title,body,label,notification_type,template_group,clarity,reason_code,android_category,is_ongoing,rule_score,rule_level,forced,model_eligible,source,dataset_version
 V02_TRAIN_001,토스,synthetic.kr.toss,토스,자동이체 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_002,토스,synthetic.kr.toss,자동이체 안내,자동이체 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_003,토스,synthetic.kr.toss,토스,카드대금 출금: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_004,토스,synthetic.kr.toss,카드대금 출금 안내,카드대금 출금: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_003,토스,synthetic.kr.toss,토스,카드대금 출금: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_004,토스,synthetic.kr.toss,카드대금 출금 안내,카드대금 출금: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_005,토스,synthetic.kr.toss,토스,확인이 필요합니다: 송금 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_006,토스,synthetic.kr.toss,송금 정보 안내,송금 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_007,토스,synthetic.kr.toss,토스,주간 소비 리포트: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_008,토스,synthetic.kr.toss,주간 소비 리포트 안내,주간 소비 리포트 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_009,토스,synthetic.kr.toss,토스,자산 현황 보기 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_010,토스,synthetic.kr.toss,자산 현황 보기 안내,자산 현황 보기 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_009,토스,synthetic.kr.toss,토스,자산 현황 보기 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_010,토스,synthetic.kr.toss,자산 현황 보기 안내,자산 현황 보기 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_011,토스,synthetic.kr.toss,토스,서비스 만족도 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_012,토스,synthetic.kr.toss,서비스 만족도 안내,서비스 만족도 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_013,토스,synthetic.kr.toss,긴급 확인,자동이체 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -17,14 +17,14 @@ V02_TRAIN_015,토스,synthetic.kr.toss,(광고) 오늘의 혜택,"첫 결제 캐
 V02_TRAIN_016,토스,synthetic.kr.toss,업데이트 완료,주간 소비 리포트 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_017,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,계좌이체 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_018,카카오뱅크,synthetic.kr.kakaobank,계좌이체 안내,계좌이체 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_019,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,대출이자 납부: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_020,카카오뱅크,synthetic.kr.kakaobank,대출이자 납부 안내,대출이자 납부: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_019,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,대출이자 납부 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_020,카카오뱅크,synthetic.kr.kakaobank,대출이자 납부 안내,대출이자 납부: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_021,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,확인이 필요합니다: 받는 계좌 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_022,카카오뱅크,synthetic.kr.kakaobank,받는 계좌 정보 안내,받는 계좌 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_023,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,이번 달 자산 리포트: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_024,카카오뱅크,synthetic.kr.kakaobank,이번 달 자산 리포트 안내,이번 달 자산 리포트 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_025,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,저금통 현황 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_026,카카오뱅크,synthetic.kr.kakaobank,저금통 현황 안내,저금통 현황 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_025,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,관심 등록한 저금통 현황 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_026,카카오뱅크,synthetic.kr.kakaobank,저금통 현황 안내,저금통 현황 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_027,카카오뱅크,synthetic.kr.kakaobank,카카오뱅크,앱 이용 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_028,카카오뱅크,synthetic.kr.kakaobank,앱 이용 설문 안내,앱 이용 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_029,카카오뱅크,synthetic.kr.kakaobank,긴급 확인,계좌이체 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -33,14 +33,14 @@ V02_TRAIN_031,카카오뱅크,synthetic.kr.kakaobank,(광고) 오늘의 혜택,"
 V02_TRAIN_032,카카오뱅크,synthetic.kr.kakaobank,업데이트 완료,이번 달 자산 리포트 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_033,삼성카드,synthetic.kr.samsungcard,삼성카드,해외 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_034,삼성카드,synthetic.kr.samsungcard,해외 결제 안내,해외 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_035,삼성카드,synthetic.kr.samsungcard,삼성카드,카드대금 납부: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_036,삼성카드,synthetic.kr.samsungcard,카드대금 납부 안내,카드대금 납부: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_035,삼성카드,synthetic.kr.samsungcard,삼성카드,카드대금 납부: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_036,삼성카드,synthetic.kr.samsungcard,카드대금 납부 안내,카드대금 납부: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_037,삼성카드,synthetic.kr.samsungcard,삼성카드,확인이 필요합니다: 결제 수단 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_038,삼성카드,synthetic.kr.samsungcard,결제 수단 정보 안내,결제 수단 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_039,삼성카드,synthetic.kr.samsungcard,삼성카드,이번 달 이용 내역: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_040,삼성카드,synthetic.kr.samsungcard,이번 달 이용 내역 안내,이번 달 이용 내역 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_041,삼성카드,synthetic.kr.samsungcard,삼성카드,카드 혜택 캘린더 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_042,삼성카드,synthetic.kr.samsungcard,카드 혜택 캘린더 안내,카드 혜택 캘린더 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_041,삼성카드,synthetic.kr.samsungcard,삼성카드,카드 혜택 캘린더 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_042,삼성카드,synthetic.kr.samsungcard,카드 혜택 캘린더 안내,카드 혜택 캘린더 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_043,삼성카드,synthetic.kr.samsungcard,삼성카드,서비스 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_044,삼성카드,synthetic.kr.samsungcard,서비스 설문 안내,서비스 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_045,삼성카드,synthetic.kr.samsungcard,긴급 확인,해외 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -49,14 +49,14 @@ V02_TRAIN_047,삼성카드,synthetic.kr.samsungcard,(광고) 오늘의 혜택,"�
 V02_TRAIN_048,삼성카드,synthetic.kr.samsungcard,업데이트 완료,이번 달 이용 내역 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_049,네이버페이,synthetic.kr.naverpay,네이버페이,간편결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_050,네이버페이,synthetic.kr.naverpay,간편결제 안내,간편결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_051,네이버페이,synthetic.kr.naverpay,네이버페이,후불결제 납부: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_052,네이버페이,synthetic.kr.naverpay,후불결제 납부 안내,후불결제 납부: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_051,네이버페이,synthetic.kr.naverpay,네이버페이,후불결제 납부: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_052,네이버페이,synthetic.kr.naverpay,후불결제 납부 안내,후불결제 납부 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_053,네이버페이,synthetic.kr.naverpay,네이버페이,확인이 필요합니다: 환불 계좌 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_054,네이버페이,synthetic.kr.naverpay,환불 계좌 정보 안내,환불 계좌 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_055,네이버페이,synthetic.kr.naverpay,네이버페이,포인트 사용 리포트: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_056,네이버페이,synthetic.kr.naverpay,포인트 사용 리포트 안내,포인트 사용 리포트 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_057,네이버페이,synthetic.kr.naverpay,네이버페이,멤버십 캘린더 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_058,네이버페이,synthetic.kr.naverpay,멤버십 캘린더 안내,멤버십 캘린더 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_057,네이버페이,synthetic.kr.naverpay,네이버페이,멤버십 캘린더 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_058,네이버페이,synthetic.kr.naverpay,멤버십 캘린더 안내,관심 등록한 멤버십 캘린더 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_059,네이버페이,synthetic.kr.naverpay,네이버페이,결제 서비스 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_060,네이버페이,synthetic.kr.naverpay,결제 서비스 설문 안내,결제 서비스 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_061,네이버페이,synthetic.kr.naverpay,긴급 확인,간편결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -65,14 +65,14 @@ V02_TRAIN_063,네이버페이,synthetic.kr.naverpay,(광고) 오늘의 혜택,"�
 V02_TRAIN_064,네이버페이,synthetic.kr.naverpay,업데이트 완료,포인트 사용 리포트 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_065,쿠팡,synthetic.kr.coupang,쿠팡,상품 주문 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_066,쿠팡,synthetic.kr.coupang,상품 주문 결제 안내,상품 주문 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_067,쿠팡,synthetic.kr.coupang,쿠팡,배송 예정일: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_068,쿠팡,synthetic.kr.coupang,배송 예정일 안내,배송 예정일: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_067,쿠팡,synthetic.kr.coupang,쿠팡,배송 예정일: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_068,쿠팡,synthetic.kr.coupang,배송 예정일 안내,배송 예정일: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_069,쿠팡,synthetic.kr.coupang,쿠팡,확인이 필요합니다: 반품 수거 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_070,쿠팡,synthetic.kr.coupang,반품 수거 정보 안내,반품 수거 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_071,쿠팡,synthetic.kr.coupang,쿠팡,최근 본 상품 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_072,쿠팡,synthetic.kr.coupang,최근 본 상품 요약 안내,최근 본 상품 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_073,쿠팡,synthetic.kr.coupang,쿠팡,장바구니 알림 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_074,쿠팡,synthetic.kr.coupang,장바구니 알림 안내,장바구니 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_073,쿠팡,synthetic.kr.coupang,쿠팡,장바구니 알림 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_074,쿠팡,synthetic.kr.coupang,장바구니 알림 안내,장바구니 알림 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_075,쿠팡,synthetic.kr.coupang,쿠팡,쇼핑 경험 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_076,쿠팡,synthetic.kr.coupang,쇼핑 경험 설문 안내,쇼핑 경험 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_077,쿠팡,synthetic.kr.coupang,긴급 확인,상품 주문 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -81,14 +81,14 @@ V02_TRAIN_079,쿠팡,synthetic.kr.coupang,(광고) 오늘의 혜택,"와우회�
 V02_TRAIN_080,쿠팡,synthetic.kr.coupang,업데이트 완료,최근 본 상품 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_081,오늘의집,synthetic.kr.ohou,오늘의집,가구 주문 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_082,오늘의집,synthetic.kr.ohou,가구 주문 결제 안내,가구 주문 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_083,오늘의집,synthetic.kr.ohou,오늘의집,설치 배송일: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_084,오늘의집,synthetic.kr.ohou,설치 배송일 안내,설치 배송일: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_083,오늘의집,synthetic.kr.ohou,오늘의집,설치 배송일: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_084,오늘의집,synthetic.kr.ohou,설치 배송일 안내,설치 배송일: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_085,오늘의집,synthetic.kr.ohou,오늘의집,확인이 필요합니다: 교환 수거 주소,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_086,오늘의집,synthetic.kr.ohou,교환 수거 주소 안내,교환 수거 주소 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_087,오늘의집,synthetic.kr.ohou,오늘의집,집들이 콘텐츠 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_088,오늘의집,synthetic.kr.ohou,집들이 콘텐츠 요약 안내,집들이 콘텐츠 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_089,오늘의집,synthetic.kr.ohou,오늘의집,관심 상품 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_090,오늘의집,synthetic.kr.ohou,관심 상품 일정 안내,관심 상품 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_089,오늘의집,synthetic.kr.ohou,오늘의집,관심 상품 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_090,오늘의집,synthetic.kr.ohou,관심 상품 일정 안내,관심 상품 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_091,오늘의집,synthetic.kr.ohou,오늘의집,인테리어 취향 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_092,오늘의집,synthetic.kr.ohou,인테리어 취향 설문 안내,인테리어 취향 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_093,오늘의집,synthetic.kr.ohou,긴급 확인,가구 주문 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -97,14 +97,14 @@ V02_TRAIN_095,오늘의집,synthetic.kr.ohou,(광고) 오늘의 혜택,"인기 �
 V02_TRAIN_096,오늘의집,synthetic.kr.ohou,업데이트 완료,집들이 콘텐츠 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_097,당근,synthetic.kr.daangn,당근,송금 처리 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_098,당근,synthetic.kr.daangn,송금 처리 안내,송금 처리 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_099,당근,synthetic.kr.daangn,당근,거래 약속 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_100,당근,synthetic.kr.daangn,거래 약속 시간 안내,거래 약속 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_099,당근,synthetic.kr.daangn,당근,거래 약속 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_100,당근,synthetic.kr.daangn,거래 약속 시간 안내,거래 약속 시간: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_101,당근,synthetic.kr.daangn,당근,확인이 필요합니다: 거래 장소 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_102,당근,synthetic.kr.daangn,거래 장소 정보 안내,거래 장소 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_103,당근,synthetic.kr.daangn,당근,동네 활동 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_104,당근,synthetic.kr.daangn,동네 활동 요약 안내,동네 활동 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_105,당근,synthetic.kr.daangn,당근,관심 물품 알림 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_106,당근,synthetic.kr.daangn,관심 물품 알림 안내,관심 물품 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_105,당근,synthetic.kr.daangn,당근,관심 등록한 관심 물품 알림 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_106,당근,synthetic.kr.daangn,관심 물품 알림 안내,관심 물품 알림 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_107,당근,synthetic.kr.daangn,당근,거래 경험 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_108,당근,synthetic.kr.daangn,거래 경험 설문 안내,거래 경험 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_109,당근,synthetic.kr.daangn,긴급 확인,송금 처리 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -113,14 +113,14 @@ V02_TRAIN_111,당근,synthetic.kr.daangn,(광고) 오늘의 혜택,"동네 가�
 V02_TRAIN_112,당근,synthetic.kr.daangn,업데이트 완료,동네 활동 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_113,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,배송지 확인 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_114,CJ대한통운,synthetic.kr.cjlogistics,배송지 확인 안내,배송지 확인 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_115,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,택배 도착 예정일: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_116,CJ대한통운,synthetic.kr.cjlogistics,택배 도착 예정일 안내,택배 도착 예정일: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_115,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,택배 도착 예정일: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_116,CJ대한통운,synthetic.kr.cjlogistics,택배 도착 예정일 안내,택배 도착 예정일: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_117,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,확인이 필요합니다: 반송 접수 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_118,CJ대한통운,synthetic.kr.cjlogistics,반송 접수 정보 안내,반송 접수 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_119,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,주간 배송 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_120,CJ대한통운,synthetic.kr.cjlogistics,주간 배송 요약 안내,주간 배송 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_121,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,택배 조회 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_122,CJ대한통운,synthetic.kr.cjlogistics,택배 조회 일정 안내,택배 조회 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_121,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,택배 조회 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_122,CJ대한통운,synthetic.kr.cjlogistics,택배 조회 일정 안내,택배 조회 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_123,CJ대한통운,synthetic.kr.cjlogistics,CJ대한통운,배송 만족도 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_124,CJ대한통운,synthetic.kr.cjlogistics,배송 만족도 설문 안내,배송 만족도 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_125,CJ대한통운,synthetic.kr.cjlogistics,긴급 확인,배송지 확인 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -129,14 +129,14 @@ V02_TRAIN_127,CJ대한통운,synthetic.kr.cjlogistics,(광고) 오늘의 혜택,
 V02_TRAIN_128,CJ대한통운,synthetic.kr.cjlogistics,업데이트 완료,주간 배송 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_129,배달의민족,synthetic.kr.baemin,배달의민족,배달 주문 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_130,배달의민족,synthetic.kr.baemin,배달 주문 결제 안내,배달 주문 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_131,배달의민족,synthetic.kr.baemin,배달의민족,배달 도착 예정 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_132,배달의민족,synthetic.kr.baemin,배달 도착 예정 시간 안내,배달 도착 예정 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_131,배달의민족,synthetic.kr.baemin,배달의민족,배달 도착 예정 시간: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_132,배달의민족,synthetic.kr.baemin,배달 도착 예정 시간 안내,배달 도착 예정 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_133,배달의민족,synthetic.kr.baemin,배달의민족,확인이 필요합니다: 배달 주소,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_134,배달의민족,synthetic.kr.baemin,배달 주소 안내,배달 주소 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_135,배달의민족,synthetic.kr.baemin,배달의민족,이번 주 주문 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_136,배달의민족,synthetic.kr.baemin,이번 주 주문 요약 안내,이번 주 주문 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_137,배달의민족,synthetic.kr.baemin,배달의민족,찜한 가게 알림 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_138,배달의민족,synthetic.kr.baemin,찜한 가게 알림 안내,찜한 가게 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_137,배달의민족,synthetic.kr.baemin,배달의민족,찜한 가게 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_138,배달의민족,synthetic.kr.baemin,찜한 가게 알림 안내,관심 등록한 찜한 가게 알림 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_139,배달의민족,synthetic.kr.baemin,배달의민족,배달 경험 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_140,배달의민족,synthetic.kr.baemin,배달 경험 설문 안내,배달 경험 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_141,배달의민족,synthetic.kr.baemin,긴급 확인,배달 주문 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -145,14 +145,14 @@ V02_TRAIN_143,배달의민족,synthetic.kr.baemin,(광고) 오늘의 혜택,"첫
 V02_TRAIN_144,배달의민족,synthetic.kr.baemin,업데이트 완료,이번 주 주문 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_145,요기요,synthetic.kr.yogiyo,요기요,주문 승인 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_146,요기요,synthetic.kr.yogiyo,주문 승인 안내,주문 승인 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_147,요기요,synthetic.kr.yogiyo,요기요,포장 완료 예정 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_148,요기요,synthetic.kr.yogiyo,포장 완료 예정 시간 안내,포장 완료 예정 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_147,요기요,synthetic.kr.yogiyo,요기요,포장 완료 예정 시간: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_148,요기요,synthetic.kr.yogiyo,포장 완료 예정 시간 안내,포장 완료 예정 시간: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_149,요기요,synthetic.kr.yogiyo,요기요,확인이 필요합니다: 수령 장소,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_150,요기요,synthetic.kr.yogiyo,수령 장소 안내,수령 장소 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_151,요기요,synthetic.kr.yogiyo,요기요,최근 주문 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_152,요기요,synthetic.kr.yogiyo,최근 주문 요약 안내,최근 주문 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_153,요기요,synthetic.kr.yogiyo,요기요,즐겨찾기 가게 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_154,요기요,synthetic.kr.yogiyo,즐겨찾기 가게 일정 안내,즐겨찾기 가게 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_153,요기요,synthetic.kr.yogiyo,요기요,즐겨찾기 가게 일정 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_154,요기요,synthetic.kr.yogiyo,즐겨찾기 가게 일정 안내,즐겨찾기 가게 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_155,요기요,synthetic.kr.yogiyo,요기요,주문 만족도 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_156,요기요,synthetic.kr.yogiyo,주문 만족도 설문 안내,주문 만족도 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_157,요기요,synthetic.kr.yogiyo,긴급 확인,주문 승인 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -161,14 +161,14 @@ V02_TRAIN_159,요기요,synthetic.kr.yogiyo,(광고) 오늘의 혜택,"오늘만
 V02_TRAIN_160,요기요,synthetic.kr.yogiyo,업데이트 완료,최근 주문 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_161,카카오 T,synthetic.kr.kakaot,카카오 T,택시 자동결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_162,카카오 T,synthetic.kr.kakaot,택시 자동결제 안내,택시 자동결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_163,카카오 T,synthetic.kr.kakaot,카카오 T,예약 호출 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_164,카카오 T,synthetic.kr.kakaot,예약 호출 시간 안내,예약 호출 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_163,카카오 T,synthetic.kr.kakaot,카카오 T,예약 호출 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_164,카카오 T,synthetic.kr.kakaot,예약 호출 시간 안내,예약 호출 시간: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_165,카카오 T,synthetic.kr.kakaot,카카오 T,확인이 필요합니다: 탑승 위치,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_166,카카오 T,synthetic.kr.kakaot,탑승 위치 안내,탑승 위치 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_167,카카오 T,synthetic.kr.kakaot,카카오 T,이번 달 이동 리포트: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_168,카카오 T,synthetic.kr.kakaot,이번 달 이동 리포트 안내,이번 달 이동 리포트 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_169,카카오 T,synthetic.kr.kakaot,카카오 T,출근길 알림 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_170,카카오 T,synthetic.kr.kakaot,출근길 알림 안내,출근길 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_169,카카오 T,synthetic.kr.kakaot,카카오 T,출근길 알림 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_170,카카오 T,synthetic.kr.kakaot,출근길 알림 안내,출근길 알림 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_171,카카오 T,synthetic.kr.kakaot,카카오 T,이동 서비스 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_172,카카오 T,synthetic.kr.kakaot,이동 서비스 설문 안내,이동 서비스 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_173,카카오 T,synthetic.kr.kakaot,긴급 확인,택시 자동결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -177,14 +177,14 @@ V02_TRAIN_175,카카오 T,synthetic.kr.kakaot,(광고) 오늘의 혜택,"공항 
 V02_TRAIN_176,카카오 T,synthetic.kr.kakaot,업데이트 완료,이번 달 이동 리포트 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_177,코레일톡,synthetic.kr.korailtalk,코레일톡,승차권 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_178,코레일톡,synthetic.kr.korailtalk,승차권 결제 안내,승차권 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_179,코레일톡,synthetic.kr.korailtalk,코레일톡,열차 출발 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_180,코레일톡,synthetic.kr.korailtalk,열차 출발 시간 안내,열차 출발 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_179,코레일톡,synthetic.kr.korailtalk,코레일톡,열차 출발 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_180,코레일톡,synthetic.kr.korailtalk,열차 출발 시간 안내,열차 출발 시간: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_181,코레일톡,synthetic.kr.korailtalk,코레일톡,확인이 필요합니다: 탑승객 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_182,코레일톡,synthetic.kr.korailtalk,탑승객 정보 안내,탑승객 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_183,코레일톡,synthetic.kr.korailtalk,코레일톡,여행 기록 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_184,코레일톡,synthetic.kr.korailtalk,여행 기록 요약 안내,여행 기록 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_185,코레일톡,synthetic.kr.korailtalk,코레일톡,관심 노선 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_186,코레일톡,synthetic.kr.korailtalk,관심 노선 일정 안내,관심 노선 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_185,코레일톡,synthetic.kr.korailtalk,코레일톡,관심 등록한 관심 노선 일정 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_186,코레일톡,synthetic.kr.korailtalk,관심 노선 일정 안내,관심 노선 일정 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_187,코레일톡,synthetic.kr.korailtalk,코레일톡,열차 이용 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_188,코레일톡,synthetic.kr.korailtalk,열차 이용 설문 안내,열차 이용 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_189,코레일톡,synthetic.kr.korailtalk,긴급 확인,승차권 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -193,14 +193,14 @@ V02_TRAIN_191,코레일톡,synthetic.kr.korailtalk,(광고) 오늘의 혜택,"�
 V02_TRAIN_192,코레일톡,synthetic.kr.korailtalk,업데이트 완료,여행 기록 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_193,에브리타임,synthetic.kr.everytime,에브리타임,과제 제출 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_194,에브리타임,synthetic.kr.everytime,과제 제출 안내,과제 제출 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_195,에브리타임,synthetic.kr.everytime,에브리타임,시험 일정: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_196,에브리타임,synthetic.kr.everytime,시험 일정 안내,시험 일정: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_195,에브리타임,synthetic.kr.everytime,에브리타임,시험 일정: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_196,에브리타임,synthetic.kr.everytime,시험 일정 안내,시험 일정: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_197,에브리타임,synthetic.kr.everytime,에브리타임,확인이 필요합니다: 수강 신청 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_198,에브리타임,synthetic.kr.everytime,수강 신청 정보 안내,수강 신청 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_199,에브리타임,synthetic.kr.everytime,에브리타임,주간 게시판 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_200,에브리타임,synthetic.kr.everytime,주간 게시판 요약 안내,주간 게시판 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_201,에브리타임,synthetic.kr.everytime,에브리타임,동아리 모집 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_202,에브리타임,synthetic.kr.everytime,동아리 모집 일정 안내,동아리 모집 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_201,에브리타임,synthetic.kr.everytime,에브리타임,동아리 모집 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_202,에브리타임,synthetic.kr.everytime,동아리 모집 일정 안내,동아리 모집 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_203,에브리타임,synthetic.kr.everytime,에브리타임,학교생활 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_204,에브리타임,synthetic.kr.everytime,학교생활 설문 안내,학교생활 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_205,에브리타임,synthetic.kr.everytime,긴급 확인,과제 제출 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -209,14 +209,14 @@ V02_TRAIN_207,에브리타임,synthetic.kr.everytime,(광고) 오늘의 혜택,"
 V02_TRAIN_208,에브리타임,synthetic.kr.everytime,업데이트 완료,주간 게시판 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_209,클래스101,synthetic.kr.class101,클래스101,수강 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_210,클래스101,synthetic.kr.class101,수강 결제 안내,수강 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_211,클래스101,synthetic.kr.class101,클래스101,라이브 수업 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_212,클래스101,synthetic.kr.class101,라이브 수업 시간 안내,라이브 수업 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_211,클래스101,synthetic.kr.class101,클래스101,라이브 수업 시간: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_212,클래스101,synthetic.kr.class101,라이브 수업 시간 안내,라이브 수업 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_213,클래스101,synthetic.kr.class101,클래스101,확인이 필요합니다: 과제 제출 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_214,클래스101,synthetic.kr.class101,과제 제출 정보 안내,과제 제출 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_215,클래스101,synthetic.kr.class101,클래스101,학습 리포트: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_216,클래스101,synthetic.kr.class101,학습 리포트 안내,학습 리포트 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_217,클래스101,synthetic.kr.class101,클래스101,추천 클래스 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_218,클래스101,synthetic.kr.class101,추천 클래스 일정 안내,추천 클래스 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_217,클래스101,synthetic.kr.class101,클래스101,추천 클래스 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_218,클래스101,synthetic.kr.class101,추천 클래스 일정 안내,관심 등록한 추천 클래스 일정 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_219,클래스101,synthetic.kr.class101,클래스101,수강 만족도 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_220,클래스101,synthetic.kr.class101,수강 만족도 설문 안내,수강 만족도 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_221,클래스101,synthetic.kr.class101,긴급 확인,수강 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -225,14 +225,14 @@ V02_TRAIN_223,클래스101,synthetic.kr.class101,(광고) 오늘의 혜택,"인�
 V02_TRAIN_224,클래스101,synthetic.kr.class101,업데이트 완료,학습 리포트 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_225,Slack,synthetic.kr.slack,Slack,배포 승인 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_226,Slack,synthetic.kr.slack,배포 승인 안내,배포 승인 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_227,Slack,synthetic.kr.slack,Slack,고객 회의 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_228,Slack,synthetic.kr.slack,고객 회의 시간 안내,고객 회의 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_227,Slack,synthetic.kr.slack,Slack,고객 회의 시간: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_228,Slack,synthetic.kr.slack,고객 회의 시간 안내,고객 회의 시간: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_229,Slack,synthetic.kr.slack,Slack,확인이 필요합니다: 담당 업무 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_230,Slack,synthetic.kr.slack,담당 업무 정보 안내,담당 업무 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_231,Slack,synthetic.kr.slack,Slack,주간 채널 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_232,Slack,synthetic.kr.slack,주간 채널 요약 안내,주간 채널 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_233,Slack,synthetic.kr.slack,Slack,사내 행사 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_234,Slack,synthetic.kr.slack,사내 행사 일정 안내,사내 행사 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_233,Slack,synthetic.kr.slack,Slack,사내 행사 일정 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_234,Slack,synthetic.kr.slack,사내 행사 일정 안내,사내 행사 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_235,Slack,synthetic.kr.slack,Slack,협업 방식 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_236,Slack,synthetic.kr.slack,협업 방식 설문 안내,협업 방식 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_237,Slack,synthetic.kr.slack,긴급 확인,배포 승인 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -241,14 +241,14 @@ V02_TRAIN_239,Slack,synthetic.kr.slack,(광고) 오늘의 혜택,"업무 생산�
 V02_TRAIN_240,Slack,synthetic.kr.slack,업데이트 완료,주간 채널 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_241,Notion,synthetic.kr.notion,Notion,문서 승인 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_242,Notion,synthetic.kr.notion,문서 승인 안내,문서 승인 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_243,Notion,synthetic.kr.notion,Notion,프로젝트 마감 일정: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_244,Notion,synthetic.kr.notion,프로젝트 마감 일정 안내,프로젝트 마감 일정: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_243,Notion,synthetic.kr.notion,Notion,프로젝트 마감 일정: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_244,Notion,synthetic.kr.notion,프로젝트 마감 일정 안내,프로젝트 마감 일정: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_245,Notion,synthetic.kr.notion,Notion,확인이 필요합니다: 작업 담당자 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_246,Notion,synthetic.kr.notion,작업 담당자 정보 안내,작업 담당자 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_247,Notion,synthetic.kr.notion,Notion,워크스페이스 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_248,Notion,synthetic.kr.notion,워크스페이스 요약 안내,워크스페이스 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_249,Notion,synthetic.kr.notion,Notion,템플릿 소개 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_250,Notion,synthetic.kr.notion,템플릿 소개 일정 안내,템플릿 소개 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_249,Notion,synthetic.kr.notion,Notion,템플릿 소개 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_250,Notion,synthetic.kr.notion,템플릿 소개 일정 안내,템플릿 소개 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_251,Notion,synthetic.kr.notion,Notion,제품 사용 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_252,Notion,synthetic.kr.notion,제품 사용 설문 안내,제품 사용 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_253,Notion,synthetic.kr.notion,긴급 확인,문서 승인 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -257,14 +257,14 @@ V02_TRAIN_255,Notion,synthetic.kr.notion,(광고) 오늘의 혜택,"팀용 템�
 V02_TRAIN_256,Notion,synthetic.kr.notion,업데이트 완료,워크스페이스 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_257,똑닥,synthetic.kr.ddocdoc,똑닥,진료비 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_258,똑닥,synthetic.kr.ddocdoc,진료비 결제 안내,진료비 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_259,똑닥,synthetic.kr.ddocdoc,똑닥,병원 예약 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_260,똑닥,synthetic.kr.ddocdoc,병원 예약 시간 안내,병원 예약 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_259,똑닥,synthetic.kr.ddocdoc,똑닥,병원 예약 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_260,똑닥,synthetic.kr.ddocdoc,병원 예약 시간 안내,병원 예약 시간: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_261,똑닥,synthetic.kr.ddocdoc,똑닥,확인이 필요합니다: 환자 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_262,똑닥,synthetic.kr.ddocdoc,환자 정보 안내,환자 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_263,똑닥,synthetic.kr.ddocdoc,똑닥,건강 기록 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_264,똑닥,synthetic.kr.ddocdoc,건강 기록 요약 안내,건강 기록 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_265,똑닥,synthetic.kr.ddocdoc,똑닥,건강 콘텐츠 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_266,똑닥,synthetic.kr.ddocdoc,건강 콘텐츠 일정 안내,건강 콘텐츠 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_265,똑닥,synthetic.kr.ddocdoc,똑닥,관심 등록한 건강 콘텐츠 일정 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_266,똑닥,synthetic.kr.ddocdoc,건강 콘텐츠 일정 안내,건강 콘텐츠 일정 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_267,똑닥,synthetic.kr.ddocdoc,똑닥,진료 경험 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_268,똑닥,synthetic.kr.ddocdoc,진료 경험 설문 안내,진료 경험 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_269,똑닥,synthetic.kr.ddocdoc,긴급 확인,진료비 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -273,14 +273,14 @@ V02_TRAIN_271,똑닥,synthetic.kr.ddocdoc,(광고) 오늘의 혜택,"건강검�
 V02_TRAIN_272,똑닥,synthetic.kr.ddocdoc,업데이트 완료,건강 기록 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_273,정부24,synthetic.kr.gov24,정부24,민원 수수료 결제 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_274,정부24,synthetic.kr.gov24,민원 수수료 결제 안내,민원 수수료 결제 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_275,정부24,synthetic.kr.gov24,정부24,서류 제출 기한: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_276,정부24,synthetic.kr.gov24,서류 제출 기한 안내,서류 제출 기한: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_275,정부24,synthetic.kr.gov24,정부24,서류 제출 기한: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_276,정부24,synthetic.kr.gov24,서류 제출 기한 안내,서류 제출 기한: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_277,정부24,synthetic.kr.gov24,정부24,확인이 필요합니다: 신청인 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_278,정부24,synthetic.kr.gov24,신청인 정보 안내,신청인 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_279,정부24,synthetic.kr.gov24,정부24,이용 내역 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_280,정부24,synthetic.kr.gov24,이용 내역 요약 안내,이용 내역 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_281,정부24,synthetic.kr.gov24,정부24,정책 안내 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_282,정부24,synthetic.kr.gov24,정책 안내 일정 안내,정책 안내 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_281,정부24,synthetic.kr.gov24,정부24,정책 안내 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_282,정부24,synthetic.kr.gov24,정책 안내 일정 안내,정책 안내 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_schedule_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_283,정부24,synthetic.kr.gov24,정부24,서비스 개선 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_284,정부24,synthetic.kr.gov24,서비스 개선 설문 안내,서비스 개선 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_285,정부24,synthetic.kr.gov24,긴급 확인,민원 수수료 결제 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -289,14 +289,14 @@ V02_TRAIN_287,정부24,synthetic.kr.gov24,(광고) 오늘의 혜택,"생활지�
 V02_TRAIN_288,정부24,synthetic.kr.gov24,업데이트 완료,이용 내역 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_289,카카오톡,synthetic.kr.kakaotalk,카카오톡,송금 받기 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_290,카카오톡,synthetic.kr.kakaotalk,송금 받기 안내,송금 받기 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_291,카카오톡,synthetic.kr.kakaotalk,카카오톡,약속 시간: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_292,카카오톡,synthetic.kr.kakaotalk,약속 시간 안내,약속 시간: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_291,카카오톡,synthetic.kr.kakaotalk,카카오톡,약속 시간: 내일 오전 9시로 변경되었습니다.,1,schedule_change,eligible_promote_schedule_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_292,카카오톡,synthetic.kr.kakaotalk,약속 시간 안내,약속 시간 변경 안내입니다. 기존 일정과 달라졌습니다.,1,schedule_change,eligible_promote_schedule_2,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_293,카카오톡,synthetic.kr.kakaotalk,카카오톡,확인이 필요합니다: 공유 계정 정보,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_294,카카오톡,synthetic.kr.kakaotalk,공유 계정 정보 안내,공유 계정 정보 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_295,카카오톡,synthetic.kr.kakaotalk,카카오톡,주간 대화 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_296,카카오톡,synthetic.kr.kakaotalk,주간 대화 요약 안내,주간 대화 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_297,카카오톡,synthetic.kr.kakaotalk,카카오톡,오픈채팅 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_298,카카오톡,synthetic.kr.kakaotalk,오픈채팅 일정 안내,오픈채팅 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_297,카카오톡,synthetic.kr.kakaotalk,카카오톡,오픈채팅 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_schedule_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_298,카카오톡,synthetic.kr.kakaotalk,오픈채팅 일정 안내,관심 등록한 오픈채팅 일정 소식이 이번 주 공개될 예정입니다.,0,optional_schedule,eligible_keep_schedule_2,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_299,카카오톡,synthetic.kr.kakaotalk,카카오톡,메신저 이용 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_300,카카오톡,synthetic.kr.kakaotalk,메신저 이용 설문 안내,메신저 이용 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_301,카카오톡,synthetic.kr.kakaotalk,긴급 확인,송금 받기 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
@@ -305,14 +305,14 @@ V02_TRAIN_303,카카오톡,synthetic.kr.kakaotalk,(광고) 오늘의 혜택,"이
 V02_TRAIN_304,카카오톡,synthetic.kr.kakaotalk,업데이트 완료,주간 대화 요약 업데이트가 완료되었습니다. 별도 작업은 필요하지 않습니다.,0,passive_update,clear_general_1,CLEAR,no_action_status,status,false,-10,GENERAL,false,false,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_305,SmartThings,synthetic.kr.smartthings,SmartThings,현관문 센서 처리가 정상적으로 완료되지 않았습니다.,1,exception,eligible_promote_0_0,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_306,SmartThings,synthetic.kr.smartthings,현관문 센서 안내,현관문 센서 처리 중 문제가 발생했습니다.,1,exception,eligible_promote_0_1,CLEAR,concrete_failure_or_exception,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_307,SmartThings,synthetic.kr.smartthings,SmartThings,보안 모드 일정: 오늘 오후 6시로 변경되었습니다.,1,schedule_change,eligible_promote_1_0,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_308,SmartThings,synthetic.kr.smartthings,보안 모드 일정 안내,보안 모드 일정: 예정 시간이 내일 오전 9시로 바뀌었습니다.,1,schedule_change,eligible_promote_1_1,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_307,SmartThings,synthetic.kr.smartthings,SmartThings,보안 모드 일정: 기존 시간이 취소되고 새 시간이 등록되었습니다.,1,schedule_change,eligible_promote_schedule_3,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_308,SmartThings,synthetic.kr.smartthings,보안 모드 일정 안내,보안 모드 일정: 예정보다 2시간 앞당겨졌습니다.,1,schedule_change,eligible_promote_schedule_4,CLEAR,meaningful_schedule_change,msg,false,30,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_309,SmartThings,synthetic.kr.smartthings,SmartThings,확인이 필요합니다: 가족 구성원 권한,1,action_required,eligible_promote_2_0,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_310,SmartThings,synthetic.kr.smartthings,가족 구성원 권한 안내,가족 구성원 권한 관련 확인이 필요합니다.,1,action_required,eligible_promote_2_1,CLEAR,concrete_user_confirmation,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_311,SmartThings,synthetic.kr.smartthings,SmartThings,주간 에너지 요약: 이번 주 요약이 도착했습니다.,0,summary,eligible_keep_0_0,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_312,SmartThings,synthetic.kr.smartthings,주간 에너지 요약 안내,주간 에너지 요약 세부 내용을 확인해주세요.,0,summary,eligible_keep_0_1,CLEAR,informational_summary,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_313,SmartThings,synthetic.kr.smartthings,SmartThings,자동화 실행 일정 관련 새 내용이 오늘 오후 3시에 공개됩니다.,0,optional_schedule,eligible_keep_1_0,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
-V02_TRAIN_314,SmartThings,synthetic.kr.smartthings,자동화 실행 일정 안내,자동화 실행 일정 관련 내용이 내일 오전 10시에 업데이트됩니다.,0,optional_schedule,eligible_keep_1_1,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_313,SmartThings,synthetic.kr.smartthings,SmartThings,자동화 실행 일정 공개 시간이 정해졌습니다.,0,optional_schedule,eligible_keep_schedule_3,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
+V02_TRAIN_314,SmartThings,synthetic.kr.smartthings,자동화 실행 일정 안내,자동화 실행 일정 관련 알림이 곧 시작됩니다.,0,optional_schedule,eligible_keep_schedule_4,CLEAR,optional_timed_content,reminder,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_315,SmartThings,synthetic.kr.smartthings,SmartThings,스마트홈 이용 설문 참여 요청이 도착했습니다.,0,optional_survey,eligible_keep_2_0,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_316,SmartThings,synthetic.kr.smartthings,스마트홈 이용 설문 안내,스마트홈 이용 설문 관련 의견을 남겨주세요.,0,optional_survey,eligible_keep_2_1,CLEAR,optional_participation_request,msg,false,25,REVIEW,false,true,SYNTHETIC_REVIEWED,0.2
 V02_TRAIN_317,SmartThings,synthetic.kr.smartthings,긴급 확인,현관문 센서 문제로 오늘까지 처리가 필요합니다. 즉시 확인해주세요.,1,urgent_action,clear_important_0,CLEAR,urgent_and_action_required,alarm,false,45,IMPORTANT,false,false,SYNTHETIC_REVIEWED,0.2
