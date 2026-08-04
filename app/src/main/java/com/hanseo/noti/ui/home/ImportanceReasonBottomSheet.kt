@@ -30,6 +30,7 @@ fun ImportanceReasonBottomSheet(
     NotificationReasonBottomSheet(
         notificationUiModel = notificationUiModel,
         onDismiss = onDismiss,
+        onConfirm = onDismiss,
         secondaryActionText =
             if (isUserCriterion) {
                 "내 기준에서 수정하기"

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -173,5 +174,13 @@ class NotificationsViewModel @Inject constructor(
 
     fun onFilterSelected(filter: NotificationFilter) {
         selectedFilter.value = filter
+    }
+
+    fun markAsRead(notificationKey: String) {
+        viewModelScope.launch {
+            notificationRepository.markAsRead(
+                notificationKey = notificationKey
+            )
+        }
     }
 }

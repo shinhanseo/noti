@@ -51,6 +51,7 @@ import java.util.Locale
 fun NotificationsScreen(
     uiState: NotificationsUiState,
     onFilterSelected: (NotificationFilter) -> Unit,
+    onMarkAsRead: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expandedNotificationKey by rememberSaveable {
@@ -126,6 +127,16 @@ fun NotificationsScreen(
         NotificationReasonBottomSheet(
             notificationUiModel = notificationUiModel,
             onDismiss = {
+                selectedReasonNotificationKey = null
+            },
+            onConfirm = {
+                val notificationKey =
+                    notificationUiModel
+                        .classifiedNotification
+                        .notification
+                        .key
+
+                onMarkAsRead(notificationKey)
                 selectedReasonNotificationKey = null
             }
         )

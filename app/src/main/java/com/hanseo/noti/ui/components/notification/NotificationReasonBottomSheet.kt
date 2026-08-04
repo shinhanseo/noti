@@ -40,6 +40,7 @@ import com.hanseo.noti.ui.model.NotificationUiModel
 fun NotificationReasonBottomSheet(
     notificationUiModel: NotificationUiModel,
     onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
     secondaryActionText: String? = null,
     onSecondaryActionClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
@@ -159,7 +160,7 @@ fun NotificationReasonBottomSheet(
             }
 
             Button(
-                onClick = onDismiss,
+                onClick = onConfirm,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),

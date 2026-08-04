@@ -70,7 +70,9 @@ private fun NotificationsRoute(
     NotificationsScreen(
         uiState = uiState,
         onFilterSelected =
-            viewModel::onFilterSelected
+            viewModel::onFilterSelected,
+        onMarkAsRead =
+            viewModel::markAsRead
     )
 }
 
