@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(
                     postedDate == today
                 }
 
-            val importantNotifications =
+            val todayImportantNotifications =
                 todayNotifications
                     .filter { classifiedNotification ->
                         val notificationKey =
@@ -100,6 +100,18 @@ class HomeViewModel @Inject constructor(
                                         ImportanceLevel.IMPORTANT
                         }
                     }
+
+            val unreadImportantNotifications =
+                todayImportantNotifications.filter {
+                        classifiedNotification ->
+
+                    classifiedNotification
+                        .notification
+                        .readAt == null
+                }
+
+            val importantNotifications =
+                unreadImportantNotifications
                     .map { classifiedNotification ->
                         val packageName =
                             classifiedNotification
@@ -127,7 +139,10 @@ class HomeViewModel @Inject constructor(
                     importantNotifications,
 
                 todayTotalNotificationCount =
-                    todayNotifications.size
+                    todayNotifications.size,
+
+                todayImportantNotificationCount =
+                    todayImportantNotifications.size
             )
         }
             .stateIn(
@@ -159,6 +174,22 @@ class HomeViewModel @Inject constructor(
                 classifiedNotification,
             label = FeedbackLabel.IMPORTANT
         )
+    }
+
+    fun markAsRead(notificationKey: String) {
+        viewModelScope.launch {
+            notificationRepository.markAsRead(
+                notificationKey = notificationKey
+            )
+        }
+    }
+
+    fun markAsUnread(notificationKey: String) {
+        viewModelScope.launch {
+            notificationRepository.markAsUnread(
+                notificationKey = notificationKey
+            )
+        }
     }
 
     private fun saveFeedback(

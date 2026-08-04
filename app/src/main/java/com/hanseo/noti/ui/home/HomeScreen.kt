@@ -26,11 +26,20 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,6 +61,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import com.hanseo.noti.domain.model.ClassifiedNotification
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -60,6 +70,8 @@ fun HomeScreen(
     onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
     onLessImportant: (ClassifiedNotification) -> Unit,
+    onMarkAsRead: (String) -> Unit,
+    onMarkAsUnread: (String) -> Unit,
     onEditCriteria: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -75,6 +87,12 @@ fun HomeScreen(
 
     val importantNotifications =
         uiState.importantNotifications
+
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
+
+    val coroutineScope = rememberCoroutineScope()
 
     var expandedNotificationKey by rememberSaveable {
         mutableStateOf<String?>(null)
@@ -94,91 +112,140 @@ fun HomeScreen(
                 .key == selectedReasonNotificationKey
         }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        HomeHeader(
-            notificationCount =
-                importantNotifications.size,
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            HomeHeader(
+                notificationCount =
+                    importantNotifications.size,
 
-            totalNotificationCount =
-                uiState.todayTotalNotificationCount,
-
-            modifier = Modifier.padding(
-                horizontal = 24.dp
-            )
-        )
-
-        Spacer(
-            modifier = Modifier.height(28.dp)
-        )
-
-        if (importantNotifications.isEmpty()) {
-            HomeEmptyContent(
-                todayTotalCount =
+                totalNotificationCount =
                     uiState.todayTotalNotificationCount,
 
-                onShowAllNotifications =
-                    onShowAllNotifications,
-
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.padding(
+                    horizontal = 24.dp
+                )
             )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentPadding = PaddingValues(
-                    start = 24.dp,
-                    end = 24.dp,
-                    bottom = 24.dp
-                ),
-                verticalArrangement =
-                    Arrangement.spacedBy(12.dp)
-            ) {
-                items(
-                    items = importantNotifications,
-                    key = { notificationUiModel ->
-                        notificationUiModel
-                            .classifiedNotification
-                            .notification
-                            .key
-                    }
-                ) { notificationUiModel ->
-                    val notificationKey =
-                        notificationUiModel
-                            .classifiedNotification
-                            .notification
-                            .key
 
-                    val isExpanded =
-                        expandedNotificationKey ==
-                            notificationKey
+            Spacer(
+                modifier = Modifier.height(28.dp)
+            )
 
-                    NotificationCard(
-                        notificationUiModel =
-                            notificationUiModel,
+            if (importantNotifications.isEmpty()) {
+                HomeEmptyContent(
+                    todayTotalCount =
+                        uiState.todayTotalNotificationCount,
 
-                        isExpanded = isExpanded,
+                    todayImportantCount =
+                        uiState.todayImportantNotificationCount,
 
-                        onCardClick = {
-                            expandedNotificationKey =
-                                if (isExpanded) {
-                                    null
-                                } else {
-                                    notificationKey
-                                }
-                        },
+                    onShowAllNotifications =
+                        onShowAllNotifications,
 
-                        onReasonClick = {
-                            selectedReasonNotificationKey =
-                                notificationKey
+                    modifier = Modifier.weight(1f)
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentPadding = PaddingValues(
+                        start = 24.dp,
+                        end = 24.dp,
+                        bottom = 24.dp
+                    ),
+                    verticalArrangement =
+                        Arrangement.spacedBy(12.dp)
+                ) {
+                    items(
+                        items = importantNotifications,
+                        key = { notificationUiModel ->
+                            notificationUiModel
+                                .classifiedNotification
+                                .notification
+                                .key
                         }
-                    )
+                    ) { notificationUiModel ->
+                        val notificationKey =
+                            notificationUiModel
+                                .classifiedNotification
+                                .notification
+                                .key
+
+                        val isExpanded =
+                            expandedNotificationKey ==
+                                notificationKey
+
+                        SwipeableNotificationCard(
+                            onMarkAsRead = {
+                                if (
+                                    expandedNotificationKey ==
+                                    notificationKey
+                                ) {
+                                    expandedNotificationKey = null
+                                }
+
+                                onMarkAsRead(notificationKey)
+
+                                coroutineScope.launch {
+                                    val result =
+                                        snackbarHostState
+                                            .showSnackbar(
+                                                message =
+                                                    "확인한 알림으로 옮겼어요",
+                                                actionLabel =
+                                                    "실행 취소",
+                                                duration =
+                                                    SnackbarDuration.Short
+                                            )
+
+                                    if (
+                                        result ==
+                                        SnackbarResult.ActionPerformed
+                                    ) {
+                                        onMarkAsUnread(
+                                            notificationKey
+                                        )
+                                    }
+                                }
+                            }
+                        ) {
+                            NotificationCard(
+                                notificationUiModel =
+                                    notificationUiModel,
+
+                                isExpanded = isExpanded,
+
+                                onCardClick = {
+                                    expandedNotificationKey =
+                                        if (isExpanded) {
+                                            null
+                                        } else {
+                                            notificationKey
+                                        }
+                                },
+
+                                onReasonClick = {
+                                    selectedReasonNotificationKey =
+                                        notificationKey
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(24.dp)
+        )
     }
 
     selectedReasonNotification?.let {
@@ -461,11 +528,15 @@ private fun HomeHeader(
 @Composable
 private fun HomeEmptyContent(
     todayTotalCount: Int,
+    todayImportantCount: Int,
     onShowAllNotifications: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val description =
-        if (todayTotalCount > 0) {
+        if (todayImportantCount > 0) {
+            "중요한 알림을 모두 확인했어요.\n" +
+                    "새 알림이 오면 다시 알려드릴게요."
+        } else if (todayTotalCount > 0) {
             "오늘 도착한 ${todayTotalCount}개 알림은\n" +
                     "모두 일반 알림으로 정리했어요."
         } else {
@@ -534,6 +605,50 @@ private fun HomeEmptyContent(
             }
         }
     }
+}
+
+@Composable
+private fun SwipeableNotificationCard(
+    onMarkAsRead: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val dismissState = rememberSwipeToDismissBoxState()
+
+    LaunchedEffect(dismissState.currentValue) {
+        if (
+            dismissState.currentValue ==
+            SwipeToDismissBoxValue.EndToStart
+        ) {
+            onMarkAsRead()
+        }
+    }
+
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = false,
+        enableDismissFromEndToStart = true,
+        backgroundContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(
+                        MaterialTheme.colorScheme.primary
+                    )
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Text(
+                    text = "확인 완료",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        },
+        content = {
+            content()
+        }
+    )
 }
 
 @Composable

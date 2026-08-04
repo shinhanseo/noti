@@ -85,6 +85,12 @@ private fun HomeRoute(
         onLessImportant =
             viewModel::markAsGeneral,
 
+        onMarkAsRead =
+            viewModel::markAsRead,
+
+        onMarkAsUnread =
+            viewModel::markAsUnread,
+
         onEditCriteria =
             onEditCriteria
     )
