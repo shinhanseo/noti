@@ -12,6 +12,7 @@ import com.hanseo.noti.ui.criteria.MyCriteriaScreen
 import com.hanseo.noti.ui.home.HomeScreen
 import com.hanseo.noti.ui.home.HomeViewModel
 import com.hanseo.noti.ui.notifications.NotificationsScreen
+import com.hanseo.noti.ui.notifications.NotificationsViewModel
 
 @Composable
 fun MainNavHost(
@@ -49,13 +50,28 @@ fun MainNavHost(
         }
 
         composable(NotiRoutes.NOTIFICATIONS) {
-            NotificationsScreen()
+            NotificationsRoute()
         }
 
         composable(NotiRoutes.MY_CRITERIA) {
             MyCriteriaScreen()
         }
     }
+}
+
+@Composable
+private fun NotificationsRoute(
+    viewModel: NotificationsViewModel = hiltViewModel()
+) {
+    val uiState by
+    viewModel.uiState
+        .collectAsStateWithLifecycle()
+
+    NotificationsScreen(
+        uiState = uiState,
+        onFilterSelected =
+            viewModel::onFilterSelected
+    )
 }
 
 @Composable
