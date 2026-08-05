@@ -158,8 +158,10 @@ private fun NotificationsHeader(
     ) {
         Text(
             text = "알림",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            style =
+                MaterialTheme.typography.headlineLarge,
+            color =
+                MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(6.dp))
