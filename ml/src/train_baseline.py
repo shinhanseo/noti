@@ -1,3 +1,4 @@
+import argparse
 from pathlib import Path
 
 import numpy as np
@@ -14,19 +15,15 @@ from sklearn.model_selection import StratifiedGroupKFold
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 
-DATA_PATH = (
-    PROJECT_DIR
-    / "data"
-    / "public"
-    / "train_notifications_v0.2.csv"
-)
+DEFAULT_DATASET_VERSION = "0.2"
 
-CONTEXT_DATA_PATH = (
-    PROJECT_DIR
-    / "data"
-    / "public"
-    / "context_notifications_v0.2.csv"
-)
+
+def dataset_paths(dataset_version: str) -> tuple[Path, Path]:
+    public_dir = PROJECT_DIR / "data" / "public"
+    return (
+        public_dir / f"train_notifications_v{dataset_version}.csv",
+        public_dir / f"context_notifications_v{dataset_version}.csv",
+    )
 
 
 def make_text(data: pd.DataFrame) -> pd.Series:
@@ -52,8 +49,11 @@ def create_model() -> LogisticRegression:
     )
 
 
-def load_training_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    all_data = pd.read_csv(DATA_PATH)
+def load_training_data(
+    dataset_version: str = DEFAULT_DATASET_VERSION,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    data_path, _ = dataset_paths(dataset_version)
+    all_data = pd.read_csv(data_path)
 
     model_eligible = (
         all_data["model_eligible"]
@@ -74,9 +74,16 @@ def load_training_data() -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def main() -> None:
-    all_data, data = load_training_data()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--dataset-version",
+        default=DEFAULT_DATASET_VERSION,
+        choices=("0.2", "0.3"),
+    )
+    args = parser.parse_args()
+    all_data, data = load_training_data(args.dataset_version)
 
-    print("v0.2 전체 학습·대조 데이터")
+    print(f"v{args.dataset_version} 전체 학습·대조 데이터")
     print(all_data.shape)
 
     print("\n실제 모델 학습 대상")
@@ -250,7 +257,8 @@ def main() -> None:
     print("\n최종 Vocabulary 크기")
     print(len(final_vectorizer.get_feature_names_out()))
 
-    context_data = pd.read_csv(CONTEXT_DATA_PATH)
+    _, context_data_path = dataset_paths(args.dataset_version)
+    context_data = pd.read_csv(context_data_path)
     context_data["text"] = make_text(context_data)
 
     context_vectors = final_vectorizer.transform(

@@ -22,6 +22,9 @@ v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/datas
 ```bash
 python src/generate_dataset_v03.py
 python src/validate_dataset_v03.py
+python src/train_baseline.py --dataset-version 0.3
+python src/compare_lightweight_models.py --dataset-version 0.3
+python src/evaluate_v03_source_holdout.py
 ```
 
 생성 파일:
@@ -39,6 +42,10 @@ python src/prepare_room_notifications_v03.py \
 ```
 
 공개 데이터와 Room 데이터는 처음부터 학습에 넣지 않는다. `UNLABELED` 상태로 반입한 뒤 importance-policy 기준의 사람 검토를 통과한 행만 `HUMAN_REVIEWED`로 승격한다.
+
+v0.3 REVIEW 데이터 400개의 20회 Group 교차검증에서는 Char TF-IDF + 32-unit MLP가 평균 정확도 98.5%, Recall 99.4%로 가장 높았다. 고정 `multilingual-e5-small` Embedding + MLP는 평균 정확도 97.8%, Recall 97.9%였다. 사전학습 모델이 현재 합성 데이터에서 자동으로 더 좋은 결과를 내지는 않았다.
+
+더 엄격한 출처 홀드아웃에서 v0.2 240개로 학습하고 현실형 신규 160개를 평가했을 때 Char TF-IDF + Logistic Regression, SGD, ComplementNB가 각각 정확도 96.9%, Recall 95.0%를 기록했다. 반대 방향은 80.8%~86.2%로 낮아 문장 스타일과 데이터 범위에 따른 비대칭이 확인됐다. 상세 결과는 `reports/v0.3_lightweight_model_bakeoff.md`, `reports/v0.3_pretrained_embedding_bakeoff.md`, `reports/v0.3_source_holdout.md`에 있다. 이 수치는 합성 중심 데이터 결과이며 실제 알림 성능이 아니다.
 
 ## v0.2 데이터 생성과 검사
 

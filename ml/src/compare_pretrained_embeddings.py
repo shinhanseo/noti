@@ -27,11 +27,6 @@ from train_baseline import load_training_data
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 CACHE_DIR = PROJECT_DIR / ".cache" / "pretrained_embeddings"
-REPORT_PATH = PROJECT_DIR / "reports" / "v0.3_pretrained_embedding_bakeoff.md"
-RESULT_PATH = PROJECT_DIR / "reports" / "v0.3_pretrained_embedding_bakeoff.json"
-LIGHTWEIGHT_RESULT_PATH = (
-    PROJECT_DIR / "reports" / "v0.2_lightweight_model_bakeoff.json"
-)
 
 
 @dataclass(frozen=True)
@@ -80,6 +75,12 @@ CANDIDATES = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="사전학습 문장 임베딩 + 얕은 분류기 비교 실험"
+    )
+    parser.add_argument(
+        "--dataset-version",
+        default="0.3",
+        choices=("0.2", "0.3"),
+        help="실험에 사용할 noti 데이터셋 버전",
     )
     parser.add_argument(
         "--models",
@@ -342,8 +343,9 @@ def summarize(
 
 def load_tfidf_baseline(
     random_states: tuple[int, ...],
+    lightweight_result_path: Path,
 ) -> dict[str, object]:
-    payload = json.loads(LIGHTWEIGHT_RESULT_PATH.read_text(encoding="utf-8"))
+    payload = json.loads(lightweight_result_path.read_text(encoding="utf-8"))
     source = next(
         row
         for row in payload["candidates"]
@@ -387,7 +389,7 @@ def load_tfidf_baseline(
         "head_joblib_size_bytes": int(source["joblib_size_bytes"]),
         "artifact_size_scope": "full_python_pipeline",
         "source_model_size_bytes": int(source["joblib_size_bytes"]),
-        "timing": {"source_report": str(LIGHTWEIGHT_RESULT_PATH.name)},
+        "timing": {"source_report": str(lightweight_result_path.name)},
         "runs": rows,
     }
 
@@ -414,11 +416,12 @@ def create_report(result: dict[str, object]) -> str:
     summaries = result["summaries"]
     failures = result["failures"]
     lines = [
-        "# v0.3 사전학습 Embedding Bake-off",
+        f"# v{result['dataset_version']} 사전학습 Embedding Bake-off",
         "",
         "## 실험 목적",
         "",
-        "동일한 v0.2 합성 REVIEW 데이터와 `template_group` 기반 분할을 "
+        f"동일한 v{result['dataset_version']} 검토 완료 REVIEW 데이터 "
+        f"{result['dataset_rows']}개와 `template_group` 기반 분할을 "
         "사용해 사전학습 문장 Embedding과 얕은 분류기 조합을 비교한다.",
         "Embedding 모델은 고정하고 분류기만 각 Fold에서 학습한다.",
         "",
@@ -457,7 +460,7 @@ def create_report(result: dict[str, object]) -> str:
             "",
             "## 해석 제한",
             "",
-            "- 현재 데이터는 합성 데이터 240개이므로 실제 알림 성능을 "
+            f"- 현재 데이터는 합성 중심 데이터 {result['dataset_rows']}개이므로 실제 알림 성능을 "
             "증명하지 않는다.",
             "- Embedding을 전체 데이터에 미리 생성하지만 라벨을 사용하지 않는 "
             "고정 사전학습 모델이므로 지도학습 라벨 누수는 없다.",
@@ -476,7 +479,22 @@ def create_report(result: dict[str, object]) -> str:
 
 def main() -> None:
     args = parse_args()
-    _, data = load_training_data()
+    _, data = load_training_data(args.dataset_version)
+    report_path = (
+        PROJECT_DIR
+        / "reports"
+        / f"v{args.dataset_version}_pretrained_embedding_bakeoff.md"
+    )
+    result_path = (
+        PROJECT_DIR
+        / "reports"
+        / f"v{args.dataset_version}_pretrained_embedding_bakeoff.json"
+    )
+    lightweight_result_path = (
+        PROJECT_DIR
+        / "reports"
+        / f"v{args.dataset_version}_lightweight_model_bakeoff.json"
+    )
     texts = data["text"].tolist()
     labels = data["label"].to_numpy(dtype=int)
     groups = data["template_group"].to_numpy()
@@ -484,7 +502,7 @@ def main() -> None:
     random_states = (42,) if args.quick else tuple(RANDOM_STATES)
 
     result: dict[str, object] = {
-        "dataset_version": "0.2",
+        "dataset_version": args.dataset_version,
         "dataset_rows": len(data),
         "dataset_fingerprint": fingerprint,
         "random_states": list(random_states),
@@ -498,7 +516,9 @@ def main() -> None:
     }
 
     if not args.no_baseline:
-        result["summaries"].append(load_tfidf_baseline(random_states))
+        result["summaries"].append(
+            load_tfidf_baseline(random_states, lightweight_result_path)
+        )
 
     for candidate_name in args.models:
         candidate = CANDIDATES[candidate_name]
@@ -553,13 +573,13 @@ def main() -> None:
         reverse=True,
     )
 
-    REPORT_PATH.write_text(create_report(result), encoding="utf-8")
-    RESULT_PATH.write_text(
+    report_path.write_text(create_report(result), encoding="utf-8")
+    result_path.write_text(
         json.dumps(result, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(f"\n보고서: {REPORT_PATH}")
-    print(f"상세 결과: {RESULT_PATH}")
+    print(f"\n보고서: {report_path}")
+    print(f"상세 결과: {result_path}")
 
 
 if __name__ == "__main__":

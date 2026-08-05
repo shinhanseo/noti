@@ -1,3 +1,4 @@
+import argparse
 import json
 import tempfile
 from pathlib import Path
@@ -26,8 +27,6 @@ from train_baseline import create_model, create_vectorizer, load_training_data
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-REPORT_PATH = PROJECT_DIR / "reports" / "v0.2_lightweight_model_bakeoff.md"
-RESULT_PATH = PROJECT_DIR / "reports" / "v0.2_lightweight_model_bakeoff.json"
 
 
 def make_candidates() -> dict[str, Callable[[], Pipeline]]:
@@ -176,13 +175,17 @@ def fitted_artifact_size(
     return size_bytes, int(transformed.shape[1])
 
 
-def create_report(summaries: list[dict[str, object]]) -> str:
+def create_report(
+    summaries: list[dict[str, object]],
+    dataset_version: str,
+    dataset_rows: int,
+) -> str:
     lines = [
-        "# v0.2 경량 모델 Bake-off",
+        f"# v{dataset_version} 경량 모델 Bake-off",
         "",
         "## 목적",
         "",
-        "동일한 합성 REVIEW 데이터 240개와 동일한 20개 "
+        f"동일한 검토 완료 REVIEW 데이터 {dataset_rows}개와 동일한 20개 "
         "`random_state`의 5-Fold `StratifiedGroupKFold`를 사용해 "
         "경량 분류 후보를 비교한다.",
         "",
@@ -227,7 +230,24 @@ def create_report(summaries: list[dict[str, object]]) -> str:
 
 
 def main() -> None:
-    _, data = load_training_data()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--dataset-version",
+        default="0.2",
+        choices=("0.2", "0.3"),
+    )
+    args = parser.parse_args()
+    _, data = load_training_data(args.dataset_version)
+    report_path = (
+        PROJECT_DIR
+        / "reports"
+        / f"v{args.dataset_version}_lightweight_model_bakeoff.md"
+    )
+    result_path = (
+        PROJECT_DIR
+        / "reports"
+        / f"v{args.dataset_version}_lightweight_model_bakeoff.json"
+    )
     summaries: list[dict[str, object]] = []
 
     for name, factory in make_candidates().items():
@@ -287,18 +307,25 @@ def main() -> None:
         reverse=True,
     )
 
-    REPORT_PATH.write_text(create_report(summaries), encoding="utf-8")
-    RESULT_PATH.write_text(
+    report_path.write_text(
+        create_report(summaries, args.dataset_version, len(data)),
+        encoding="utf-8",
+    )
+    result_path.write_text(
         json.dumps(
-            {"dataset_version": "0.2", "candidates": summaries},
+            {
+                "dataset_version": args.dataset_version,
+                "dataset_rows": len(data),
+                "candidates": summaries,
+            },
             ensure_ascii=False,
             indent=2,
         ),
         encoding="utf-8",
     )
 
-    print(f"보고서: {REPORT_PATH}")
-    print(f"상세 결과: {RESULT_PATH}")
+    print(f"보고서: {report_path}")
+    print(f"상세 결과: {result_path}")
 
 
 if __name__ == "__main__":
