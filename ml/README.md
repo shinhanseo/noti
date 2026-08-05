@@ -15,7 +15,30 @@ Android 앱 코드는 루트의 `app/`에서 관리하고, 머신러닝 코드�
 7. 실제 익명화 알림으로 그림자 모드 검증
 8. Android 적용용 모델 변환 검토
 
-v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다.
+v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다. 현실형 표현과 실데이터 반입 규칙은 [`docs/dataset-v0.3-design.md`](docs/dataset-v0.3-design.md)에 정리한다.
+
+## v0.3 현실형 데이터 초안
+
+```bash
+python src/generate_dataset_v03.py
+python src/validate_dataset_v03.py
+```
+
+생성 파일:
+
+- `data/public/train_notifications_v0.3.csv`: v0.2 320개 + 현실형 신규 160개
+- `data/public/context_notifications_v0.3.csv`: 문맥 의존 데이터 80개
+- `data/public/public_evaluation_v0.3.csv`: 공개 실데이터를 라벨 없이 받을 입구
+- `data/public/source_manifest_v0.3.csv`: 출처, 라이선스, 반입 상태
+
+실제 Room CSV는 Git에 포함하지 않고 다음처럼 익명화한다.
+
+```bash
+python src/prepare_room_notifications_v03.py \
+  data/private/room_notifications_raw.csv
+```
+
+공개 데이터와 Room 데이터는 처음부터 학습에 넣지 않는다. `UNLABELED` 상태로 반입한 뒤 importance-policy 기준의 사람 검토를 통과한 행만 `HUMAN_REVIEWED`로 승격한다.
 
 ## v0.2 데이터 생성과 검사
 
@@ -30,6 +53,7 @@ python src/verify_portable_model.py
 python src/compare_lightweight_models.py
 python src/train_selected_model.py
 python src/verify_selected_portable_model.py
+python src/compare_pretrained_embeddings.py
 ```
 
 생성 파일:
@@ -54,6 +78,24 @@ python src/predict_notification.py \
 ```
 
 `compare_lightweight_models.py`는 동일한 반복 Group 교차 검증으로 다섯 경량 후보를 비교한다. 현재 합성 v0.2 데이터에서는 Char TF-IDF + 32-unit MLP가 평균 정확도 94.5%, 평균 Recall 95.2%로 임시 1위다. `train_selected_model.py`가 이 모델을 전체 데이터로 학습해 저장하며, 상세 판단과 한계는 `reports/v0.2_model_selection.md`에 기록한다.
+
+`compare_pretrained_embeddings.py`는 `multilingual-e5-small`, `paraphrase-multilingual-MiniLM-L12-v2`, `EmbeddingGemma 300M`의 고정 문장 Embedding 위에서 Logistic Regression과 32-unit MLP를 동일한 반복 Group 교차 검증으로 비교한다. 기존 Char TF-IDF + MLP도 같은 표에 기준선으로 포함한다. Transformer 계열 패키지가 Python 3.14를 아직 지원하지 않을 수 있으므로 Python 3.12 가상환경을 별도로 사용한다.
+
+```bash
+python3.12 -m venv .venv-embeddings
+source .venv-embeddings/bin/activate
+python -m pip install -r requirements-embeddings.txt
+
+# 빠른 파이프라인 확인
+python src/compare_pretrained_embeddings.py \
+  --models multilingual_e5_small \
+  --quick
+
+# 전체 20회 비교. EmbeddingGemma는 Hugging Face 약관 동의가 필요할 수 있다.
+python src/compare_pretrained_embeddings.py
+```
+
+임베딩은 `ml/.cache/pretrained_embeddings/`에 저장해 반복 실행 시간을 줄인다. 캐시는 로컬 실험 산출물이므로 Git에 포함하지 않는다. 이 실험의 Mac CPU 시간은 Android 성능이 아니며, 최종 후보는 INT8 LiteRT 변환 후 실제 기기에서 다시 측정해야 한다.
 
 일정형 문장을 중요·일반 라벨별 2개에서 5개 구조로 확장한 뒤, 동일한 모델의 정확도는 76.7%에서 87.9%로 상승했고 오분류는 56개에서 29개로 감소했다. 합성 데이터 안에서의 비교 결과이므로 실제 알림에 대한 성능으로 해석하지 않는다.
 
