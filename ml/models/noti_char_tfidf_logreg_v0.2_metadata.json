@@ -1,0 +1,58 @@
+{
+  "model_name": "noti_char_tfidf_logreg_v0.2",
+  "model_type": "char_tfidf_logistic_regression",
+  "dataset_version": "0.2",
+  "training_rows": 240,
+  "label_counts": {
+    "0": 120,
+    "1": 120
+  },
+  "template_group_count": 18,
+  "feature_count": 3657,
+  "parameters": {
+    "analyzer": "char",
+    "ngram_range": [
+      2,
+      5
+    ],
+    "min_df": 2,
+    "logistic_regression_max_iter": 1000
+  },
+  "evaluation": {
+    "method": "StratifiedGroupKFold",
+    "folds": 5,
+    "random_state_42_accuracy": 0.8791666666666667,
+    "random_state_42_errors": 29,
+    "random_state_42_confusion_matrix": [
+      [
+        100,
+        20
+      ],
+      [
+        9,
+        111
+      ]
+    ],
+    "repeated_random_state_count": 20,
+    "repeated_accuracy_mean": 0.9172916666666666,
+    "repeated_accuracy_std": 0.02609660870900874,
+    "repeated_accuracy_min": 0.8333333333333334,
+    "repeated_accuracy_max": 0.95
+  },
+  "artifacts": {
+    "joblib": "noti_char_tfidf_logreg_v0.2.joblib",
+    "portable": "noti_char_tfidf_logreg_v0.2_portable.json",
+    "reference_predictions": "noti_char_tfidf_logreg_v0.2_reference_predictions.json"
+  },
+  "integrity": {
+    "training_data_sha256": "e5b973734c0ff3f963ba6341d9ffa3e9ab1cf45784920f783ccc9756a1a394c3",
+    "joblib_sha256": "21e975da6057e5cc1fca838cb40cec81670ac0431ccc7156158ac76b1316837f",
+    "portable_sha256": "0b805180211c70614891f48a2dd340e6cb6131a3aa16cae6001c60b691daeeae",
+    "reload_max_probability_difference": 0.0
+  },
+  "limitations": [
+    "합성 데이터 성능이며 실제 사용자 알림 성능이 아니다.",
+    "확률 보정을 별도로 수행하지 않았다.",
+    "joblib 파일은 신뢰할 수 있는 환경에서만 로드해야 한다."
+  ]
+}

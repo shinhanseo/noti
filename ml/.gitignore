@@ -8,3 +8,5 @@ data/private/
 
 models/*
 !models/.gitkeep
+!models/noti_char_tfidf_logreg_v0.2*
+!models/noti_char_tfidf_mlp_v0.2*

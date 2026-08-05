@@ -25,6 +25,11 @@ python src/validate_dataset_v02.py
 python src/train_baseline.py
 python src/analyze_baseline_errors.py
 python src/evaluate_stability.py
+python src/train_final_model.py
+python src/verify_portable_model.py
+python src/compare_lightweight_models.py
+python src/train_selected_model.py
+python src/verify_selected_portable_model.py
 ```
 
 생성 파일:
@@ -39,6 +44,16 @@ python src/evaluate_stability.py
 `analyze_baseline_errors.py`는 동일한 교차 검증의 오분류를 Fold, 문장 템플릿, 알림 유형, 앱별로 분해하고 `reports/v0.2_error_analysis.md`를 생성한다.
 
 `evaluate_stability.py`는 같은 모델을 20개의 `random_state`로 반복 평가하고 `reports/v0.2_stability_evaluation.md`를 생성한다. 현재 평균 정확도는 91.7%, 반복별 표준편차는 0.026, 범위는 83.3%~95.0%다.
+
+`train_final_model.py`는 REVIEW 학습 대상 240개 전체로 최종 기준 모델을 학습하고 `models/`에 Python용 `joblib`, 구현 중립적인 가중치 JSON, 메타데이터와 기준 예측값을 저장한다. 저장된 모델은 다음처럼 확인할 수 있다.
+
+```bash
+python src/predict_notification.py \
+  --title "결제 상태 안내" \
+  --body "자동이체 처리 중 문제가 발생했습니다."
+```
+
+`compare_lightweight_models.py`는 동일한 반복 Group 교차 검증으로 다섯 경량 후보를 비교한다. 현재 합성 v0.2 데이터에서는 Char TF-IDF + 32-unit MLP가 평균 정확도 94.5%, 평균 Recall 95.2%로 임시 1위다. `train_selected_model.py`가 이 모델을 전체 데이터로 학습해 저장하며, 상세 판단과 한계는 `reports/v0.2_model_selection.md`에 기록한다.
 
 일정형 문장을 중요·일반 라벨별 2개에서 5개 구조로 확장한 뒤, 동일한 모델의 정확도는 76.7%에서 87.9%로 상승했고 오분류는 56개에서 29개로 감소했다. 합성 데이터 안에서의 비교 결과이므로 실제 알림에 대한 성능으로 해석하지 않는다.
 

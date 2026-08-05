@@ -1,0 +1,42 @@
+{
+  "status": "provisional_best_on_synthetic_v0.2",
+  "model_name": "noti_char_tfidf_mlp_v0.2",
+  "model_type": "char_tfidf_mlp",
+  "dataset_version": "0.2",
+  "training_rows": 240,
+  "feature_count": 3657,
+  "hidden_layer_sizes": [
+    32
+  ],
+  "bakeoff": {
+    "name": "char_tfidf_mlp",
+    "accuracy_mean": 0.9452083333333333,
+    "accuracy_std": 0.025626693710963867,
+    "accuracy_min": 0.8666666666666667,
+    "accuracy_max": 0.9833333333333333,
+    "precision_mean": 0.9402849780869601,
+    "recall_mean": 0.9520833333333333,
+    "brier_score_mean": 0.05281919387925501,
+    "log_loss_mean": 0.20814941628300013,
+    "false_positive_mean": 7.4,
+    "false_negative_mean": 5.75,
+    "maximum_group_overlap": 0,
+    "joblib_size_bytes": 3628735,
+    "feature_count": 3657
+  },
+  "artifacts": {
+    "joblib": "noti_char_tfidf_mlp_v0.2.joblib",
+    "portable": "noti_char_tfidf_mlp_v0.2_portable.json",
+    "reference_predictions": "noti_char_tfidf_mlp_v0.2_reference_predictions.json"
+  },
+  "integrity": {
+    "joblib_sha256": "b955325cd7bc66a43b3c2a27cfea5e40a9479f07b038b19740f2e95b91337987",
+    "portable_sha256": "17d0cd3ede679b6fd03c24cac6a9373750b3fd19051ef13f6717483525024c6f",
+    "reload_max_probability_difference": 0.0
+  },
+  "limitations": [
+    "현재 1위는 합성 v0.2 데이터에서의 임시 선정 결과다.",
+    "Pretrained embedding 모델과 실제 익명화 외부 평가를 아직 비교하지 않았다.",
+    "Android 성능과 배터리는 이 모델 선정 범위에 포함되지 않았다."
+  ]
+}

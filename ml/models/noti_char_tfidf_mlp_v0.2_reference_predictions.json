@@ -1,0 +1,62 @@
+{
+  "model_name": "noti_char_tfidf_mlp_v0.2",
+  "probability_tolerance": 1e-06,
+  "notifications": [
+    {
+      "title": "결제 상태 안내",
+      "body": "자동이체 처리 중 문제가 발생했습니다.",
+      "text": "결제 상태 안내 자동이체 처리 중 문제가 발생했습니다.",
+      "important_probability": 0.9952454255403802,
+      "prediction": 1
+    },
+    {
+      "title": "예약 변경",
+      "body": "예약 시간이 내일 오전 9시로 변경되었습니다.",
+      "text": "예약 변경 예약 시간이 내일 오전 9시로 변경되었습니다.",
+      "important_probability": 0.9883356704380849,
+      "prediction": 1
+    },
+    {
+      "title": "확인 요청",
+      "body": "등록된 결제 수단을 다시 확인해주세요.",
+      "text": "확인 요청 등록된 결제 수단을 다시 확인해주세요.",
+      "important_probability": 0.4383012531097136,
+      "prediction": 0
+    },
+    {
+      "title": "배송 안내",
+      "body": "주문한 상품이 오늘 오후 도착할 예정입니다.",
+      "text": "배송 안내 주문한 상품이 오늘 오후 도착할 예정입니다.",
+      "important_probability": 0.2267971244238002,
+      "prediction": 0
+    },
+    {
+      "title": "쿠폰 도착",
+      "body": "오늘까지 사용할 수 있는 할인 쿠폰입니다.",
+      "text": "쿠폰 도착 오늘까지 사용할 수 있는 할인 쿠폰입니다.",
+      "important_probability": 0.6521624143202566,
+      "prediction": 1
+    },
+    {
+      "title": "콘텐츠 소식",
+      "body": "관심 등록한 콘텐츠가 이번 주 공개될 예정입니다.",
+      "text": "콘텐츠 소식 관심 등록한 콘텐츠가 이번 주 공개될 예정입니다.",
+      "important_probability": 0.00823830543768587,
+      "prediction": 0
+    },
+    {
+      "title": "일정 알림",
+      "body": "등록한 일정이 한 시간 후 시작됩니다.",
+      "text": "일정 알림 등록한 일정이 한 시간 후 시작됩니다.",
+      "important_probability": 0.06203887503026243,
+      "prediction": 0
+    },
+    {
+      "title": "오늘의집",
+      "body": "설치 배송 일정이 예정보다 앞당겨졌습니다.",
+      "text": "오늘의집 설치 배송 일정이 예정보다 앞당겨졌습니다.",
+      "important_probability": 0.9626543761112467,
+      "prediction": 1
+    }
+  ]
+}
