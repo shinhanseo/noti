@@ -17,6 +17,76 @@ Android 앱 코드는 루트의 `app/`에서 관리하고, 머신러닝 코드�
 
 v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다. 현실형 표현과 실데이터 반입 규칙은 [`docs/dataset-v0.3-design.md`](docs/dataset-v0.3-design.md)에 정리한다.
 
+## v0.5 고정 5-Fold와 KoELECTRA 최종 실험
+
+v0.5는 정상 배송, 완료된 결제, 일반 정보, 행동 필요, 광고성 위장 표현을 포함한
+정책 검토 합성 문장 160개를 추가했다. 총 680개 중 600개를 학습에 사용하며,
+`template_group`이 겹치지 않는 고정 `cv_fold`를 CSV에 저장한다. 상세 설계는
+[`docs/dataset-v0.5-design.md`](docs/dataset-v0.5-design.md)에 있다.
+
+```bash
+python src/generate_dataset_v05.py
+python src/validate_dataset_v05.py
+
+# Linux/Colab에서 fold별 실행
+python src/train_koelectra_tensorflow.py --fold-index 0 --skip-artifacts
+
+# 내려받은 5개 fold report 집계
+python src/analyze_koelectra_v05_cv.py
+
+# 교차검증 뒤 전체 데이터 최종 학습과 TFLite export
+python src/train_koelectra_final_tensorflow.py \
+  --decision-threshold 0.6587844491004944
+```
+
+5-Fold 평균 Accuracy는 0.922, Recall은 0.938이지만 fold별 Accuracy가
+0.800~0.959로 흔들렸다. 모든 OOF 예측에 공통 임계값을 적용하면 Accuracy 0.875,
+Precision 0.864, Recall 0.909다. 최종 FP32 TFLite는 약 53.8 MiB이며 변환 전후
+logit 최대 차이는 `2.38e-7`이다.
+
+실제 Room 개발 세트에서는 중요한 배송을 잡았지만 일반 11개 중 7개를 중요로
+잘못 올렸다. 이 Room 알림은 v0.5 설계에 참고했으므로 독립 테스트가 아니다.
+새 실제 홀드아웃을 통과하기 전에는 Android 중요도 점수에 연결하지 않는다. 결과는
+[`reports/koelectra_v0.5_training.md`](reports/koelectra_v0.5_training.md)와
+[`reports/koelectra_v0.5_cross_validation.md`](reports/koelectra_v0.5_cross_validation.md)에 있다.
+
+## v0.4 행동 필요성과 개인 선호 분리
+
+v0.4부터 공통 KoELECTRA 모델이 학습할 `행동 필요성`과 Android에서 피드백으로
+학습할 `사용자 선호`를 분리한다. 상세 정책은
+[`docs/dataset-v0.4-design.md`](docs/dataset-v0.4-design.md)에 정리한다.
+
+```bash
+python src/generate_dataset_v04.py
+python src/validate_dataset_v04.py
+```
+
+생성 파일:
+
+- `data/public/train_notifications_v0.4.csv`: 공통 행동 필요성 데이터 520개
+- `data/public/context_notifications_v0.4.csv`: 공통 정답을 두지 않은 개인화 문맥 80개
+- `data/public/review_notifications_v0.4.csv`: 사람이 확인할 경계 사례 30개
+- `data/public/public_evaluation_v0.4.csv`: 공개 실데이터의 검토 전 입구
+- `data/public/source_manifest_v0.4.csv`: 출처와 이용 상태
+
+검수용 워크북은 `reports/outputs/v0.4/dataset_v0.4_review.xlsx`에 있다. 노란색
+`user_actionability`, `user_preference_sensitive`, `review_note` 열만 작성하면 된다.
+검수 결과를 반영해 KoELECTRA 상위 2-layer를 다시 학습하고 TFLite로 변환했다.
+
+```bash
+# Linux/Colab 학습과 TFLite export
+python src/train_koelectra_tensorflow.py
+
+# 실제 알림 원문을 외부로 보내지 않는 로컬 평가
+source .venv-embeddings/bin/activate
+python src/evaluate_koelectra_real_room.py
+```
+
+첫 group fold에서 Recall은 100%였지만 Accuracy 76.6%, Precision 57.7%였고 설문과
+선택형 이벤트 오탐이 22개 발생했다. 실제 Room 12개에서도 배송 출발을 놓치고
+5개의 일반 알림을 중요 후보로 올렸으므로 Android 점수에는 아직 반영하지 않는다.
+상세 결과와 다음 데이터 개선 방향은 `reports/koelectra_v0.4_training.md`에 있다.
+
 ## v0.3 현실형 데이터 초안
 
 ```bash
@@ -121,3 +191,75 @@ ml/
 ```
 
 실제 알림 원문과 개인 데이터는 `data/private/`에만 보관하며 Git에 커밋하지 않는다.
+
+## KoELECTRA LiteRT 변환 가능성 검사
+
+`KoELECTRA-small-v3`는 아직 최종 모델이 아니다. 먼저 임의로 초기화된 2-class
+분류 헤드를 붙여 모델 구조가 LiteRT/TFLite로 변환되고, 변환 전후 logits가
+일치하는지 확인한다. 이 단계에서는 알림 중요도 학습이나 정확도 평가를 하지 않는다.
+
+모델 구조와 실제 파라미터 수, LiteRT Torch의 선행 조건인 `torch.export`
+호환성은 기존 Python 3.12 임베딩 환경에서도 확인할 수 있다.
+
+```bash
+source .venv-embeddings/bin/activate
+python src/probe_koelectra_litert.py --inspect-only
+```
+
+LiteRT Torch 변환은 Linux 환경을 기준으로 지원되므로 Google Colab 또는 별도의
+Linux Python 3.11/3.12 환경에서 실행한다.
+
+```bash
+python3.11 -m venv .venv-litert
+source .venv-litert/bin/activate
+python -m pip install -r requirements-litert.txt
+python src/probe_koelectra_litert.py
+```
+
+성공하면 `models/koelectra_litert_probe/` 아래에 다음 로컬 산출물이 생성된다.
+
+- `koelectra_small_probe_fp32.tflite`
+- `probe_report.json`
+- Python/Android tokenizer 일치 검증에 사용할 tokenizer 파일
+
+이 폴더는 모델 캐시 및 실험 산출물이므로 Git에는 포함하지 않는다. 변환에 성공한
+경우에만 실제 v0.3 데이터 학습, 양자화, Android 통합 단계로 진행한다.
+
+실제 검사에서는 LiteRT Torch 직행 변환이 파일 생성에는 성공했지만 변환 후 logits
+오차가 크게 발생했다. 반면 독립적인 TensorFlow 경로는 TFLite builtin ops만으로
+변환됐고 TensorFlow 대비 TFLite 최대 logits 차이가 약 `2.61e-8`이었다.
+
+```bash
+python -m pip install -r requirements-litert-tensorflow.txt
+python src/probe_koelectra_tensorflow_litert.py
+```
+
+따라서 현재 채택한 배포 경로는 다음과 같다.
+
+```text
+KoELECTRA PyTorch checkpoint
+→ TensorFlow KoELECTRA
+→ TensorFlow Lite Converter
+→ .tflite
+```
+
+측정값과 판단 근거는 `reports/koelectra_litert_probe.md`에 기록한다.
+
+### v0.3 1차 학습 결과
+
+동일한 TensorFlow 경로로 encoder 전체 고정 모델과 상위 2-layer 미세조정 모델을
+학습했다. 상위 2-layer 모델은 합성 group holdout에서 Accuracy 87.0%, Precision
+81.8%, Recall 90.0%를 기록했지만 실제 Room 알림 12개에서는 유일한 중요 배송
+알림을 놓쳤다. 따라서 아직 Android에 연결하지 않는다.
+
+```bash
+# 학습과 TFLite export. Linux/Colab에서 실행
+python src/train_koelectra_tensorflow.py
+
+# 실제 알림을 외부로 보내지 않는 로컬 그림자 평가
+source .venv-embeddings/bin/activate
+python src/evaluate_koelectra_real_room.py
+```
+
+상세 결과는 `reports/koelectra_v0.3_training.md`와
+`reports/v0.3_koelectra_real_room_evaluation.md`에 기록한다.

@@ -1,0 +1,9 @@
+# Alternative KoELECTRA -> TensorFlow -> TFLite conversion probe.
+# Run in a clean Linux/Colab environment with Python 3.11 or 3.12.
+numpy
+pandas
+scikit-learn
+torch
+tensorflow
+tf-keras
+transformers<5

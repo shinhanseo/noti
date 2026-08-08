@@ -1,0 +1,32 @@
+{
+  "model": "models/koelectra_tensorflow_v0.3_top2/noti_koelectra_v0.3_top2_fp32.tflite",
+  "review_rows": 12,
+  "important_rows": 1,
+  "general_rows": 11,
+  "threshold": 0.75431889295578,
+  "important_predictions": 0,
+  "general_predictions": 12,
+  "metrics": {
+    "accuracy": 0.9166666666666666,
+    "precision": 0.0,
+    "recall": 0.0,
+    "false_positive": 0,
+    "false_negative": 1,
+    "confusion_matrix": [
+      [
+        11,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "latency_ms": {
+    "median": 3.3989790099440143,
+    "p95": 43.42269564076553,
+    "minimum": 2.8795420075766742,
+    "maximum": 90.90524999191985
+  }
+}

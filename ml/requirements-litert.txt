@@ -1,0 +1,6 @@
+# KoELECTRA -> LiteRT conversion probe.
+# LiteRT Torch currently targets Linux; use Python 3.11 in Google Colab or Linux.
+numpy
+torch
+transformers
+litert-torch

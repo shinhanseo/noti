@@ -22,8 +22,18 @@ def mask_private_text(value: str) -> str:
     value = re.sub(r"https?://\S+", "<URL>", value)
     value = re.sub(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "<EMAIL>", value)
     value = re.sub(r"(?<!\d)01[016789][- ]?\d{3,4}[- ]?\d{4}(?!\d)", "<PHONE>", value)
+    value = re.sub(r"(?<!\d)0\d{1,2}[- ]\d{3,4}[- ]\d{4}(?!\d)", "<PHONE>", value)
     value = re.sub(r"(?<!\d)(?:\d[- ]?){12,18}\d(?!\d)", "<ACCOUNT_OR_CARD>", value)
-    value = re.sub(r"(?<!\d)\d{4,8}(?=\s*(?:원|KRW))", "<AMOUNT>", value)
+    value = re.sub(
+        r"(?<!\d)(?:\d{1,3}(?:,\d{3})+|\d{4,8})(?=\s*(?:원|KRW))",
+        "<AMOUNT>",
+        value,
+    )
+    value = re.sub(
+        r"(예금|적금|계좌|입금|출금)(\([^)]*\))\s+[가-힣]{2,4}(?=\s+\d{2}[/:])",
+        r"\1(<ACCOUNT_SUFFIX>) <NAME>",
+        value,
+    )
     value = re.sub(r"(?i)(인증번호|인증코드|verification code)(\s*[:은는]?\s*)\d{4,8}", r"\1\2<CODE>", value)
     return re.sub(r"\s+", " ", value)
 
