@@ -1,0 +1,2 @@
+# Keep the ML experiment code, but present this repository as an Android project.
+ml/**/*.py linguist-detectable=false
