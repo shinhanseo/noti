@@ -1,0 +1,41 @@
+{
+  "dataset_version": "0.5",
+  "review_rows": 12,
+  "important_rows": 1,
+  "general_rows": 11,
+  "binary_threshold": 0.7534542828798294,
+  "predicted_actionability_counts": {
+    "ATTENTION_WORTHY": 8,
+    "GENERAL": 3,
+    "ACTION_REQUIRED": 1
+  },
+  "model_score_delta_counts": {
+    "15": 9,
+    "0": 1,
+    "-10": 1,
+    "-15": 1
+  },
+  "personal_label_metrics": {
+    "accuracy": 0.3333333333333333,
+    "precision": 0.1111111111111111,
+    "recall": 1.0,
+    "false_positive": 8,
+    "false_negative": 0,
+    "confusion_matrix": [
+      [
+        3,
+        8
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "latency_ms": {
+    "median": 3.432167010032572,
+    "p95": 47.298585445969294,
+    "minimum": 2.673499984666705,
+    "maximum": 99.91820799768902
+  }
+}

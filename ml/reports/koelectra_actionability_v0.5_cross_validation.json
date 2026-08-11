@@ -1,0 +1,525 @@
+{
+  "dataset_version": "0.5",
+  "label_order": [
+    "PROMOTIONAL",
+    "INFORMATIONAL",
+    "ATTENTION_WORTHY",
+    "ACTION_REQUIRED"
+  ],
+  "rows": 600,
+  "folds": [
+    {
+      "fold": 0,
+      "rows": 118,
+      "actionability_metrics": {
+        "accuracy": 0.7627118644067796,
+        "macro_precision": 0.5706550802139037,
+        "macro_recall": 0.6408730158730158,
+        "macro_f1": 0.5998599439775911,
+        "weighted_f1": 0.7204481792717087,
+        "confusion_matrix": [
+          [
+            40,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            10,
+            0
+          ],
+          [
+            0,
+            0,
+            22,
+            6
+          ],
+          [
+            0,
+            0,
+            8,
+            28
+          ]
+        ],
+        "per_class": {
+          "PROMOTIONAL": {
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523,
+            "support": 40
+          },
+          "INFORMATIONAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 14
+          },
+          "ATTENTION_WORTHY": {
+            "precision": 0.55,
+            "recall": 0.7857142857142857,
+            "f1": 0.6470588235294118,
+            "support": 28
+          },
+          "ACTION_REQUIRED": {
+            "precision": 0.8235294117647058,
+            "recall": 0.7777777777777778,
+            "f1": 0.8,
+            "support": 36
+          }
+        }
+      },
+      "binary_metrics": {
+        "threshold": 0.6449002623558044,
+        "accuracy": 0.9322033898305084,
+        "precision": 0.9375,
+        "recall": 0.9375,
+        "f1": 0.9375,
+        "confusion_matrix": [
+          [
+            50,
+            4
+          ],
+          [
+            4,
+            60
+          ]
+        ],
+        "false_positive": 4,
+        "false_negative": 4
+      }
+    },
+    {
+      "fold": 1,
+      "rows": 122,
+      "actionability_metrics": {
+        "accuracy": 0.6967213114754098,
+        "macro_precision": 0.5427083333333333,
+        "macro_recall": 0.6160256410256411,
+        "macro_f1": 0.5702310924369748,
+        "weighted_f1": 0.6410455985672957,
+        "confusion_matrix": [
+          [
+            36,
+            0,
+            4,
+            0
+          ],
+          [
+            18,
+            0,
+            1,
+            1
+          ],
+          [
+            6,
+            0,
+            19,
+            1
+          ],
+          [
+            0,
+            0,
+            6,
+            30
+          ]
+        ],
+        "per_class": {
+          "PROMOTIONAL": {
+            "precision": 0.6,
+            "recall": 0.9,
+            "f1": 0.72,
+            "support": 40
+          },
+          "INFORMATIONAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 20
+          },
+          "ATTENTION_WORTHY": {
+            "precision": 0.6333333333333333,
+            "recall": 0.7307692307692307,
+            "f1": 0.6785714285714286,
+            "support": 26
+          },
+          "ACTION_REQUIRED": {
+            "precision": 0.9375,
+            "recall": 0.8333333333333334,
+            "f1": 0.8823529411764706,
+            "support": 36
+          }
+        }
+      },
+      "binary_metrics": {
+        "threshold": 0.5537364184856415,
+        "accuracy": 0.9098360655737705,
+        "precision": 0.9047619047619048,
+        "recall": 0.9193548387096774,
+        "f1": 0.912,
+        "confusion_matrix": [
+          [
+            54,
+            6
+          ],
+          [
+            5,
+            57
+          ]
+        ],
+        "false_positive": 6,
+        "false_negative": 5
+      }
+    },
+    {
+      "fold": 2,
+      "rows": 120,
+      "actionability_metrics": {
+        "accuracy": 0.65,
+        "macro_precision": 0.5090339892665474,
+        "macro_recall": 0.5833701901813357,
+        "macro_f1": 0.5390399956437693,
+        "weighted_f1": 0.5939168867470755,
+        "confusion_matrix": [
+          [
+            28,
+            0,
+            5,
+            5
+          ],
+          [
+            20,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            20,
+            8
+          ],
+          [
+            4,
+            0,
+            0,
+            30
+          ]
+        ],
+        "per_class": {
+          "PROMOTIONAL": {
+            "precision": 0.5384615384615384,
+            "recall": 0.7368421052631579,
+            "f1": 0.6222222222222222,
+            "support": 38
+          },
+          "INFORMATIONAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 20
+          },
+          "ATTENTION_WORTHY": {
+            "precision": 0.8,
+            "recall": 0.7142857142857143,
+            "f1": 0.7547169811320755,
+            "support": 28
+          },
+          "ACTION_REQUIRED": {
+            "precision": 0.6976744186046512,
+            "recall": 0.8823529411764706,
+            "f1": 0.7792207792207793,
+            "support": 34
+          }
+        }
+      },
+      "binary_metrics": {
+        "threshold": 0.6473867297172546,
+        "accuracy": 0.9333333333333333,
+        "precision": 0.9655172413793104,
+        "recall": 0.9032258064516129,
+        "f1": 0.9333333333333333,
+        "confusion_matrix": [
+          [
+            56,
+            2
+          ],
+          [
+            6,
+            56
+          ]
+        ],
+        "false_positive": 2,
+        "false_negative": 6
+      }
+    },
+    {
+      "fold": 3,
+      "rows": 120,
+      "actionability_metrics": {
+        "accuracy": 0.45,
+        "macro_precision": 0.436492673992674,
+        "macro_recall": 0.37569444444444444,
+        "macro_f1": 0.3428030303030303,
+        "weighted_f1": 0.4065151515151515,
+        "confusion_matrix": [
+          [
+            15,
+            0,
+            0,
+            25
+          ],
+          [
+            6,
+            0,
+            2,
+            6
+          ],
+          [
+            0,
+            0,
+            8,
+            22
+          ],
+          [
+            5,
+            0,
+            0,
+            31
+          ]
+        ],
+        "per_class": {
+          "PROMOTIONAL": {
+            "precision": 0.5769230769230769,
+            "recall": 0.375,
+            "f1": 0.45454545454545453,
+            "support": 40
+          },
+          "INFORMATIONAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 14
+          },
+          "ATTENTION_WORTHY": {
+            "precision": 0.8,
+            "recall": 0.26666666666666666,
+            "f1": 0.4,
+            "support": 30
+          },
+          "ACTION_REQUIRED": {
+            "precision": 0.36904761904761907,
+            "recall": 0.8611111111111112,
+            "f1": 0.5166666666666667,
+            "support": 36
+          }
+        }
+      },
+      "binary_metrics": {
+        "threshold": 0.5857696533203125,
+        "accuracy": 0.725,
+        "precision": 0.6896551724137931,
+        "recall": 0.9090909090909091,
+        "f1": 0.7843137254901961,
+        "confusion_matrix": [
+          [
+            27,
+            27
+          ],
+          [
+            6,
+            60
+          ]
+        ],
+        "false_positive": 27,
+        "false_negative": 6
+      }
+    },
+    {
+      "fold": 4,
+      "rows": 120,
+      "actionability_metrics": {
+        "accuracy": 0.6,
+        "macro_precision": 0.5494791666666666,
+        "macro_recall": 0.47777777777777775,
+        "macro_f1": 0.39273936170212764,
+        "weighted_f1": 0.49056914893617015,
+        "confusion_matrix": [
+          [
+            36,
+            0,
+            0,
+            4
+          ],
+          [
+            14,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            2,
+            26
+          ],
+          [
+            2,
+            0,
+            0,
+            34
+          ]
+        ],
+        "per_class": {
+          "PROMOTIONAL": {
+            "precision": 0.6666666666666666,
+            "recall": 0.9,
+            "f1": 0.7659574468085106,
+            "support": 40
+          },
+          "INFORMATIONAL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 14
+          },
+          "ATTENTION_WORTHY": {
+            "precision": 1.0,
+            "recall": 0.06666666666666667,
+            "f1": 0.125,
+            "support": 30
+          },
+          "ACTION_REQUIRED": {
+            "precision": 0.53125,
+            "recall": 0.9444444444444444,
+            "f1": 0.68,
+            "support": 36
+          }
+        }
+      },
+      "binary_metrics": {
+        "threshold": 0.547409251332283,
+        "accuracy": 0.95,
+        "precision": 0.9411764705882353,
+        "recall": 0.9696969696969697,
+        "f1": 0.9552238805970149,
+        "confusion_matrix": [
+          [
+            50,
+            4
+          ],
+          [
+            2,
+            64
+          ]
+        ],
+        "false_positive": 4,
+        "false_negative": 2
+      }
+    }
+  ],
+  "fold_metric_summary": {
+    "accuracy": {
+      "mean": 0.631886635176438,
+      "std": 0.10559012775622278,
+      "minimum": 0.45,
+      "maximum": 0.7627118644067796
+    },
+    "macro_f1": {
+      "mean": 0.48893468481269853,
+      "std": 0.1020118246331958,
+      "minimum": 0.3428030303030303,
+      "maximum": 0.5998599439775911
+    }
+  },
+  "pooled_actionability_metrics": {
+    "accuracy": 0.6316666666666667,
+    "macro_precision": 0.4789154505464297,
+    "macro_recall": 0.5355947111565089,
+    "macro_f1": 0.49700377866144385,
+    "confusion_matrix": [
+      [
+        155,
+        0,
+        9,
+        34
+      ],
+      [
+        62,
+        0,
+        13,
+        7
+      ],
+      [
+        8,
+        0,
+        71,
+        63
+      ],
+      [
+        11,
+        0,
+        14,
+        153
+      ]
+    ],
+    "per_class": {
+      "PROMOTIONAL": {
+        "precision": 0.6567796610169492,
+        "recall": 0.7828282828282829,
+        "f1": 0.7142857142857143,
+        "support": 198
+      },
+      "INFORMATIONAL": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 82
+      },
+      "ATTENTION_WORTHY": {
+        "precision": 0.6635514018691588,
+        "recall": 0.5,
+        "f1": 0.570281124497992,
+        "support": 142
+      },
+      "ACTION_REQUIRED": {
+        "precision": 0.5953307392996109,
+        "recall": 0.8595505617977528,
+        "f1": 0.7034482758620689,
+        "support": 178
+      }
+    }
+  },
+  "pooled_binary_metrics": {
+    "threshold": 0.5957255959510803,
+    "accuracy": 0.86,
+    "precision": 0.8450292397660819,
+    "recall": 0.903125,
+    "f1": 0.8731117824773413,
+    "confusion_matrix": [
+      [
+        227,
+        53
+      ],
+      [
+        31,
+        289
+      ]
+    ],
+    "false_positive": 53,
+    "false_negative": 31
+  },
+  "binary_error_event_types": {
+    "GENERAL_INFORMATION": 17,
+    "SURVEY": 17,
+    "USER_ACTION": 16,
+    "PROMOTION": 12,
+    "SCHEDULE_CHANGE": 10,
+    "OPTIONAL_CONTENT": 6,
+    "ADDRESS_ACTION": 2,
+    "DEADLINE_ACTION": 2,
+    "SUMMARY": 1,
+    "DELIVERY_STATUS": 1
+  }
+}

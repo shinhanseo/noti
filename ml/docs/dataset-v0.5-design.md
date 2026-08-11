@@ -82,5 +82,22 @@ python src/validate_dataset_v05.py
 - 기존 Room 12개는 실패 유형을 설계에 참고했으므로 독립 테스트가 아니라 개발 세트다.
 - Android 중요도 점수 연결 전 새 사용자·새 시점의 미사용 실제 알림이 필요하다.
 
-결과는 `reports/koelectra_v0.5_cross_validation.md`와
-`reports/v0.5_koelectra_real_room_evaluation.md`에 기록한다.
+## 최종 모델 출력 계약
+
+4개 원본 actionability를 그대로 분류한 실험은 `INFORMATIONAL` Recall이 0이어서
+채택하지 않았다. 온디바이스 후보는 다음 3개 클래스를 예측한다.
+
+| 모델 클래스 | 원본 데이터 |
+|---|---|
+| `GENERAL` | `PROMOTIONAL`, `INFORMATIONAL` |
+| `ATTENTION_WORTHY` | `ATTENTION_WORTHY` |
+| `ACTION_REQUIRED` | `ACTION_REQUIRED` |
+
+기존 중요도 정책에 전달하는 값은
+`P(ATTENTION_WORTHY) + P(ACTION_REQUIRED)`로 고정한다. 모델 버전이 달라져도
+Android가 임의로 클래스 순서를 추측하지 않도록 label order와 확률 계산 규칙을
+`model_contract.json`에 함께 저장한다.
+
+결과는 `reports/koelectra_actionability_triage_v0.5_training.md`,
+`reports/koelectra_actionability_triage_v0.5_cross_validation.md`,
+`reports/v0.5_koelectra_actionability_room.md`에 기록한다.

@@ -17,7 +17,7 @@ Android 앱 코드는 루트의 `app/`에서 관리하고, 머신러닝 코드�
 
 v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다. 현실형 표현과 실데이터 반입 규칙은 [`docs/dataset-v0.3-design.md`](docs/dataset-v0.3-design.md)에 정리한다.
 
-## v0.5 고정 5-Fold와 KoELECTRA 최종 실험
+## v0.5 고정 5-Fold와 KoELECTRA 3단계 실험
 
 v0.5는 정상 배송, 완료된 결제, 일반 정보, 행동 필요, 광고성 위장 표현을 포함한
 정책 검토 합성 문장 160개를 추가했다. 총 680개 중 600개를 학습에 사용하며,
@@ -28,27 +28,34 @@ v0.5는 정상 배송, 완료된 결제, 일반 정보, 행동 필요, 광고성
 python src/generate_dataset_v05.py
 python src/validate_dataset_v05.py
 
-# Linux/Colab에서 fold별 실행
-python src/train_koelectra_tensorflow.py --fold-index 0 --skip-artifacts
+# fold별 3단계 Actionability 학습
+python src/train_koelectra_actionability_tensorflow.py \
+  --fold-index 0 --skip-artifacts
 
 # 내려받은 5개 fold report 집계
-python src/analyze_koelectra_v05_cv.py
+python src/analyze_koelectra_actionability_cv.py
 
 # 교차검증 뒤 전체 데이터 최종 학습과 TFLite export
-python src/train_koelectra_final_tensorflow.py \
-  --decision-threshold 0.6587844491004944
+python src/train_koelectra_actionability_final_tensorflow.py \
+  --decision-threshold 0.7534542828798294
 ```
 
-5-Fold 평균 Accuracy는 0.922, Recall은 0.938이지만 fold별 Accuracy가
-0.800~0.959로 흔들렸다. 모든 OOF 예측에 공통 임계값을 적용하면 Accuracy 0.875,
-Precision 0.864, Recall 0.909다. 최종 FP32 TFLite는 약 53.8 MiB이며 변환 전후
-logit 최대 차이는 `2.38e-7`이다.
+4개 원본 라벨을 그대로 예측한 실험은 `INFORMATIONAL` Recall이 0이어서 폐기했다.
+최종 후보는 `PROMOTIONAL`과 `INFORMATIONAL`을 `GENERAL`로 합치고,
+`ATTENTION_WORTHY`, `ACTION_REQUIRED`를 별도로 예측하는 3단계 구조다.
 
-실제 Room 개발 세트에서는 중요한 배송을 잡았지만 일반 11개 중 7개를 중요로
+3단계 5-Fold OOF Accuracy는 0.863, Macro F1은 0.859다. 두 중요 후보 클래스의
+확률을 합친 공통 임계값 결과는 Accuracy 0.915, Precision 0.927, Recall 0.913이다.
+최종 FP32 TFLite는 약 53.8 MiB이며 변환 전후 logit 최대 차이는 `4.77e-7`이다.
+후처리 양자화 결과 FP16은 약 27.0 MiB, 동적 범위 모델은 약 14.0 MiB로 줄었고,
+v0.5 600개에서 FP32와 3단계 예측 및 보조 점수가 모두 일치했다. 실제 Android
+후보는 동적 범위 모델을 먼저 측정하되 FP16을 보수적 대안으로 유지한다.
+
+실제 Room 개발 세트에서는 중요한 배송을 잡았지만 일반 11개 중 8개를 중요로
 잘못 올렸다. 이 Room 알림은 v0.5 설계에 참고했으므로 독립 테스트가 아니다.
 새 실제 홀드아웃을 통과하기 전에는 Android 중요도 점수에 연결하지 않는다. 결과는
-[`reports/koelectra_v0.5_training.md`](reports/koelectra_v0.5_training.md)와
-[`reports/koelectra_v0.5_cross_validation.md`](reports/koelectra_v0.5_cross_validation.md)에 있다.
+[`reports/koelectra_actionability_triage_v0.5_training.md`](reports/koelectra_actionability_triage_v0.5_training.md)와
+[`reports/koelectra_actionability_triage_v0.5_cross_validation.md`](reports/koelectra_actionability_triage_v0.5_cross_validation.md)에 있다.
 
 ## v0.4 행동 필요성과 개인 선호 분리
 
