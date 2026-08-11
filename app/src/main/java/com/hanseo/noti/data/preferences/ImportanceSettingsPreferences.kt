@@ -1,6 +1,7 @@
 package com.hanseo.noti.data.preferences
 
 import android.content.Context
+import android.net.Uri
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringSetPreferencesKey
@@ -37,6 +38,11 @@ class ImportanceSettingsPreferences @Inject constructor(
             stringSetPreferencesKey(
                 "global_important_keywords"
             )
+
+        val EXCLUSION_KEYWORDS =
+            stringSetPreferencesKey(
+                "exclusion_keywords"
+            )
     }
 
     val settings: Flow<ImportanceSettings> =
@@ -61,7 +67,10 @@ class ImportanceSettingsPreferences @Inject constructor(
                         ]?.toSet() ?: emptySet(),
 
                     exclusionKeywordsByPackage =
-                        emptyMap()
+                        decodeExclusionKeywords(
+                            preferences[EXCLUSION_KEYWORDS]
+                                ?: emptySet()
+                        )
                 )
             }
 
@@ -100,5 +109,144 @@ class ImportanceSettingsPreferences @Inject constructor(
             preferences[GLOBAL_IMPORTANT_KEYWORDS] =
                 sanitizedKeywords
         }
+    }
+
+    suspend fun updateImportantApps(
+        importantAppPackages: Set<String>
+    ) {
+        val sanitizedPackages =
+            sanitizeValues(importantAppPackages)
+
+        context.importanceSettingsDataStore.edit { preferences ->
+            preferences[IMPORTANT_APP_PACKAGES] =
+                sanitizedPackages
+
+            val currentExclusions =
+                decodeExclusionKeywords(
+                    preferences[EXCLUSION_KEYWORDS]
+                        ?: emptySet()
+                )
+                    .filterKeys { packageName ->
+                        packageName in sanitizedPackages
+                    }
+
+            preferences[EXCLUSION_KEYWORDS] =
+                encodeExclusionKeywords(
+                    currentExclusions
+                )
+        }
+    }
+
+    suspend fun updateGlobalImportantKeywords(
+        keywords: Set<String>
+    ) {
+        context.importanceSettingsDataStore.edit { preferences ->
+            preferences[GLOBAL_IMPORTANT_KEYWORDS] =
+                sanitizeValues(keywords)
+        }
+    }
+
+    suspend fun updateExclusionKeywords(
+        packageName: String,
+        keywords: Set<String>
+    ) {
+        val sanitizedPackageName =
+            packageName.trim()
+
+        if (sanitizedPackageName.isEmpty()) {
+            return
+        }
+
+        context.importanceSettingsDataStore.edit { preferences ->
+            val updatedExclusions =
+                decodeExclusionKeywords(
+                    preferences[EXCLUSION_KEYWORDS]
+                        ?: emptySet()
+                )
+                    .toMutableMap()
+
+            val sanitizedKeywords =
+                sanitizeValues(keywords)
+
+            if (sanitizedKeywords.isEmpty()) {
+                updatedExclusions.remove(
+                    sanitizedPackageName
+                )
+            } else {
+                updatedExclusions[sanitizedPackageName] =
+                    sanitizedKeywords
+            }
+
+            preferences[EXCLUSION_KEYWORDS] =
+                encodeExclusionKeywords(
+                    updatedExclusions
+                )
+        }
+    }
+
+    private fun sanitizeValues(
+        values: Set<String>
+    ): Set<String> {
+        return values
+            .map { value -> value.trim() }
+            .filter { value -> value.isNotEmpty() }
+            .toSet()
+    }
+
+    private fun encodeExclusionKeywords(
+        exclusions: Map<String, Set<String>>
+    ): Set<String> {
+        return exclusions.flatMap { (packageName, keywords) ->
+            keywords.map { keyword ->
+                "$packageName|${Uri.encode(keyword)}"
+            }
+        }.toSet()
+    }
+
+    private fun decodeExclusionKeywords(
+        entries: Set<String>
+    ): Map<String, Set<String>> {
+        return entries
+            .mapNotNull { entry ->
+                val separatorIndex =
+                    entry.indexOf('|')
+
+                if (
+                    separatorIndex <= 0 ||
+                    separatorIndex == entry.lastIndex
+                ) {
+                    return@mapNotNull null
+                }
+
+                val packageName =
+                    entry.substring(
+                        startIndex = 0,
+                        endIndex = separatorIndex
+                    )
+
+                val keyword =
+                    Uri.decode(
+                        entry.substring(
+                            startIndex = separatorIndex + 1
+                        )
+                    ).trim()
+
+                if (keyword.isEmpty()) {
+                    null
+                } else {
+                    packageName to keyword
+                }
+            }
+            .groupBy(
+                keySelector = { (packageName, _) ->
+                    packageName
+                },
+                valueTransform = { (_, keyword) ->
+                    keyword
+                }
+            )
+            .mapValues { (_, keywords) ->
+                keywords.toSet()
+            }
     }
 }
