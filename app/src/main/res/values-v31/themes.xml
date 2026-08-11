@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Android 12 이상 시스템 SplashScreen API가 읽는 속성 -->
+    <style name="Theme.Noti.Starting" parent="Theme.Noti">
+        <item name="android:windowSplashScreenBackground">@color/noti_splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/noti_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">300</item>
+        <item name="android:windowBackground">@drawable/noti_splash_background</item>
+    </style>
+
+</resources>

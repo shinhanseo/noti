@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Noti" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Noti" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/noti_splash_background</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <!-- Android 11 이하에서 앱 화면이 그려지기 전 표시되는 시작 테마 -->
+    <style name="Theme.Noti.Starting" parent="Theme.Noti">
+        <item name="android:windowBackground">@drawable/noti_splash_background</item>
+    </style>
 </resources>
