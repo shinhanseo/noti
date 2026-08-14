@@ -6,10 +6,8 @@ class ImportanceClassifier {
         settings: ImportanceSettings,
         evaluatedAtMillis: Long = System.currentTimeMillis()
     ) : ImportanceResult {
-        val normalizedText = ImportanceTextNormalizer.normalize(
-            title = input.title,
-            body = input.body,
-        )
+        val normalizedText =
+            ImportanceTextPreprocessor.normalize(input)
 
         val globalKeywordResult = classifyGlobalImportantKeyword(
             settings = settings,
@@ -65,7 +63,7 @@ class ImportanceClassifier {
 
         val hasMatchedKeyword = exclusionKeywords.any { keyword ->
             val normalizedKeyword =
-                ImportanceTextNormalizer.normalizeKeyword(keyword)
+                ImportanceTextPreprocessor.normalizeKeyword(keyword)
 
             normalizedKeyword.isNotEmpty() &&
                     normalizedText.contains(normalizedKeyword)
