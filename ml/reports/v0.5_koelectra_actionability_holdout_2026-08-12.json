@@ -1,0 +1,60 @@
+{
+  "dataset_version": "0.5",
+  "evaluation_kind": "independent_holdout",
+  "review_rows": 6,
+  "important_rows": 4,
+  "general_rows": 2,
+  "binary_threshold": 0.7534542828798294,
+  "predicted_actionability_counts": {
+    "ATTENTION_WORTHY": 5,
+    "ACTION_REQUIRED": 1
+  },
+  "model_score_delta_counts": {
+    "15": 6
+  },
+  "personal_label_metrics": {
+    "accuracy": 0.6666666666666666,
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "false_positive": 2,
+    "false_negative": 0,
+    "confusion_matrix": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        4
+      ]
+    ]
+  },
+  "latency_ms": {
+    "median": 3.132728990749456,
+    "p95": 25.79413549392484,
+    "minimum": 2.7054999954998493,
+    "maximum": 33.004124998115
+  },
+  "common_actionability_metrics": {
+    "rows": 6,
+    "accuracy": 0.5,
+    "macro_f1": 0.2222222222222222,
+    "confusion_matrix": [
+      [
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        3,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  }
+}

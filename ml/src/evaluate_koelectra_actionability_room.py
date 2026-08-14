@@ -10,7 +10,13 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from ai_edge_litert.interpreter import Interpreter
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+)
 from transformers import AutoTokenizer
 
 from actionability_contract import (
@@ -61,13 +67,23 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--report-markdown", type=Path, default=DEFAULT_REPORT_MARKDOWN
     )
+    parser.add_argument(
+        "--evaluation-kind",
+        choices=("development", "independent_holdout"),
+        default="development",
+    )
     return parser.parse_args()
 
 
 def make_markdown(result: dict[str, object]) -> str:
     metric = result["personal_label_metrics"]
+    independent = result["evaluation_kind"] == "independent_holdout"
     lines = [
-        "# KoELECTRA v0.5 3-Tier 실제 Room 개발 세트 점검",
+        (
+            "# KoELECTRA v0.5 3-Tier 실제 Room 독립 홀드아웃"
+            if independent
+            else "# KoELECTRA v0.5 3-Tier 실제 Room 개발 세트 점검"
+        ),
         "",
         "## 조건",
         "",
@@ -83,9 +99,25 @@ def make_markdown(result: dict[str, object]) -> str:
         f"- Recall: {metric['recall']:.3f}",
         f"- FP/FN: {metric['false_positive']}/{metric['false_negative']}",
         "",
+    ]
+    if "common_actionability_metrics" in result:
+        actionability = result["common_actionability_metrics"]
+        lines.extend(
+            [
+                "## 공통 Actionability 정답과 비교",
+                "",
+                f"- Accuracy: {actionability['accuracy']:.3f}",
+                f"- Macro F1: {actionability['macro_f1']:.3f}",
+                "- Confusion matrix 순서: GENERAL, ATTENTION_WORTHY, ACTION_REQUIRED",
+                "",
+            ]
+        )
+    lines.extend(
+        [
         "## 예측 Actionability 분포",
         "",
-    ]
+        ]
+    )
     for label in ACTIONABILITY_LABELS:
         lines.append(f"- `{label}`: {result['predicted_actionability_counts'].get(label, 0)}개")
     lines.extend(
@@ -99,8 +131,16 @@ def make_markdown(result: dict[str, object]) -> str:
             "## 제한",
             "",
             "- 사용자 중요/일반 라벨은 공통 actionability 정답과 다르다.",
-            "- 이 데이터는 모델 설계에 참고했으므로 독립 테스트가 아니다.",
-            "- Android 적용 전 새 실제 홀드아웃이 필요하다.",
+            (
+                "- 모델과 임계값을 고정한 뒤 수집한 독립 홀드아웃이다."
+                if independent
+                else "- 이 데이터는 모델 설계에 참고했으므로 독립 테스트가 아니다."
+            ),
+            (
+                "- 6개뿐인 작은 표본이므로 Android 적용 판단에는 부족하다."
+                if independent
+                else "- Android 적용 전 새 실제 홀드아웃이 필요하다."
+            ),
             "",
         ]
     )
@@ -113,9 +153,30 @@ def main() -> None:
     threshold = float(training_report["binary_decision_threshold"]["threshold"])
     room_data = load_room_candidates(args.database)
     labels = pd.read_csv(args.labels, dtype={"private_id": str})
-    room_data["human_label"] = room_data["private_id"].map(
-        labels.set_index("private_id")["human_label"]
-    )
+    indexed_labels = labels.set_index("private_id")
+    if "human_label" in labels:
+        personal_labels = indexed_labels["human_label"]
+    elif "personal_preference" in labels:
+        unknown_preferences = set(labels["personal_preference"].dropna()) - {
+            "GENERAL",
+            "IMPORTANT",
+        }
+        if unknown_preferences:
+            raise ValueError(
+                f"알 수 없는 personal_preference: {sorted(unknown_preferences)}"
+            )
+        personal_labels = indexed_labels["personal_preference"].map(
+            {"GENERAL": 0, "IMPORTANT": 1}
+        )
+    else:
+        raise ValueError(
+            "라벨 CSV에는 human_label 또는 personal_preference가 필요합니다."
+        )
+    room_data["human_label"] = room_data["private_id"].map(personal_labels)
+    if "common_actionability" in labels:
+        room_data["common_actionability"] = room_data["private_id"].map(
+            indexed_labels["common_actionability"]
+        )
     labeled = room_data[room_data["human_label"].notna()].copy()
     if labeled.empty:
         raise RuntimeError("사용자 라벨이 있는 실제 REVIEW 알림이 없습니다.")
@@ -165,6 +226,7 @@ def main() -> None:
 
     result: dict[str, object] = {
         "dataset_version": "0.5",
+        "evaluation_kind": args.evaluation_kind,
         "review_rows": len(labeled),
         "important_rows": int(actual.sum()),
         "general_rows": int((actual == 0).sum()),
@@ -194,6 +256,38 @@ def main() -> None:
             "maximum": float(np.max(latencies_ms)),
         },
     }
+    if "common_actionability" in labeled:
+        actionability_labeled = labeled[
+            labeled["common_actionability"].notna()
+            & labeled["common_actionability"].ne("")
+        ]
+        if not actionability_labeled.empty:
+            actionability_actual = actionability_labeled[
+                "common_actionability"
+            ].astype(str)
+            actionability_predicted = actionability_labeled[
+                "predicted_actionability"
+            ].astype(str)
+            result["common_actionability_metrics"] = {
+                "rows": len(actionability_labeled),
+                "accuracy": float(
+                    accuracy_score(actionability_actual, actionability_predicted)
+                ),
+                "macro_f1": float(
+                    f1_score(
+                        actionability_actual,
+                        actionability_predicted,
+                        labels=list(ACTIONABILITY_LABELS),
+                        average="macro",
+                        zero_division=0,
+                    )
+                ),
+                "confusion_matrix": confusion_matrix(
+                    actionability_actual,
+                    actionability_predicted,
+                    labels=list(ACTIONABILITY_LABELS),
+                ).tolist(),
+            }
     args.private_output.parent.mkdir(parents=True, exist_ok=True)
     output_columns = [
         "private_id",
@@ -201,6 +295,7 @@ def main() -> None:
         "title",
         "body",
         "human_label",
+        *(["common_actionability"] if "common_actionability" in labeled else []),
         "predicted_actionability",
         *probability_columns(probabilities).keys(),
         "important_probability",
