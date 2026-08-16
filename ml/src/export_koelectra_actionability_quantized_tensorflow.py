@@ -21,7 +21,9 @@ from actionability_contract import (
     softmax,
 )
 from train_koelectra_tensorflow import (
+    LEGACY_TEXT_PREPROCESSING,
     MODEL_NAME,
+    TEXT_PREPROCESSING_CHOICES,
     KoElectraModule,
     default_data_path,
     load_data,
@@ -39,6 +41,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-dir", type=Path, default=DEFAULT_MODEL_DIR)
     parser.add_argument(
         "--data", type=Path, default=default_data_path()
+    )
+    parser.add_argument(
+        "--text-preprocessing",
+        choices=TEXT_PREPROCESSING_CHOICES,
+        default=LEGACY_TEXT_PREPROCESSING,
+        help=(
+            "기존 v0.5 가중치는 legacy로 학습됨. android_v2로 새로 학습한 "
+            "가중치만 android_v2를 선택합니다."
+        ),
     )
     return parser.parse_args()
 
@@ -142,7 +153,7 @@ def main() -> None:
     )
     classifier.load_weights(str(weights_path))
     module = KoElectraModule(classifier)
-    data = load_data(args.data)
+    data = load_data(args.data, args.text_preprocessing)
     inputs = make_inputs(tokenizer, data["text"].astype(str).tolist())
     fp32_path = args.model_dir / "noti_koelectra_actionability_v0.5_final_fp32.tflite"
     reference = run_tflite(fp32_path.read_bytes(), inputs)
@@ -165,6 +176,7 @@ def main() -> None:
             **fidelity(reference, logits),
         }
 
+    results["text_preprocessing"] = args.text_preprocessing
     report_path = args.model_dir / "quantization_report.json"
     report_path.write_text(
         json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8"

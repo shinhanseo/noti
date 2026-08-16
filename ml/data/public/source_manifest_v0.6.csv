@@ -1,0 +1,12 @@
+﻿source_id,name,url,license,intended_use,status,notes
+noti_v02,noti v0.2 synthetic reviewed,,PROJECT_OWNED,TRAIN,INCLUDED,320 labeled rows and 80 context rows migrated to v0.3 schema
+noti_realistic_v03,brand-style Korean notification seeds,,PROJECT_OWNED,TRAIN,INCLUDED,160 policy-reviewed synthetic rows; no copied production message text
+gunpo_alimtalk_2025,경기도 군포시 문자 알림톡 발송현황,https://www.data.go.kr/data/15143968/fileData.do?recommendDataYn=Y,공공데이터포털 이용허락범위 제한 없음,EVALUATION_ONLY,PENDING_DOWNLOAD,41 real public messages; keep UNLABELED until noti policy review
+busan_bukgu_disaster,부산광역시 북구 재난문자 발송 현황,https://www.data.go.kr/data/15115557/fileData.do?recommendDataYn=Y,공공데이터포털 이용허락범위 제한 없음,EVALUATION_ONLY,PENDING_REVIEW,Emergency-message language and recall stress test
+incheon_public_messages,인천광역시 공공 메시지 발송 데이터,https://www.data.go.kr/data/15091238/fileData.do,공공데이터포털 페이지 확인 필요,EVALUATION_ONLY,PENDING_REVIEW,Large public-message source; sample and inspect before import
+kisa_spam_trap,KISA 이동통신 스팸 트랩 문자,https://data.edmgr.kr/dataView.do?id=bdp-kt-co-kr-dataset-1221107,CC-BY per catalog page,EVALUATION_ONLY,BLOCKED_DOWNLOAD,Catalog was visible but original CSV download failed during this draft
+kakao_push_docs,Kakao Developers Push documentation,https://developers.kakao.com/docs/ko/push/common,REFERENCE_ONLY,PATTERN_REFERENCE,REFERENCE_ONLY,Used only to understand push structure; no message text copied
+noti_v04_policy_migration,noti v0.4 actionability policy migration,,PROJECT_OWNED,TRAIN_AND_PERSONALIZATION_DESIGN,INCLUDED,480 v0.3 rows relabeled as actionability; personal preference is kept separate from the shared base label
+noti_v04_personalization_seeds,delivery and completed-payment personalization seeds,,PROJECT_OWNED,TRAIN,INCLUDED,40 policy-reviewed synthetic rows for normal delivery and completed financial status; no copied production message text
+noti_v05_diversity_seeds,v0.5 delivery and disguised-promotion diversity seeds,,PROJECT_OWNED,TRAIN,INCLUDED,"160 policy-reviewed synthetic rows across delivery, payment, informational, action-required, and disguised-promotion templates"
+noti_v06_real_pattern_seeds,v0.6 private Room error-taxonomy synthetic seeds,,PROJECT_OWNED,TRAIN,INCLUDED,160 synthetic rows; contains no copied private notification text

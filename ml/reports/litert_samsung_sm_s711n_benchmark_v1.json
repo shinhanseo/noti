@@ -1,0 +1,137 @@
+{
+  "created_at": "2026-08-16T09:48:34.649744+00:00",
+  "device": {
+    "serial": "R5CX20B92YM",
+    "model": "SM-S711N",
+    "abi": "arm64-v8a",
+    "android_version": "16",
+    "sdk": "36"
+  },
+  "conditions": {
+    "accelerator": "CPU (XNNPACK)",
+    "sequence_length": 64,
+    "input_ids_range": [
+      1,
+      100
+    ],
+    "attention_mask_range": [
+      1,
+      1
+    ],
+    "trials": 3,
+    "runs_per_trial": 50,
+    "warmup_runs_per_trial": 3
+  },
+  "models": [
+    {
+      "name": "granite_97m_seq64_q8_weight_only.tflite",
+      "path": "/Users/shinhanseo/noti/ml/models/litert_mobile_benchmark/granite_97m_seq64_q8_weight_only.tflite",
+      "size_bytes": 100765248,
+      "trials": [
+        {
+          "initialization_ms": 242.88,
+          "first_warmup_ms": 480.73,
+          "average_warmup_ms": 204.73,
+          "average_inference_ms": 66.41,
+          "minimum_inference_ms": 66.24,
+          "maximum_inference_ms": 66.76,
+          "inference_std_ms": 0.11,
+          "initial_footprint_mb": 255.77,
+          "overall_footprint_mb": 648.03,
+          "trial": 1
+        },
+        {
+          "initialization_ms": 220.1,
+          "first_warmup_ms": 451.12,
+          "average_warmup_ms": 194.7,
+          "average_inference_ms": 66.52,
+          "minimum_inference_ms": 66.31,
+          "maximum_inference_ms": 69.08,
+          "inference_std_ms": 0.42,
+          "initial_footprint_mb": 255.64,
+          "overall_footprint_mb": 652.58,
+          "trial": 2
+        },
+        {
+          "initialization_ms": 208.91,
+          "first_warmup_ms": 451.36,
+          "average_warmup_ms": 194.91,
+          "average_inference_ms": 66.75,
+          "minimum_inference_ms": 66.31,
+          "maximum_inference_ms": 70.4,
+          "inference_std_ms": 0.65,
+          "initial_footprint_mb": 255.37,
+          "overall_footprint_mb": 652.33,
+          "trial": 3
+        }
+      ],
+      "median": {
+        "average_inference_ms": 66.52,
+        "average_warmup_ms": 194.91,
+        "first_warmup_ms": 451.36,
+        "inference_std_ms": 0.42,
+        "initial_footprint_mb": 255.64,
+        "initialization_ms": 220.1,
+        "maximum_inference_ms": 69.08,
+        "minimum_inference_ms": 66.31,
+        "overall_footprint_mb": 652.33,
+        "trial": 2
+      }
+    },
+    {
+      "name": "embeddinggemma_300m_seq64_q8.tflite",
+      "path": "/Users/shinhanseo/noti/ml/models/litert_mobile_benchmark/embeddinggemma_300m_seq64_q8.tflite",
+      "size_bytes": 314071856,
+      "trials": [
+        {
+          "initialization_ms": 212.74,
+          "first_warmup_ms": 71.72,
+          "average_warmup_ms": 62.55,
+          "average_inference_ms": 58.41,
+          "minimum_inference_ms": 57.19,
+          "maximum_inference_ms": 64.16,
+          "inference_std_ms": 1.46,
+          "initial_footprint_mb": 232.94,
+          "overall_footprint_mb": 263.87,
+          "trial": 1
+        },
+        {
+          "initialization_ms": 210.0,
+          "first_warmup_ms": 71.71,
+          "average_warmup_ms": 62.28,
+          "average_inference_ms": 57.41,
+          "minimum_inference_ms": 54.16,
+          "maximum_inference_ms": 58.43,
+          "inference_std_ms": 0.61,
+          "initial_footprint_mb": 233.18,
+          "overall_footprint_mb": 264.01,
+          "trial": 2
+        },
+        {
+          "initialization_ms": 209.44,
+          "first_warmup_ms": 71.47,
+          "average_warmup_ms": 62.07,
+          "average_inference_ms": 60.62,
+          "minimum_inference_ms": 57.1,
+          "maximum_inference_ms": 66.13,
+          "inference_std_ms": 2.3,
+          "initial_footprint_mb": 232.97,
+          "overall_footprint_mb": 263.89,
+          "trial": 3
+        }
+      ],
+      "median": {
+        "average_inference_ms": 58.41,
+        "average_warmup_ms": 62.28,
+        "first_warmup_ms": 71.71,
+        "inference_std_ms": 1.46,
+        "initial_footprint_mb": 232.97,
+        "initialization_ms": 210.0,
+        "maximum_inference_ms": 64.16,
+        "minimum_inference_ms": 57.1,
+        "overall_footprint_mb": 263.89,
+        "trial": 2
+      }
+    }
+  ]
+}

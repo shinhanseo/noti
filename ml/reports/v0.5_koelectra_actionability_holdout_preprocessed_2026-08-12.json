@@ -1,0 +1,65 @@
+{
+  "dataset_version": "0.5",
+  "evaluation_kind": "independent_holdout",
+  "text_preprocessing": "android-importance-text-v2",
+  "model_training_text_preprocessing": "legacy-title-body-v1",
+  "review_rows": 6,
+  "important_rows": 4,
+  "general_rows": 2,
+  "binary_threshold": 0.7534542828798294,
+  "predicted_actionability_counts": {
+    "GENERAL": 3,
+    "ATTENTION_WORTHY": 2,
+    "ACTION_REQUIRED": 1
+  },
+  "model_score_delta_counts": {
+    "15": 3,
+    "0": 2,
+    "-15": 1
+  },
+  "personal_label_metrics": {
+    "accuracy": 0.8333333333333334,
+    "precision": 1.0,
+    "recall": 0.75,
+    "false_positive": 0,
+    "false_negative": 1,
+    "confusion_matrix": [
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        3
+      ]
+    ]
+  },
+  "latency_ms": {
+    "median": 3.6698959993373137,
+    "p95": 37.012041502748616,
+    "minimum": 2.617124999233056,
+    "maximum": 47.723000003315974
+  },
+  "common_actionability_metrics": {
+    "rows": 6,
+    "accuracy": 0.6666666666666666,
+    "macro_f1": 0.48888888888888893,
+    "confusion_matrix": [
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "model_id": "ibm-granite/granite-embedding-97m-multilingual-r2",
+  "head": "mlp_32",
+  "active_learning_rows": 40,
+  "v0.5": {
+    "training_rows": 600,
+    "cross_validation": {
+      "accuracy": 0.9433333333333334,
+      "macro_f1": 0.9299521863690642,
+      "confusion_matrix": [
+        [
+          277,
+          3,
+          0
+        ],
+        [
+          0,
+          129,
+          13
+        ],
+        [
+          0,
+          18,
+          160
+        ]
+      ],
+      "important_false_positive": 3,
+      "important_false_negative": 0,
+      "important_recall": 1.0,
+      "predicted_counts": {
+        "GENERAL": 277,
+        "ATTENTION_WORTHY": 150,
+        "ACTION_REQUIRED": 173
+      }
+    },
+    "active_learning_development": {
+      "accuracy": 0.725,
+      "macro_f1": 0.5037037037037037,
+      "confusion_matrix": [
+        [
+          26,
+          4,
+          5
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "important_false_positive": 9,
+      "important_false_negative": 2,
+      "important_recall": 0.6,
+      "predicted_counts": {
+        "GENERAL": 28,
+        "ATTENTION_WORTHY": 6,
+        "ACTION_REQUIRED": 6
+      }
+    },
+    "active_predictions": [
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "ACTION_REQUIRED",
+      "ATTENTION_WORTHY",
+      "ACTION_REQUIRED",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ACTION_REQUIRED",
+      "GENERAL",
+      "ACTION_REQUIRED",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ACTION_REQUIRED",
+      "ACTION_REQUIRED"
+    ]
+  },
+  "v0.6": {
+    "training_rows": 760,
+    "cross_validation": {
+      "accuracy": 0.8934210526315789,
+      "macro_f1": 0.8631383397036787,
+      "confusion_matrix": [
+        [
+          385,
+          17,
+          10
+        ],
+        [
+          21,
+          100,
+          17
+        ],
+        [
+          6,
+          10,
+          194
+        ]
+      ],
+      "important_false_positive": 27,
+      "important_false_negative": 27,
+      "important_recall": 0.9224137931034483,
+      "predicted_counts": {
+        "GENERAL": 412,
+        "ATTENTION_WORTHY": 127,
+        "ACTION_REQUIRED": 221
+      }
+    },
+    "active_learning_development": {
+      "accuracy": 0.825,
+      "macro_f1": 0.6680911680911681,
+      "confusion_matrix": [
+        [
+          28,
+          5,
+          2
+        ],
+        [
+          0,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "important_false_positive": 7,
+      "important_false_negative": 0,
+      "important_recall": 1.0,
+      "predicted_counts": {
+        "GENERAL": 28,
+        "ATTENTION_WORTHY": 9,
+        "ACTION_REQUIRED": 3
+      }
+    },
+    "active_predictions": [
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "ACTION_REQUIRED",
+      "ATTENTION_WORTHY",
+      "ACTION_REQUIRED",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ATTENTION_WORTHY",
+      "GENERAL",
+      "GENERAL",
+      "GENERAL",
+      "ACTION_REQUIRED",
+      "GENERAL"
+    ]
+  }
+}

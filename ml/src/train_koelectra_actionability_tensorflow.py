@@ -29,7 +29,9 @@ from actionability_contract import (
     probability_columns,
 )
 from train_koelectra_tensorflow import (
+    ANDROID_V2_TEXT_PREPROCESSING,
     MODEL_NAME,
+    TEXT_PREPROCESSING_CHOICES,
     KoElectraModule,
     choose_recall_threshold,
     compile_classifier,
@@ -38,6 +40,7 @@ from train_koelectra_tensorflow import (
     evaluate,
     load_data,
     serializable_history,
+    text_preprocessing_version,
     tokenize,
 )
 
@@ -56,6 +59,11 @@ def parse_args() -> argparse.Namespace:
         / "koelectra_actionability_triage_v0.5_fold0",
     )
     parser.add_argument("--dataset-version", default="0.5")
+    parser.add_argument(
+        "--text-preprocessing",
+        choices=TEXT_PREPROCESSING_CHOICES,
+        default=ANDROID_V2_TEXT_PREPROCESSING,
+    )
     parser.add_argument("--fold-index", type=int, default=0)
     parser.add_argument("--skip-artifacts", action="store_true")
     parser.add_argument("--print-validation-rows", action="store_true")
@@ -124,7 +132,7 @@ def main() -> None:
     tf.random.set_seed(42)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    data = load_data(args.data)
+    data = load_data(args.data, args.text_preprocessing)
     if "actionability" not in data.columns:
         raise ValueError("데이터에 actionability 열이 없습니다.")
     if "cv_fold" not in data.columns or data["cv_fold"].isna().any():
@@ -285,6 +293,9 @@ def main() -> None:
         "model_contract_version": MODEL_CONTRACT_VERSION,
         "dataset_version": args.dataset_version,
         "dataset": str(args.data),
+        "text_preprocessing": text_preprocessing_version(
+            args.text_preprocessing
+        ),
         "label_order": list(ACTIONABILITY_LABELS),
         "fold_index": args.fold_index,
         "split_strategy": "preassigned_actionability_balanced_group_fold",

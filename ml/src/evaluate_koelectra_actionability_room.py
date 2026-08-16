@@ -32,6 +32,10 @@ from evaluate_real_room_v03 import (
     DEFAULT_HUMAN_LABELS,
     load_room_candidates,
 )
+from notification_text_preprocessor import (
+    PREPROCESSING_VERSION,
+    normalize_notification_text,
+)
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -72,6 +76,11 @@ def parse_args() -> argparse.Namespace:
         choices=("development", "independent_holdout"),
         default="development",
     )
+    parser.add_argument(
+        "--text-preprocessing",
+        choices=("legacy", "android_v2"),
+        default="android_v2",
+    )
     return parser.parse_args()
 
 
@@ -90,6 +99,11 @@ def make_markdown(result: dict[str, object]) -> str:
         f"- 실제 REVIEW 알림: {result['review_rows']}개",
         f"- 사용자 중요/일반: {result['important_rows']}/{result['general_rows']}",
         f"- OOF 이진 임계값: {result['binary_threshold']:.6f}",
+        f"- 텍스트 전처리: `{result['text_preprocessing']}`",
+        (
+            "- 모델 학습 당시 전처리: "
+            f"`{result['model_training_text_preprocessing']}`"
+        ),
         "- 실제 원문과 개별 예측은 Git 제외 private CSV에만 저장",
         "",
         "## 개인 라벨과 비교한 참고 결과",
@@ -180,6 +194,15 @@ def main() -> None:
     labeled = room_data[room_data["human_label"].notna()].copy()
     if labeled.empty:
         raise RuntimeError("사용자 라벨이 있는 실제 REVIEW 알림이 없습니다.")
+    if args.text_preprocessing == "android_v2":
+        labeled["text"] = [
+            normalize_notification_text(package_name, title, body)
+            for package_name, title, body in zip(
+                labeled["package_name"],
+                labeled["title"],
+                labeled["body"],
+            )
+        ]
 
     tokenizer = AutoTokenizer.from_pretrained(
         args.model.parent / "tokenizer", use_fast=True, local_files_only=True
@@ -227,6 +250,14 @@ def main() -> None:
     result: dict[str, object] = {
         "dataset_version": "0.5",
         "evaluation_kind": args.evaluation_kind,
+        "text_preprocessing": (
+            PREPROCESSING_VERSION
+            if args.text_preprocessing == "android_v2"
+            else "legacy-title-body-v1"
+        ),
+        "model_training_text_preprocessing": training_report.get(
+            "text_preprocessing", "legacy-title-body-v1"
+        ),
         "review_rows": len(labeled),
         "important_rows": int(actual.sum()),
         "general_rows": int((actual == 0).sum()),

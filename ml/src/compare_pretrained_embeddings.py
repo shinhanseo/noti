@@ -62,7 +62,7 @@ CANDIDATES = {
     "embeddinggemma_300m": EmbeddingCandidate(
         name="embeddinggemma_300m",
         model_id="google/embeddinggemma-300m",
-        text_prefix="",
+        text_prefix="task: classification | query: ",
         max_sequence_length=64,
         notes=(
             "정확도 상한 후보. Hugging Face에서 Gemma 사용 약관 동의와 "

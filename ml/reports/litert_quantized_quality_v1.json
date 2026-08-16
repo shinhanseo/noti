@@ -1,0 +1,163 @@
+{
+  "protocol": {
+    "holdout_rows": 100,
+    "max_length": 64,
+    "head": "same saved MLP 32-unit head as the full-precision benchmark",
+    "preprocessing": "android-importance-text-v2"
+  },
+  "models": {
+    "granite_97m_r2": {
+      "tflite_bytes": 100765248,
+      "embedding_cosine_mean": 0.9995653033256531,
+      "embedding_cosine_min": 0.9990689754486084,
+      "embedding_max_absolute_error": 0.007787644863128662,
+      "prediction_disagreements_vs_full_precision": 1,
+      "room_holdout": {
+        "three_class_accuracy": 0.89,
+        "three_class_macro_f1": 0.49443588426639273,
+        "observed_class_macro_f1": 0.7416538263995891,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            83,
+            8,
+            1
+          ],
+          [
+            2,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.89,
+          "precision": 0.4,
+          "recall": 0.75,
+          "f1": 0.5217391304347826,
+          "false_positive": 9,
+          "false_negative": 2,
+          "confusion_matrix": [
+            [
+              83,
+              9
+            ],
+            [
+              2,
+              6
+            ]
+          ]
+        }
+      }
+    },
+    "embeddinggemma_300m": {
+      "tflite_bytes": 314071856,
+      "embedding_cosine_mean": 0.9976997375488281,
+      "embedding_cosine_min": 0.9960574507713318,
+      "embedding_max_absolute_error": 0.012225475162267685,
+      "prediction_disagreements_vs_full_precision": 0,
+      "room_holdout": {
+        "three_class_accuracy": 0.92,
+        "three_class_macro_f1": 0.5185185185185185,
+        "observed_class_macro_f1": 0.7777777777777778,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            86,
+            6,
+            0
+          ],
+          [
+            2,
+            6,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.92,
+          "precision": 0.5,
+          "recall": 0.75,
+          "f1": 0.6,
+          "false_positive": 6,
+          "false_negative": 2,
+          "confusion_matrix": [
+            [
+              86,
+              6
+            ],
+            [
+              2,
+              6
+            ]
+          ]
+        }
+      }
+    },
+    "embeddinggemma_300m_int4": {
+      "tflite_bytes": 174930848,
+      "embedding_cosine_mean": 0.9433963298797607,
+      "embedding_cosine_min": 0.9155033826828003,
+      "embedding_max_absolute_error": 0.059836000204086304,
+      "prediction_disagreements_vs_full_precision": 6,
+      "room_holdout": {
+        "three_class_accuracy": 0.92,
+        "three_class_macro_f1": 0.49661835748792277,
+        "observed_class_macro_f1": 0.7449275362318841,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            88,
+            3,
+            1
+          ],
+          [
+            4,
+            4,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.92,
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "false_positive": 4,
+          "false_negative": 4,
+          "confusion_matrix": [
+            [
+              88,
+              4
+            ],
+            [
+              4,
+              4
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

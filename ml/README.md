@@ -17,6 +17,81 @@ Android 앱 코드는 루트의 `app/`에서 관리하고, 머신러닝 코드�
 
 v0.2의 라벨 정책과 스키마는 [`docs/dataset-v0.2-design.md`](docs/dataset-v0.2-design.md)에 정리한다. 현실형 표현과 실데이터 반입 규칙은 [`docs/dataset-v0.3-design.md`](docs/dataset-v0.3-design.md)에 정리한다.
 
+## Frozen Backbone 동일조건 모델 비교
+
+Granite 97M R2, EmbeddingGemma 300M, KoELECTRA-small-v3를 동일한 v0.5 600개,
+Android v2 전처리, 고정 5-Fold, frozen encoder, MLP 32-unit 조건으로 비교했다.
+
+```bash
+source .venv-embeddings/bin/activate
+python src/compare_frozen_backbones_v05.py
+```
+
+실제 Room 100개에서 EmbeddingGemma는 Accuracy 92.0%, 중요 F1 0.600으로 품질
+1위였고, Granite는 90.0%, 0.545였다. 둘의 McNemar p-value는 0.5로 차이가
+확정되지 않았다. Frozen KoELECTRA는 Accuracy 73.0%, 중요 F1 0.333으로 두
+embedding 모델보다 명확히 낮았다. 모바일 균형 후보는 Granite, 순수 품질 후보는
+EmbeddingGemma로 남기고 동일 양자화·Android 물리 기기 비교로 최종 결정한다.
+상세 프로토콜과 결과는
+[`docs/frozen-backbone-model-benchmark-v1.md`](docs/frozen-backbone-model-benchmark-v1.md),
+[`reports/frozen_backbone_benchmark_v1.md`](reports/frozen_backbone_benchmark_v1.md),
+[`reports/frozen_backbone_benchmark_v1_decision.md`](reports/frozen_backbone_benchmark_v1_decision.md)에 있다.
+
+### Granite / EmbeddingGemma LiteRT 변환과 Android 에뮬레이터 측정
+
+두 후보를 batch 1, 64 tokens로 고정해 INT8 LiteRT로 변환했다. Granite weight-only
+모델은 96.1 MiB, EmbeddingGemma dynamic 모델은 299.5 MiB다.
+
+```bash
+python3.12 -m venv .venv-litert
+source .venv-litert/bin/activate
+python -m pip install -r requirements-litert.txt
+python src/convert_embedding_backbones_to_litert.py --model all
+
+source .venv-embeddings/bin/activate
+python src/evaluate_litert_backbones_v05.py
+```
+
+Room 100개에서 같은 저장 MLP head를 사용했을 때 양자화 EmbeddingGemma는 원본
+예측 100개를 모두 유지했고 Accuracy 92%, 중요 F1 0.600이었다. Granite는 예측
+1개가 바뀌어 Accuracy 89%, 중요 F1 0.522였다.
+
+Samsung SM-S711N CPU/XNNPACK에서 모델별 3 trial × 50회를 측정한 추론 중앙값은
+Granite 66.52 ms, EmbeddingGemma INT8 58.41 ms였다. 실행 footprint도 Granite
+652.33 MB, EmbeddingGemma 263.89 MB로 실제 기기에서 차이가 재현됐다.
+EmbeddingGemma INT4는 166.8 MiB와 167.51 MB footprint로 줄었지만 85.68 ms로
+느려지고 중요 Recall이 0.50으로 내려가 탈락했다. 따라서 1차 Android 적용 후보는
+EmbeddingGemma INT8로 확정한다. 재현 스크립트는 `src/benchmark_litert_android.py`, 상세 결과와 제한은
+[`reports/litert_mobile_benchmark_v1.md`](reports/litert_mobile_benchmark_v1.md)에 있다.
+
+## v0.6 실제 Room 오류 유형 교정
+
+실제 Room Active Learning 검수 40개에서 발견한 오류 유형을 사용하되 원문은
+복사하지 않고, 개인정보 없는 프로젝트 소유 합성 문장 160개를 추가했다. 배송
+출발·이동·도착 예정 52개는 `INFORMATIONAL`로 교정하고 배송 완료·회수 준비는
+`ATTENTION_WORTHY`로 분리했다.
+
+```bash
+python src/generate_dataset_v06.py
+python src/validate_dataset_v06.py
+
+source .venv-embeddings/bin/activate
+python src/compare_granite_v05_v06_active_learning.py
+```
+
+같은 Granite Embedding 97M R2 + MLP에서 v0.5 대비 실제 개발 세트 일치율은
+72.5%에서 82.5%, 중요 Recall은 60%에서 100%로 변했다. 합성 CV 정확도는
+94.3%에서 89.3%로 낮아졌다. 실제 40개를 보고 데이터 정책을 수정했으므로 이
+수치는 독립 성능이 아니며, 다음 시점의 미사용 실제 라벨로 재검증해야 한다.
+상세 설계는 [`docs/dataset-v0.6-design.md`](docs/dataset-v0.6-design.md), 결과는
+[`reports/granite_v05_v06_active_learning.md`](reports/granite_v05_v06_active_learning.md)에 있다.
+
+이후 모델 예측을 먼저 봉인하고 기존 개발 문장군을 제외한 실제 Room 100개로
+블라인드 비교했다. v0.5는 Accuracy 90.0%, 중요 F1 0.545였고 v0.6은 Accuracy
+87.0%, 중요 F1 0.381이었다. 차이는 통계적으로 확정되지 않았지만 v0.6 개선은
+재현되지 않았으므로 채택하지 않고 v0.5를 잠정 유지한다. 판정 근거는
+[`reports/granite_v05_v06_blind_decision.md`](reports/granite_v05_v06_blind_decision.md)에 있다.
+
 ## v0.5 고정 5-Fold와 KoELECTRA 3단계 실험
 
 v0.5는 정상 배송, 완료된 결제, 일반 정보, 행동 필요, 광고성 위장 표현을 포함한
@@ -56,6 +131,61 @@ v0.5 600개에서 FP32와 3단계 예측 및 보조 점수가 모두 일치했�
 새 실제 홀드아웃을 통과하기 전에는 Android 중요도 점수에 연결하지 않는다. 결과는
 [`reports/koelectra_actionability_triage_v0.5_training.md`](reports/koelectra_actionability_triage_v0.5_training.md)와
 [`reports/koelectra_actionability_triage_v0.5_cross_validation.md`](reports/koelectra_actionability_triage_v0.5_cross_validation.md)에 있다.
+
+### Android와 ML의 텍스트 전처리 계약
+
+다음 Actionability 학습부터 `android-importance-text-v2`를 기본 입력 계약으로
+사용한다. Python의 `notification_text_preprocessor.py`가 Android 전처리를 미러링하며,
+Unicode 정규화·format 문자 제거·삼성 MMS 포장 제거 후 제목과 의미 본문을 합친다.
+학습 보고서와 `model_contract.json`에도 전처리 버전을 저장한다.
+
+```bash
+# 앞으로 사용할 기본값: android_v2
+python src/train_koelectra_actionability_tensorflow.py --fold-index 0 --skip-artifacts
+
+# 과거 v0.5 결과를 재현할 때만 명시
+python src/train_koelectra_actionability_tensorflow.py \
+  --fold-index 0 --skip-artifacts --text-preprocessing legacy
+```
+
+기존 v0.5 모델은 재학습하지 않고 새 전처리만 적용한 독립 홀드아웃에서 모델 단독
+Accuracy가 0.667에서 0.833으로 변했고 광고 FP는 2개에서 0개가 됐다. 그러나 앱
+규칙까지 합친 결과는 배송 개인 선호 때문에 4/6으로 동일하다. 상세 비교는
+[`reports/v0.5_text_preprocessing_koelectra_comparison.md`](reports/v0.5_text_preprocessing_koelectra_comparison.md)에 있다.
+
+### EmbeddingGemma 300M + Thin Head 실험
+
+공식 classification 프롬프트와 Android v2 전처리를 사용해 EmbeddingGemma는
+고정하고 Logistic Regression 및 32-unit MLP만 학습했다.
+
+```bash
+source .venv-embeddings/bin/activate
+python src/experiment_embeddinggemma_actionability_v05.py --local-files-only
+```
+
+600개 고정 5-Fold에서는 MLP의 3단계 Accuracy가 0.952로 KoELECTRA의 0.863보다
+높았다. 하지만 실제 독립 홀드아웃 6개에서는 Logistic Regression만 KoELECTRA와
+같은 0.833이었고, CV로 선택한 MLP는 0.667이었다. 기존 앱 점수표와 결합한 MLP의
+전체 결과는 3/6이므로 아직 Android 모델을 교체하지 않는다. 상세 내용은
+[`reports/embeddinggemma_actionability_v0.5.md`](reports/embeddinggemma_actionability_v0.5.md)와
+[`reports/embeddinggemma_vs_koelectra_v0.5.md`](reports/embeddinggemma_vs_koelectra_v0.5.md)에 있다.
+
+### Granite Embedding 97M R2 실험
+
+같은 실험 파이프라인을 2026년 공개된 Granite Embedding 97M Multilingual R2로
+반복했다.
+
+```bash
+source .venv-embeddings/bin/activate
+python src/experiment_granite_actionability_v05.py --local-files-only
+```
+
+고정 5-Fold에서 MLP 3단계 Accuracy 0.943, 이진 0.5 Accuracy 0.995를 기록했지만
+실제 6개에서는 Accuracy 0.500, Recall 0.250이었다. 로컬 스냅샷은 210.0 MiB,
+Mac CPU 단일 알림 median은 9.35ms로 EmbeddingGemma보다 작고 빨랐지만 실제
+일반화 성능이 부족해 채택하지 않는다. 상세 비교는
+[`reports/granite_97m_actionability_v0.5.md`](reports/granite_97m_actionability_v0.5.md)와
+[`reports/granite_vs_embeddinggemma_vs_koelectra_v0.5.md`](reports/granite_vs_embeddinggemma_vs_koelectra_v0.5.md)에 있다.
 
 ## v0.4 행동 필요성과 개인 선호 분리
 

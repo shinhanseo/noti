@@ -20,13 +20,16 @@ from actionability_contract import (
     encode_actionability,
 )
 from train_koelectra_tensorflow import (
+    ANDROID_V2_TEXT_PREPROCESSING,
     MODEL_NAME,
+    TEXT_PREPROCESSING_CHOICES,
     KoElectraModule,
     compile_classifier,
     default_data_path,
     default_project_dir,
     load_data,
     serializable_history,
+    text_preprocessing_version,
     tokenize,
 )
 
@@ -42,6 +45,11 @@ def parse_args() -> argparse.Namespace:
         / "koelectra_actionability_triage_v0.5_final",
     )
     parser.add_argument("--dataset-version", default="0.5")
+    parser.add_argument(
+        "--text-preprocessing",
+        choices=TEXT_PREPROCESSING_CHOICES,
+        default=ANDROID_V2_TEXT_PREPROCESSING,
+    )
     parser.add_argument("--decision-threshold", type=float, required=True)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--head-epochs", type=int, default=3)
@@ -61,7 +69,10 @@ def main() -> None:
     tf.random.set_seed(42)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    data = load_data(args.data)
+    data = load_data(args.data, args.text_preprocessing)
+    preprocessing_version = text_preprocessing_version(
+        args.text_preprocessing
+    )
     labels = encode_actionability(data["actionability"].astype(str).tolist())
     class_counts = np.bincount(labels, minlength=len(ACTIONABILITY_LABELS))
     class_weights = {
@@ -159,6 +170,7 @@ def main() -> None:
         "sequence_length": 64,
         "input_names": ["input_ids", "attention_mask", "token_type_ids"],
         "output_name": "logits",
+        "text_preprocessing": preprocessing_version,
     }
     (args.output_dir / "model_contract.json").write_text(
         json.dumps(model_contract, ensure_ascii=False, indent=2),
@@ -170,6 +182,7 @@ def main() -> None:
         "model_contract_version": MODEL_CONTRACT_VERSION,
         "dataset_version": args.dataset_version,
         "dataset": str(args.data),
+        "text_preprocessing": preprocessing_version,
         "label_order": list(ACTIONABILITY_LABELS),
         "training_rows": len(data),
         "training_actionability_counts": {

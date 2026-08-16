@@ -23,9 +23,20 @@ from sklearn.metrics import (
 from sklearn.model_selection import StratifiedGroupKFold
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
 
+from notification_text_preprocessor import (
+    PREPROCESSING_VERSION,
+    normalize_notification_text,
+)
+
 
 MODEL_NAME = "monologg/koelectra-small-v3-discriminator"
 SEQ_LEN = 64
+LEGACY_TEXT_PREPROCESSING = "legacy"
+ANDROID_V2_TEXT_PREPROCESSING = "android_v2"
+TEXT_PREPROCESSING_CHOICES = (
+    LEGACY_TEXT_PREPROCESSING,
+    ANDROID_V2_TEXT_PREPROCESSING,
+)
 
 
 def default_project_dir() -> Path:
@@ -74,17 +85,40 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
-def load_data(path: Path) -> pd.DataFrame:
+def text_preprocessing_version(mode: str) -> str:
+    if mode == LEGACY_TEXT_PREPROCESSING:
+        return "legacy-title-body-v1"
+    if mode == ANDROID_V2_TEXT_PREPROCESSING:
+        return PREPROCESSING_VERSION
+    raise ValueError(f"지원하지 않는 텍스트 전처리입니다: {mode}")
+
+
+def load_data(
+    path: Path,
+    text_preprocessing: str = LEGACY_TEXT_PREPROCESSING,
+) -> pd.DataFrame:
     data = pd.read_csv(path)
     eligible = data["model_eligible"].astype(str).str.lower().eq("true")
     if "training_eligible" in data.columns:
         eligible &= data["training_eligible"].astype(str).str.lower().eq("true")
     filtered = data[eligible & data["clarity"].eq("CLEAR")].copy()
-    filtered["text"] = (
-        filtered["title"].fillna("").str.strip()
-        + " "
-        + filtered["body"].fillna("").str.strip()
-    ).str.strip()
+    if text_preprocessing == LEGACY_TEXT_PREPROCESSING:
+        filtered["text"] = (
+            filtered["title"].fillna("").str.strip()
+            + " "
+            + filtered["body"].fillna("").str.strip()
+        ).str.strip()
+    elif text_preprocessing == ANDROID_V2_TEXT_PREPROCESSING:
+        filtered["text"] = [
+            normalize_notification_text(package_name, title, body)
+            for package_name, title, body in zip(
+                filtered["package_name"].fillna(""),
+                filtered["title"],
+                filtered["body"],
+            )
+        ]
+    else:
+        text_preprocessing_version(text_preprocessing)
     return filtered.reset_index(drop=True)
 
 

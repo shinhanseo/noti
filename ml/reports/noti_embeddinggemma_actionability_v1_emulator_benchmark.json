@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-08-16T10:46:25.758830+00:00",
+  "device": {
+    "serial": "emulator-5554",
+    "model": "sdk_gphone16k_arm64",
+    "abi": "arm64-v8a",
+    "android_version": "17",
+    "sdk": "37"
+  },
+  "conditions": {
+    "accelerator": "CPU (XNNPACK)",
+    "sequence_length": 64,
+    "input_ids_range": [
+      1,
+      100
+    ],
+    "attention_mask_range": [
+      1,
+      1
+    ],
+    "trials": 3,
+    "runs_per_trial": 50,
+    "warmup_runs_per_trial": 3
+  },
+  "models": [
+    {
+      "name": "noti_embeddinggemma_actionability_v1_int8.tflite",
+      "path": "/Users/shinhanseo/noti/ml/models/noti_embeddinggemma_actionability_v1/noti_embeddinggemma_actionability_v1_int8.tflite",
+      "size_bytes": 314284128,
+      "trials": [
+        {
+          "initialization_ms": 424.98,
+          "first_warmup_ms": 48.6,
+          "average_warmup_ms": 39.98,
+          "average_inference_ms": 36.79,
+          "minimum_inference_ms": 34.56,
+          "maximum_inference_ms": 66.83,
+          "inference_std_ms": 4.37,
+          "initial_footprint_mb": 224.75,
+          "overall_footprint_mb": 230.31,
+          "trial": 1
+        },
+        {
+          "initialization_ms": 80.12,
+          "first_warmup_ms": 37.23,
+          "average_warmup_ms": 35.88,
+          "average_inference_ms": 36.01,
+          "minimum_inference_ms": 34.63,
+          "maximum_inference_ms": 64.79,
+          "inference_std_ms": 4.27,
+          "initial_footprint_mb": 234.69,
+          "overall_footprint_mb": 239.22,
+          "trial": 2
+        },
+        {
+          "initialization_ms": 74.57,
+          "first_warmup_ms": 38.69,
+          "average_warmup_ms": 36.8,
+          "average_inference_ms": 37.06,
+          "minimum_inference_ms": 35.22,
+          "maximum_inference_ms": 72.45,
+          "inference_std_ms": 5.11,
+          "initial_footprint_mb": 233.66,
+          "overall_footprint_mb": 238.66,
+          "trial": 3
+        }
+      ],
+      "median": {
+        "average_inference_ms": 36.79,
+        "average_warmup_ms": 36.8,
+        "first_warmup_ms": 38.69,
+        "inference_std_ms": 4.37,
+        "initial_footprint_mb": 233.66,
+        "initialization_ms": 80.12,
+        "maximum_inference_ms": 66.83,
+        "minimum_inference_ms": 34.63,
+        "overall_footprint_mb": 238.66,
+        "trial": 2
+      }
+    }
+  ]
+}

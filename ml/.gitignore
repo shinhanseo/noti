@@ -1,5 +1,7 @@
 .venv/
 .venv-embeddings/
+.venv-litert/
+.venv-litert-cli/
 __pycache__/
 *.py[cod]
 .pytest_cache/
