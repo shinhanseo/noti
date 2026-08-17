@@ -14,7 +14,7 @@ import com.hanseo.noti.data.local.entity.NotificationFeedbackEntity
         ImportanceReasonEntity::class,
         NotificationFeedbackEntity::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class NotiDatabase : RoomDatabase() {

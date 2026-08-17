@@ -127,3 +127,43 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
         )
     }
 }
+
+val MIGRATION_6_7 = object : Migration(6, 7) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN ai_prediction_label TEXT
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN ai_important_probability REAL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN ai_score_delta INTEGER
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN ai_model_version TEXT
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN ai_evaluated_at INTEGER
+            """.trimIndent()
+        )
+    }
+}
