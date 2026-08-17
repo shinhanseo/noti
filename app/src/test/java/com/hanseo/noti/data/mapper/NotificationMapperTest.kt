@@ -11,6 +11,8 @@ import com.hanseo.noti.domain.model.NotificationItem
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
+import com.hanseo.noti.domain.importance.AiImportanceLabel
+import com.hanseo.noti.domain.importance.AiImportancePrediction
 
 class NotificationMapperTest {
 
@@ -49,6 +51,13 @@ class NotificationMapperTest {
                 isForced = false,
                 policyVersion = "1",
                 evaluatedAtMillis = 2_000L
+            ),
+            aiPrediction = AiImportancePrediction(
+                label = AiImportanceLabel.ATTENTION_WORTHY,
+                importantProbability = 0.82f,
+                scoreDelta = 15,
+                modelVersion = "noti_embeddinggemma_actionability_v1",
+                evaluatedAtMillis = 2_100L
             )
         )
 
