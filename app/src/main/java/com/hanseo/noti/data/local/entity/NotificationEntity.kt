@@ -56,5 +56,20 @@ data class NotificationEntity(
     val importancePolicyVersion: String? = null,
 
     @ColumnInfo(name = "importance_evaluated_at")
-    val importanceEvaluatedAt: Long? = null
+    val importanceEvaluatedAt: Long? = null,
+
+    @ColumnInfo(name = "ai_prediction_label")
+    val aiPredictionLabel: String? = null,
+
+    @ColumnInfo(name = "ai_important_probability")
+    val aiImportantProbability: Float? = null,
+
+    @ColumnInfo(name = "ai_score_delta")
+    val aiScoreDelta: Int? = null,
+
+    @ColumnInfo(name = "ai_model_version")
+    val aiModelVersion: String? = null,
+
+    @ColumnInfo(name = "ai_evaluated_at")
+    val aiEvaluatedAt: Long? = null
 )
