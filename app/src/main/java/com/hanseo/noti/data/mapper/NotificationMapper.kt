@@ -9,6 +9,8 @@ import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.importance.ImportanceReason
 import com.hanseo.noti.domain.importance.ImportanceReasonType
 import com.hanseo.noti.domain.importance.ImportanceResult
+import com.hanseo.noti.domain.importance.AiImportanceLabel
+import com.hanseo.noti.domain.importance.AiImportancePrediction
 
 fun NotificationEntity.toDomain(): NotificationItem {
     return NotificationItem(
@@ -43,7 +45,13 @@ fun ClassifiedNotification.toEntity(): NotificationEntity {
         importanceLevel = importance.level.name,
         importanceForced = importance.isForced,
         importancePolicyVersion = importance.policyVersion,
-        importanceEvaluatedAt = importance.evaluatedAtMillis
+        importanceEvaluatedAt = importance.evaluatedAtMillis,
+
+        aiPredictionLabel = aiPrediction?.label?.name,
+        aiImportantProbability = aiPrediction?.importantProbability,
+        aiScoreDelta = aiPrediction?.scoreDelta,
+        aiModelVersion = aiPrediction?.modelVersion,
+        aiEvaluatedAt = aiPrediction?.evaluatedAtMillis
     )
 }
 
@@ -102,6 +110,34 @@ fun NotificationWithReasons.toClassifiedNotification():
 
     return ClassifiedNotification(
         notification = notification.toDomain(),
-        importance = importanceResult
+        importance = importanceResult,
+        aiPrediction = notification.toAiPrediction()
+    )
+}
+
+private fun NotificationEntity.toAiPrediction():
+        AiImportancePrediction? {
+
+    val labelName = aiPredictionLabel
+        ?: return null
+
+    val importantProbability = aiImportantProbability
+        ?: return null
+
+    val scoreDelta = aiScoreDelta
+        ?: return null
+
+    val modelVersion = aiModelVersion
+        ?: return null
+
+    val evaluatedAtMillis = aiEvaluatedAt
+        ?: return null
+
+    return AiImportancePrediction(
+        label = AiImportanceLabel.valueOf(labelName),
+        importantProbability = importantProbability,
+        scoreDelta = scoreDelta,
+        modelVersion = modelVersion,
+        evaluatedAtMillis = evaluatedAtMillis
     )
 }
