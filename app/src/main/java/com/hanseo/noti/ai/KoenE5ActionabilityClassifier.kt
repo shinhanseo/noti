@@ -2,35 +2,66 @@ package com.hanseo.noti.ai
 
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
+import com.hanseo.noti.ai.tokenizer.NativeSentencePieceTokenizer
+import com.hanseo.noti.ai.tokenizer.TokenizedText
 import java.io.Closeable
 
 class KoenE5ActionabilityClassifier(
-    modelPath: String,  // ONNX 실제 경로
-    numberOfThreads: Int = DEFAULT_THREAD_COUNT // onnx 모델이 CPU 연산 시 사용할 스레드 수
+    modelPath: String,
+    tokenizerModelPath: String,
+    numberOfThreads: Int = DEFAULT_THREAD_COUNT,
 ) : Closeable {
 
-    // ONNX 전체 실행 환경
-    private val environment: OrtEnvironment = OrtEnvironment.getEnvironment()
+    private val environment: OrtEnvironment =
+        OrtEnvironment.getEnvironment()
 
-    // ONNX 모델 실행 방법 설정
-    private val sessionOptions: OrtSession.SessionOptions = //
+    private val sessionOptions: OrtSession.SessionOptions =
         OrtSession.SessionOptions().apply {
             setIntraOpNumThreads(numberOfThreads)
         }
 
-    //ONNX 파일을 읽어 메모리에 올림
     private val session: OrtSession =
         environment.createSession(
             modelPath,
-            sessionOptions
+            sessionOptions,
         )
 
+    private val tokenizer =
+        NativeSentencePieceTokenizer(
+            modelPath = tokenizerModelPath,
+            bosTokenId = BOS_TOKEN_ID,
+            padTokenId = PAD_TOKEN_ID,
+            eosTokenId = EOS_TOKEN_ID,
+        )
+
+    private fun tokenize(
+        normalizedText: String,
+    ): TokenizedText {
+        val classificationText =
+            CLASSIFICATION_PREFIX +
+                    normalizedText.trim()
+
+        return tokenizer.tokenize(
+            text = classificationText,
+            maxLength = SEQUENCE_LENGTH,
+        )
+    }
+
     override fun close() {
+        tokenizer.close()
         session.close()
         sessionOptions.close()
     }
 
     private companion object {
         const val DEFAULT_THREAD_COUNT = 4
+        const val SEQUENCE_LENGTH = 64
+
+        const val CLASSIFICATION_PREFIX =
+            "query: "
+
+        const val BOS_TOKEN_ID = 0
+        const val PAD_TOKEN_ID = 1
+        const val EOS_TOKEN_ID = 2
     }
 }
