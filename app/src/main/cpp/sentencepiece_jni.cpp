@@ -46,18 +46,6 @@ Java_com_hanseo_noti_ai_tokenizer_NativeSentencePieceTokenizer_nativeCreate(
   return reinterpret_cast<jlong>(processor.release());
 }
 
-extern "C" JNIEXPORT jlong JNICALL
-Java_com_hanseo_noti_ai_tokenizer_NativeSentencePieceTokenizer_nativeCreateFromSerialized(
-    JNIEnv* env, jobject, jbyteArray model_bytes) {
-  auto processor = std::make_unique<SentencePieceProcessor>();
-  const auto status = processor->LoadFromSerializedProto(to_utf8(env, model_bytes));
-  if (!status.ok()) {
-    throw_illegal_state(env, status.ToString());
-    return 0;
-  }
-  return reinterpret_cast<jlong>(processor.release());
-}
-
 extern "C" JNIEXPORT jintArray JNICALL
 Java_com_hanseo_noti_ai_tokenizer_NativeSentencePieceTokenizer_nativeEncode(
     JNIEnv* env, jobject, jlong handle, jbyteArray text_utf8) {

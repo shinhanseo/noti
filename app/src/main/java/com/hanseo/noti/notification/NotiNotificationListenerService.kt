@@ -14,17 +14,10 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import android.app.Notification
 import java.util.concurrent.TimeUnit
-import com.hanseo.noti.ai.OnDeviceActionabilityPredictor
-import com.hanseo.noti.ai.ActionabilityShadowPolicy
 import com.hanseo.noti.data.mapper.toImportanceInput
 import com.hanseo.noti.domain.importance.ImportanceClassifier
-import com.hanseo.noti.domain.importance.ImportanceInput
-import com.hanseo.noti.domain.importance.ImportanceResult
-import com.hanseo.noti.domain.importance.ImportanceTextPreprocessor
-import com.hanseo.noti.domain.importance.AiImportancePrediction
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
-import dagger.Lazy
 
 @AndroidEntryPoint
 class NotiNotificationListenerService :
@@ -38,9 +31,6 @@ class NotiNotificationListenerService :
 
     @Inject
     lateinit var importanceSettingsPreferences: ImportanceSettingsPreferences
-
-    @Inject
-    lateinit var actionabilityPredictor: Lazy<OnDeviceActionabilityPredictor>
 
     private val importanceClassifier = ImportanceClassifier()
 
@@ -84,24 +74,16 @@ class NotiNotificationListenerService :
                     importanceSettingsPreferences
                         .getSettings()
 
-                val importanceInput =
-                    notificationItem.toImportanceInput()
-
                 val importanceResult =
                     importanceClassifier.classify(
-                        input = importanceInput,
+                        input =
+                            notificationItem.toImportanceInput(),
                         settings = importanceSettings
                     )
 
-                val aiPrediction = predictInShadowMode(
-                    input = importanceInput,
-                    importanceResult = importanceResult,
-                )
-
                 val classifiedNotification = ClassifiedNotification(
                     notification = notificationItem,
-                    importance = importanceResult,
-                    aiPrediction = aiPrediction,
+                    importance = importanceResult
                 )
 
                 notificationRepository.save(classifiedNotification)
@@ -111,8 +93,7 @@ class NotiNotificationListenerService :
                     "Notification classified and saved: " +
                             "score=${importanceResult.score}, " +
                             "level=${importanceResult.level}, " +
-                            "forced=${importanceResult.isForced}, " +
-                            "aiShadow=${aiPrediction?.label}"
+                            "forced=${importanceResult.isForced}"
                 )
 
             } catch (error: CancellationException) {
@@ -124,27 +105,6 @@ class NotiNotificationListenerService :
                     "Notification save failed: ${error.javaClass.simpleName}"
                 )
             }
-        }
-    }
-
-    private fun predictInShadowMode(
-        input: ImportanceInput,
-        importanceResult: ImportanceResult,
-    ): AiImportancePrediction? {
-        if (!ActionabilityShadowPolicy.shouldPredict(importanceResult)) {
-            return null
-        }
-
-        return try {
-            actionabilityPredictor.get().predict(
-                ImportanceTextPreprocessor.normalize(input)
-            )
-        } catch (error: Exception) {
-            Log.e(
-                TAG,
-                "AI shadow prediction failed: ${error.javaClass.simpleName}"
-            )
-            null
         }
     }
 
