@@ -7,9 +7,10 @@ import com.hanseo.noti.ai.tokenizer.TokenizedText
 import java.io.Closeable
 import ai.onnxruntime.OnnxTensor
 import java.nio.LongBuffer
+import java.nio.ByteBuffer
 
 class KoenE5ActionabilityClassifier(
-    modelPath: String,
+    modelBuffer: ByteBuffer,
     tokenizerModelPath: String,
     numberOfThreads: Int = DEFAULT_THREAD_COUNT,
 ) : Closeable {
@@ -24,7 +25,7 @@ class KoenE5ActionabilityClassifier(
 
     private val session: OrtSession =
         environment.createSession(
-            modelPath,
+            modelBuffer,
             sessionOptions,
         )
 

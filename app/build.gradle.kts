@@ -45,6 +45,12 @@ android {
     buildFeatures {
         compose = true
     }
+    androidResources {
+        noCompress += listOf(
+            "onnx",
+            "model",
+        )
+    }
     externalNativeBuild {
         cmake {
             path = file("src/main/cpp/CMakeLists.txt")
