@@ -5,6 +5,8 @@ import ai.onnxruntime.OrtSession
 import com.hanseo.noti.ai.tokenizer.NativeSentencePieceTokenizer
 import com.hanseo.noti.ai.tokenizer.TokenizedText
 import java.io.Closeable
+import ai.onnxruntime.OnnxTensor
+import java.nio.LongBuffer
 
 class KoenE5ActionabilityClassifier(
     modelPath: String,
@@ -44,6 +46,31 @@ class KoenE5ActionabilityClassifier(
         return tokenizer.tokenize(
             text = classificationText,
             maxLength = SEQUENCE_LENGTH,
+        )
+    }
+
+    private fun createLongTensor(
+        values: IntArray,
+    ): OnnxTensor {
+        require(values.size == SEQUENCE_LENGTH) {
+            "Input size must be $SEQUENCE_LENGTH"
+        }
+
+        val longValues =
+            LongArray(values.size) { index ->
+                values[index].toLong()
+            }
+
+        val shape =
+            longArrayOf(
+                1L,
+                values.size.toLong(),
+            )
+
+        return OnnxTensor.createTensor(
+            environment,
+            LongBuffer.wrap(longValues),
+            shape,
         )
     }
 
