@@ -1,0 +1,299 @@
+{
+  "protocol": {
+    "model_id": "LiquidAI/LFM2.5-Embedding-350M",
+    "sequence_length": 64,
+    "batch_size": 1,
+    "batch_contract_reason": "The current bidirectional ShortConv implementation is slightly batch-sensitive, so export and source verification both use batch 1.",
+    "prompt": "document: ",
+    "holdout_rows": 145,
+    "head": "same frozen mlp_32 head as new_ondevice_backbone_benchmark_v1",
+    "runtime": "ONNX Runtime CPUExecutionProvider, 4 intra-op threads"
+  },
+  "variants": {
+    "fp32": {
+      "artifact_bytes": 1419737056,
+      "session_load_seconds": 2.877176292007789,
+      "cosine_vs_export_source_mean": 1.0,
+      "cosine_vs_export_source_min": 0.9999998807907104,
+      "max_absolute_error_vs_export_source": 5.513429641723633e-07,
+      "cosine_vs_benchmark_bf16_mean": 0.9955869317054749,
+      "cosine_vs_benchmark_bf16_min": 0.9511083960533142,
+      "prediction_disagreements_vs_pytorch": 1,
+      "room_145": {
+        "three_class_accuracy": 0.9379310344827586,
+        "three_class_macro_f1": 0.5583094615352681,
+        "observed_class_macro_f1": 0.837464192302902,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            125,
+            7,
+            0
+          ],
+          [
+            2,
+            11,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.9379310344827586,
+          "precision": 0.6111111111111112,
+          "recall": 0.8461538461538461,
+          "f1": 0.7096774193548387,
+          "false_positive": 7,
+          "false_negative": 2,
+          "confusion_matrix": [
+            [
+              125,
+              7
+            ],
+            [
+              2,
+              11
+            ]
+          ]
+        }
+      },
+      "runtime": {
+        "single_median_ms": 194.27856199763482,
+        "single_p95_ms": 219.70416890326305,
+        "single_samples": 30
+      },
+      "graph": {
+        "ir_version": 10,
+        "opset": {
+          "ai.onnx": 18
+        },
+        "node_count": 774,
+        "operator_counts": {
+          "Add": 96,
+          "Cast": 1,
+          "Clip": 1,
+          "Concat": 12,
+          "Conv": 10,
+          "Div": 1,
+          "Equal": 1,
+          "Expand": 13,
+          "Gather": 2,
+          "MatMul": 104,
+          "Mul": 179,
+          "Neg": 12,
+          "Pow": 45,
+          "Reciprocal": 45,
+          "ReduceL2": 1,
+          "ReduceMean": 45,
+          "Reshape": 42,
+          "Sigmoid": 16,
+          "Slice": 24,
+          "Softmax": 6,
+          "Split": 10,
+          "Sqrt": 45,
+          "Transpose": 50,
+          "Unsqueeze": 13
+        }
+      }
+    },
+    "dynamic_int8": {
+      "artifact_bytes": 558734806,
+      "session_load_seconds": 0.5029172500071581,
+      "cosine_vs_export_source_mean": 0.9811272025108337,
+      "cosine_vs_export_source_min": 0.9606817364692688,
+      "max_absolute_error_vs_export_source": 0.03436587005853653,
+      "cosine_vs_benchmark_bf16_mean": 0.9770987629890442,
+      "cosine_vs_benchmark_bf16_min": 0.9338700175285339,
+      "prediction_disagreements_vs_pytorch": 4,
+      "room_145": {
+        "three_class_accuracy": 0.9172413793103448,
+        "three_class_macro_f1": 0.5333946078431372,
+        "observed_class_macro_f1": 0.8000919117647058,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            122,
+            10,
+            0
+          ],
+          [
+            2,
+            11,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.9172413793103448,
+          "precision": 0.5238095238095238,
+          "recall": 0.8461538461538461,
+          "f1": 0.6470588235294118,
+          "false_positive": 10,
+          "false_negative": 2,
+          "confusion_matrix": [
+            [
+              122,
+              10
+            ],
+            [
+              2,
+              11
+            ]
+          ]
+        }
+      },
+      "runtime": {
+        "single_median_ms": 57.218729496526066,
+        "single_p95_ms": 66.00719169509829,
+        "single_samples": 30
+      },
+      "graph": {
+        "ir_version": 10,
+        "opset": {
+          "ai.onnx": 18
+        },
+        "node_count": 1114,
+        "operator_counts": {
+          "Add": 96,
+          "Cast": 93,
+          "Clip": 1,
+          "Concat": 12,
+          "Conv": 10,
+          "Div": 1,
+          "DynamicQuantizeLinear": 64,
+          "Equal": 1,
+          "Expand": 13,
+          "Gather": 2,
+          "MatMul": 12,
+          "MatMulInteger": 92,
+          "Mul": 363,
+          "Neg": 12,
+          "Pow": 45,
+          "Reciprocal": 45,
+          "ReduceL2": 1,
+          "ReduceMean": 45,
+          "Reshape": 42,
+          "Sigmoid": 16,
+          "Slice": 24,
+          "Softmax": 6,
+          "Split": 10,
+          "Sqrt": 45,
+          "Transpose": 50,
+          "Unsqueeze": 13
+        }
+      }
+    },
+    "weight_int4": {
+      "artifact_bytes": 422908322,
+      "session_load_seconds": 0.2925121250009397,
+      "cosine_vs_export_source_mean": 0.9409979581832886,
+      "cosine_vs_export_source_min": 0.8711682558059692,
+      "max_absolute_error_vs_export_source": 0.06654870510101318,
+      "cosine_vs_benchmark_bf16_mean": 0.9364383816719055,
+      "cosine_vs_benchmark_bf16_min": 0.8719861507415771,
+      "prediction_disagreements_vs_pytorch": 5,
+      "room_145": {
+        "three_class_accuracy": 0.9241379310344827,
+        "three_class_macro_f1": 0.5475256769374416,
+        "observed_class_macro_f1": 0.8212885154061624,
+        "observed_labels": [
+          "GENERAL",
+          "ATTENTION_WORTHY"
+        ],
+        "three_class_confusion_matrix": [
+          [
+            122,
+            10,
+            0
+          ],
+          [
+            1,
+            12,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "important_binary": {
+          "accuracy": 0.9241379310344827,
+          "precision": 0.5454545454545454,
+          "recall": 0.9230769230769231,
+          "f1": 0.6857142857142857,
+          "false_positive": 10,
+          "false_negative": 1,
+          "confusion_matrix": [
+            [
+              122,
+              10
+            ],
+            [
+              1,
+              12
+            ]
+          ]
+        }
+      },
+      "runtime": {
+        "single_median_ms": 214.86925050703576,
+        "single_p95_ms": 238.33982965443283,
+        "single_samples": 30
+      },
+      "graph": {
+        "ir_version": 10,
+        "opset": {
+          "ai.onnx": 18,
+          "com.microsoft": 1
+        },
+        "node_count": 774,
+        "operator_counts": {
+          "Add": 96,
+          "Cast": 1,
+          "Clip": 1,
+          "Concat": 12,
+          "Conv": 10,
+          "Div": 1,
+          "Equal": 1,
+          "Expand": 13,
+          "Gather": 2,
+          "MatMul": 12,
+          "MatMulNBits": 92,
+          "Mul": 179,
+          "Neg": 12,
+          "Pow": 45,
+          "Reciprocal": 45,
+          "ReduceL2": 1,
+          "ReduceMean": 45,
+          "Reshape": 42,
+          "Sigmoid": 16,
+          "Slice": 24,
+          "Softmax": 6,
+          "Split": 10,
+          "Sqrt": 45,
+          "Transpose": 50,
+          "Unsqueeze": 13
+        }
+      }
+    }
+  },
+  "decision": {
+    "status": "REJECT_CURRENT_LFM_ARTIFACT_FOR_ANDROID",
+    "reason": "The smallest tested artifact is still about 403 MiB and relies on the com.microsoft MatMulNBits contrib operator.",
+    "next": "distill to a smaller student or evaluate a smaller backbone"
+  }
+}

@@ -7,11 +7,35 @@ data class TokenizedText(
     val attentionMask: IntArray,
 )
 
-class NativeSentencePieceTokenizer(modelPath: String) : Closeable {
+class NativeSentencePieceTokenizer private constructor(
+    private val bosTokenId: Int,
+    private val eosTokenId: Int,
+    private val padTokenId: Int,
+) : Closeable {
 
-    private var nativeHandle: Long = nativeCreate(modelPath)
+    private var nativeHandle: Long = 0L
 
-    init {
+    constructor(
+        modelPath: String,
+        bosTokenId: Int = DEFAULT_BOS_TOKEN_ID,
+        eosTokenId: Int = DEFAULT_EOS_TOKEN_ID,
+        padTokenId: Int = DEFAULT_PAD_TOKEN_ID,
+    ) : this(bosTokenId, eosTokenId, padTokenId) {
+        nativeHandle = nativeCreate(modelPath)
+        validateHandle()
+    }
+
+    constructor(
+        modelBytes: ByteArray,
+        bosTokenId: Int = DEFAULT_BOS_TOKEN_ID,
+        eosTokenId: Int = DEFAULT_EOS_TOKEN_ID,
+        padTokenId: Int = DEFAULT_PAD_TOKEN_ID,
+    ) : this(bosTokenId, eosTokenId, padTokenId) {
+        nativeHandle = nativeCreateFromSerialized(modelBytes)
+        validateHandle()
+    }
+
+    private fun validateHandle() {
         check(nativeHandle != 0L) { "Failed to load SentencePiece model" }
     }
 
@@ -25,14 +49,15 @@ class NativeSentencePieceTokenizer(modelPath: String) : Closeable {
         val inputIds = IntArray(maxLength)
         val attentionMask = IntArray(maxLength)
 
-        inputIds[0] = BOS_TOKEN_ID
+        inputIds.fill(padTokenId)
+        inputIds[0] = bosTokenId
         pieces.copyInto(
             destination = inputIds,
             destinationOffset = 1,
             startIndex = 0,
             endIndex = pieceCount,
         )
-        inputIds[pieceCount + 1] = EOS_TOKEN_ID
+        inputIds[pieceCount + 1] = eosTokenId
         attentionMask.fill(1, fromIndex = 0, toIndex = pieceCount + 2)
 
         return TokenizedText(inputIds, attentionMask)
@@ -47,13 +72,15 @@ class NativeSentencePieceTokenizer(modelPath: String) : Closeable {
     }
 
     private external fun nativeCreate(modelPath: String): Long
+    private external fun nativeCreateFromSerialized(modelBytes: ByteArray): Long
     private external fun nativeEncode(handle: Long, textUtf8: ByteArray): IntArray
     private external fun nativeDestroy(handle: Long)
 
     private companion object {
         const val DEFAULT_MAX_LENGTH = 64
-        const val BOS_TOKEN_ID = 2
-        const val EOS_TOKEN_ID = 1
+        const val DEFAULT_BOS_TOKEN_ID = 2
+        const val DEFAULT_EOS_TOKEN_ID = 1
+        const val DEFAULT_PAD_TOKEN_ID = 0
 
         init {
             System.loadLibrary("noti_sentencepiece")

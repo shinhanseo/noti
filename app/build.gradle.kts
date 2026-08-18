@@ -30,6 +30,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            ndk {
+                abiFilters += "arm64-v8a"
+            }
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -44,6 +49,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    androidResources {
+        noCompress += listOf("onnx", "model")
     }
     externalNativeBuild {
         cmake {
@@ -75,7 +83,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.litert)
+    implementation(libs.onnxruntime.android)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)

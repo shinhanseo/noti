@@ -1,6 +1,8 @@
 package com.hanseo.noti
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.hanseo.noti.ai.OnDeviceActionabilityClassifier
 import com.hanseo.noti.ai.tokenizer.NativeSentencePieceTokenizer
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
@@ -10,8 +12,17 @@ import org.junit.runner.RunWith
 class NativeSentencePieceTokenizerCompatibilityTest {
 
     @Test
-    fun tokenize_matchesEmbeddingGemmaPythonGoldenCase() {
-        NativeSentencePieceTokenizer(TOKENIZER_DEVICE_PATH).use { tokenizer ->
+    fun tokenize_matchesKoEnE5TinyPythonGoldenCase() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val tokenizerBytes = context.assets
+            .open(OnDeviceActionabilityClassifier.TOKENIZER_ASSET_PATH)
+            .use { stream -> stream.readBytes() }
+        NativeSentencePieceTokenizer(
+            modelBytes = tokenizerBytes,
+            bosTokenId = 0,
+            eosTokenId = 2,
+            padTokenId = 1,
+        ).use { tokenizer ->
             val result = tokenizer.tokenize(CLASSIFICATION_TEXT)
 
             assertArrayEquals(EXPECTED_INPUT_IDS, result.inputIds)
@@ -20,24 +31,19 @@ class NativeSentencePieceTokenizerCompatibilityTest {
     }
 
     private companion object {
-        const val TOKENIZER_DEVICE_PATH = "/data/local/tmp/tokenizer.model"
         const val CLASSIFICATION_TEXT =
-            "task: classification | query: 배송 출발 주문하신 상품이 오늘 오후 도착할 예정입니다."
+            "query: 배송 출발 주문하신 상품이 오늘 오후 도착할 예정입니다."
 
         val EXPECTED_INPUT_IDS = intArrayOf(
-            2, 8071, 236787, 15241, 1109, 7609, 236787, 26440,
-            239917, 172508, 132962, 148009, 104507, 237077, 31694, 133055,
-            222715, 238221, 110942, 15245, 236761, 1,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
+            0, 37, 832, 12, 27791, 26292, 20524, 21282,
+            10396, 354, 14084, 17468, 25509, 1410, 23062, 2865,
+            5, 2,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         )
-        val EXPECTED_ATTENTION_MASK = intArrayOf(
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 1,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
-        )
+        val EXPECTED_ATTENTION_MASK = IntArray(64) { index ->
+            if (index < 18) 1 else 0
+        }
     }
 }
