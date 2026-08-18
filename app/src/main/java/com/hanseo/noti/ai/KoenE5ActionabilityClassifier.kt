@@ -74,6 +74,78 @@ class KoenE5ActionabilityClassifier(
         )
     }
 
+    @Synchronized
+    fun classify(
+        normalizedText: String,
+    ): ActionabilityResult {
+        val tokenized =
+            tokenize(normalizedText)
+
+        val tokenTypeIds =
+            IntArray(SEQUENCE_LENGTH)
+
+        return createLongTensor(
+            tokenized.inputIds
+        ).use { inputIdsTensor ->
+            createLongTensor(
+                tokenized.attentionMask
+            ).use { attentionMaskTensor ->
+                createLongTensor(
+                    tokenTypeIds
+                ).use { tokenTypeIdsTensor ->
+                    session.run(
+                        mapOf(
+                            INPUT_IDS to inputIdsTensor,
+                            ATTENTION_MASK to
+                                    attentionMaskTensor,
+                            TOKEN_TYPE_IDS to
+                                    tokenTypeIdsTensor,
+                        )
+                    ).use { result ->
+                        @Suppress("UNCHECKED_CAST")
+                        val output =
+                            result[0].value as
+                                    Array<FloatArray>
+
+                        require(output.size == 1) {
+                            "Output batch size must be 1"
+                        }
+
+                        val probabilities =
+                            output[0]
+
+                        require(
+                            probabilities.size ==
+                                    ActionabilityLabel.entries.size
+                        ) {
+                            "Output must contain 3 probabilities"
+                        }
+
+                        val probabilityMap =
+                            ActionabilityLabel.entries
+                                .mapIndexed { index, label ->
+                                    label to
+                                            probabilities[index]
+                                }
+                                .toMap()
+
+                        val predictedLabel =
+                            probabilityMap
+                                .maxBy { entry ->
+                                    entry.value
+                                }
+                                .key
+
+                        ActionabilityResult(
+                            label = predictedLabel,
+                            probabilities = probabilityMap,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     override fun close() {
         tokenizer.close()
         session.close()
@@ -90,5 +162,14 @@ class KoenE5ActionabilityClassifier(
         const val BOS_TOKEN_ID = 0
         const val PAD_TOKEN_ID = 1
         const val EOS_TOKEN_ID = 2
+
+        const val INPUT_IDS =
+            "input_ids"
+
+        const val ATTENTION_MASK =
+            "attention_mask"
+
+        const val TOKEN_TYPE_IDS =
+            "token_type_ids"
     }
 }
