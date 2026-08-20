@@ -62,6 +62,6 @@ class ActionabilityPredictionMapper(
 
     private companion object {
         const val MODEL_VERSION =
-            "noti_embeddinggemma_actionability_v1"
+            "noti_koen_e5_tiny_actionability_v1_int8"
     }
 }

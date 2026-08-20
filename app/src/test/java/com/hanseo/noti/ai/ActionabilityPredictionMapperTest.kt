@@ -37,7 +37,7 @@ class ActionabilityPredictionMapperTest {
         )
         assertEquals(15, prediction.scoreDelta)
         assertEquals(
-            "noti_embeddinggemma_actionability_v1",
+            "noti_koen_e5_tiny_actionability_v1_int8",
             prediction.modelVersion
         )
         assertEquals(
