@@ -13,7 +13,7 @@ class KoenE5ActionabilityClassifier(
     modelBuffer: ByteBuffer,
     tokenizerModelPath: String,
     numberOfThreads: Int = DEFAULT_THREAD_COUNT,
-) : Closeable {
+) : ActionabilityClassifier, Closeable {
 
     private val environment: OrtEnvironment =
         OrtEnvironment.getEnvironment()
@@ -76,7 +76,7 @@ class KoenE5ActionabilityClassifier(
     }
 
     @Synchronized
-    fun classify(
+    override fun classify(
         normalizedText: String,
     ): ActionabilityResult {
         val tokenized =
