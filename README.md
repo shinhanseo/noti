@@ -23,6 +23,16 @@
 
 > **개인 프로젝트** · 제품 기획, UI/UX 디자인, Android 앱 구현, 데이터 설계와 ML 실험 전 과정을 직접 진행하고 있습니다.
 
+## Screens
+
+<p align="center">
+  <img src="./docs/screens/home-anonymized.png" width="18%" alt="noti. 중요 알림 홈 화면" />
+  <img src="./docs/screens/importance-reason.png" width="18%" alt="noti. 중요도 판정 이유 화면" />
+  <img src="./docs/screens/important-apps.png" width="18%" alt="noti. 중요 앱 설정 화면" />
+  <img src="./docs/screens/important-keywords.png" width="18%" alt="noti. 중요 키워드 설정 화면" />
+  <img src="./docs/screens/exclusion-keywords.png" width="18%" alt="noti. 앱별 제외 키워드 화면" />
+</p>
+
 ## Product Principles
 
 - **Explainable** — 모든 중요 판정에 사용자가 이해할 수 있는 근거를 남깁니다.
@@ -77,12 +87,6 @@ ViewModel → Jetpack Compose UI
 ## Tech Stack
 
 `Kotlin` `Jetpack Compose` `Material 3` `Room` `Hilt` `DataStore` `Flow` `ONNX Runtime` `C++/JNI` `JUnit`
-
-## UI Reference
-
-<p align="center">
-  <img src="./docs/home-screen-reference.svg" width="360" alt="noti. home screen reference" />
-</p>
 
 ## Testing
 
