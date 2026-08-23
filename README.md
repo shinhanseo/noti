@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <a href="https://velog.io/@imkara/series/noti."><img src="https://img.shields.io/badge/Velog_Series-20C997?style=flat-square&logo=velog&logoColor=white" alt="noti. Velog Series" /></a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Status-In_Development-2563EB?style=flat-square" alt="In Development" />
   <img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android" />
   <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin" />
