@@ -37,12 +37,36 @@ class NotiNotificationListenerService :
     lateinit var importanceDecisionCoordinator:
         ImportanceDecisionCoordinator
 
+    @Inject
+    lateinit var notificationAccessManager:
+        NotificationAccessManager
+
     override fun onListenerConnected() { // 서비스 연결 함수
         super.onListenerConnected()
+
+        notificationAccessManager
+            .markListenerConnected()
 
         Log.d(TAG, "Notification listener connected")
 
         cleanupOldNotifications()
+    }
+
+    override fun onListenerDisconnected() {
+        super.onListenerDisconnected()
+
+        notificationAccessManager
+            .markListenerDisconnected()
+
+        val rebindRequested =
+            notificationAccessManager
+                .requestRebindIfNeeded()
+
+        Log.w(
+            TAG,
+            "Notification listener disconnected: " +
+                    "rebindRequested=$rebindRequested"
+        )
     }
 
     override fun onNotificationPosted( // 알림 도착 시 콜백 확인 함수
@@ -206,6 +230,8 @@ class NotiNotificationListenerService :
     }
 
     override fun onDestroy() {
+        notificationAccessManager
+            .markListenerDisconnected()
         serviceScope.cancel()
         super.onDestroy()
     }
