@@ -30,8 +30,10 @@ class ImportanceDecisionCoordinatorTest {
 
         val coordinator =
             ImportanceDecisionCoordinator(
-                actionabilityClassifier =
-                    fakeAiClassifier
+                actionabilityClassifierProvider =
+                    successfulProvider(
+                        fakeAiClassifier
+                    )
             )
 
         val decision =
@@ -75,8 +77,10 @@ class ImportanceDecisionCoordinatorTest {
 
         val coordinator =
             ImportanceDecisionCoordinator(
-                actionabilityClassifier =
-                    fakeAiClassifier
+                actionabilityClassifierProvider =
+                    successfulProvider(
+                        fakeAiClassifier
+                    )
             )
 
         val decision =
@@ -103,8 +107,8 @@ class ImportanceDecisionCoordinatorTest {
 
     @Test
     fun importantResult_doesNotRunAi() {
-        val fakeAiClassifier =
-            ActionabilityClassifier {
+        val failingProvider =
+            ActionabilityClassifierProvider {
                 error(
                     "IMPORTANT에서는 AI가 실행되면 안 됩니다"
                 )
@@ -112,8 +116,8 @@ class ImportanceDecisionCoordinatorTest {
 
         val coordinator =
             ImportanceDecisionCoordinator(
-                actionabilityClassifier =
-                    fakeAiClassifier
+                actionabilityClassifierProvider =
+                    failingProvider
             )
 
         val input =
@@ -141,6 +145,81 @@ class ImportanceDecisionCoordinatorTest {
             decision.importance.level
         )
         assertNull(decision.aiPrediction)
+    }
+
+    @Test
+    fun modelLoadingFailure_keepsReviewResult() {
+        val loadingError =
+            IllegalStateException("모델 로딩 실패")
+
+        val failingProvider =
+            ActionabilityClassifierProvider {
+                Result.failure(loadingError)
+            }
+
+        val coordinator =
+            ImportanceDecisionCoordinator(
+                actionabilityClassifierProvider =
+                    failingProvider
+            )
+
+        val decision =
+            coordinator.evaluate(
+                input = createReviewInput(),
+                settings = ImportanceSettings(),
+                evaluatedAtMillis = 4_000L
+            )
+
+        assertEquals(
+            25,
+            decision.importance.score
+        )
+        assertEquals(
+            ImportanceLevel.REVIEW,
+            decision.importance.level
+        )
+        assertNull(decision.aiPrediction)
+    }
+
+    @Test
+    fun inferenceFailure_keepsReviewResult() {
+        val failingClassifier =
+            ActionabilityClassifier {
+                error("ONNX 추론 실패")
+            }
+
+        val coordinator =
+            ImportanceDecisionCoordinator(
+                actionabilityClassifierProvider =
+                    successfulProvider(
+                        failingClassifier
+                    )
+            )
+
+        val decision =
+            coordinator.evaluate(
+                input = createReviewInput(),
+                settings = ImportanceSettings(),
+                evaluatedAtMillis = 5_000L
+            )
+
+        assertEquals(
+            25,
+            decision.importance.score
+        )
+        assertEquals(
+            ImportanceLevel.REVIEW,
+            decision.importance.level
+        )
+        assertNull(decision.aiPrediction)
+    }
+
+    private fun successfulProvider(
+        classifier: ActionabilityClassifier
+    ): ActionabilityClassifierProvider {
+        return ActionabilityClassifierProvider {
+            Result.success(classifier)
+        }
     }
 
     private fun createReviewInput():

@@ -1,6 +1,6 @@
 package com.hanseo.noti.ai
 
-interface ActionabilityClassifierProvider {
+fun interface ActionabilityClassifierProvider {
 
     fun get():
         Result<ActionabilityClassifier>

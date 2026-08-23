@@ -7,19 +7,24 @@ import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.importance.ImportanceResult
 import com.hanseo.noti.domain.importance.ImportanceSettings
 import com.hanseo.noti.domain.importance.ImportanceTextPreprocessor
+import javax.inject.Inject
 
 data class ImportanceDecision(
     val importance: ImportanceResult,
     val aiPrediction: AiImportancePrediction?
 )
 
-class ImportanceDecisionCoordinator(
-    private val actionabilityClassifier: ActionabilityClassifier,
-    private val importanceClassifier: ImportanceClassifier =
-        ImportanceClassifier(),
-    private val predictionMapper: ActionabilityPredictionMapper =
-        ActionabilityPredictionMapper()
+class ImportanceDecisionCoordinator
+@Inject constructor(
+    private val actionabilityClassifierProvider:
+        ActionabilityClassifierProvider
 ) {
+
+    private val importanceClassifier =
+        ImportanceClassifier()
+
+    private val predictionMapper =
+        ActionabilityPredictionMapper()
 
     fun evaluate(
         input: ImportanceInput,
@@ -53,16 +58,28 @@ class ImportanceDecisionCoordinator(
             )
         }
 
-        val actionabilityResult =
-            actionabilityClassifier.classify(
-                normalizedText = normalizedText
-            )
-
         val aiPrediction =
-            predictionMapper.map(
-                result = actionabilityResult,
-                evaluatedAtMillis = evaluatedAtMillis
-            )
+            runCatching {
+                val actionabilityClassifier =
+                    actionabilityClassifierProvider
+                        .get()
+                        .getOrThrow()
+
+                val actionabilityResult =
+                    actionabilityClassifier.classify(
+                        normalizedText = normalizedText
+                    )
+
+                predictionMapper.map(
+                    result = actionabilityResult,
+                    evaluatedAtMillis = evaluatedAtMillis
+                )
+            }.getOrElse {
+                return ImportanceDecision(
+                    importance = baseResult,
+                    aiPrediction = null
+                )
+            }
 
         val finalScore =
             (
