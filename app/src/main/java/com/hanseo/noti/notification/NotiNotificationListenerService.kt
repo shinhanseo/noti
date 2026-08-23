@@ -13,9 +13,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import android.app.Notification
+import android.os.SystemClock
 import java.util.concurrent.TimeUnit
 import com.hanseo.noti.data.mapper.toImportanceInput
-import com.hanseo.noti.domain.importance.ImportanceClassifier
+import com.hanseo.noti.ai.ImportanceDecisionCoordinator
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
 
@@ -32,7 +33,9 @@ class NotiNotificationListenerService :
     @Inject
     lateinit var importanceSettingsPreferences: ImportanceSettingsPreferences
 
-    private val importanceClassifier = ImportanceClassifier()
+    @Inject
+    lateinit var importanceDecisionCoordinator:
+        ImportanceDecisionCoordinator
 
     override fun onListenerConnected() { // 서비스 연결 함수
         super.onListenerConnected()
@@ -74,16 +77,25 @@ class NotiNotificationListenerService :
                     importanceSettingsPreferences
                         .getSettings()
 
-                val importanceResult =
-                    importanceClassifier.classify(
+                val evaluationStartedAt =
+                    SystemClock.elapsedRealtimeNanos()
+
+                val decision =
+                    importanceDecisionCoordinator.evaluate(
                         input =
                             notificationItem.toImportanceInput(),
                         settings = importanceSettings
                     )
 
+                val evaluationElapsedMillis =
+                    (SystemClock.elapsedRealtimeNanos() -
+                            evaluationStartedAt) /
+                            NANOS_PER_MILLISECOND
+
                 val classifiedNotification = ClassifiedNotification(
                     notification = notificationItem,
-                    importance = importanceResult
+                    importance = decision.importance,
+                    aiPrediction = decision.aiPrediction
                 )
 
                 notificationRepository.save(classifiedNotification)
@@ -91,9 +103,17 @@ class NotiNotificationListenerService :
                 Log.d(
                     TAG,
                     "Notification classified and saved: " +
-                            "score=${importanceResult.score}, " +
-                            "level=${importanceResult.level}, " +
-                            "forced=${importanceResult.isForced}"
+                            "score=${decision.importance.score}, " +
+                            "level=${decision.importance.level}, " +
+                            "forced=${decision.importance.isForced}, " +
+                            "aiApplied=${decision.aiPrediction != null}, " +
+                            "aiLabel=${decision.aiPrediction?.label}, " +
+                            "aiProbability=" +
+                            "${decision.aiPrediction?.importantProbability}, " +
+                            "aiScoreDelta=" +
+                            "${decision.aiPrediction?.scoreDelta}, " +
+                            "evaluationElapsedMillis=" +
+                            evaluationElapsedMillis
                 )
 
             } catch (error: CancellationException) {
@@ -193,5 +213,6 @@ class NotiNotificationListenerService :
     companion object {
         private const val TAG = "NotiListener"
         private const val REMOVED_NOTIFICATION_RETENTION_DAYS = 30L
+        private const val NANOS_PER_MILLISECOND = 1_000_000L
     }
 }
