@@ -29,6 +29,19 @@
     <string name="notification_access_later">나중에 할게요</string>
     <string name="back">뒤로</string>
 
+    <string name="battery_optimization_top_title">백그라운드 알림 수집</string>
+    <string name="battery_optimization_title">알림 수집이 멈추지 않도록\n배터리 제한을 해제해주세요</string>
+    <string name="battery_optimization_description">일부 기기는 배터리를 절약하기 위해\nnoti.의 백그라운드 실행을 중단할 수 있어요.</string>
+    <string name="battery_optimization_collect_title">앱을 열지 않아도 새 알림을 수집해요</string>
+    <string name="battery_optimization_collect_description">배터리 제한이 없으면 알림 수집 연결이 더 안정적으로 유지돼요.</string>
+    <string name="battery_optimization_samsung_title">제조사별 절전 정책에 대비해요</string>
+    <string name="battery_optimization_samsung_description">삼성 등 일부 기기에서 앱이 절전 상태로 전환되면 새 알림을 놓칠 수 있어요.</string>
+    <string name="battery_optimization_change_title">언제든지 다시 변경할 수 있어요</string>
+    <string name="battery_optimization_change_description">Android 앱 설정의 배터리 메뉴에서 직접 관리할 수 있어요.</string>
+    <string name="battery_optimization_open_settings">배터리 설정 열기</string>
+    <string name="battery_optimization_allowed">배터리 제한 해제됨</string>
+    <string name="battery_optimization_later">나중에 할게요</string>
+
     <string name="important_apps_step">1 / 2</string>
     <string name="important_apps_skip">건너뛰기</string>
     <string name="important_apps_title">먼저 확인하고 싶은 앱을\n선택해주세요</string>
@@ -71,4 +84,8 @@
     <string name="listener_reconnect_required_title">알림 수집이 중단됐어요</string>
     <string name="listener_reconnect_required_description">Android 알림 접근 설정에서 noti. 권한을 껐다가 다시 켜주세요.</string>
     <string name="listener_reconnect_open_settings">알림 접근 설정 열기</string>
+
+    <string name="home_battery_warning_title">알림 수집이 중단될 수 있어요</string>
+    <string name="home_battery_warning_description">삼성 등 일부 기기의 배터리 사용 제한으로 noti.가 종료되면 새 알림이 수집되지 않을 수 있어요. 배터리 사용을 ‘제한 없음’으로 설정해주세요.</string>
+    <string name="home_battery_warning_button">배터리 설정 열기</string>
 </resources>

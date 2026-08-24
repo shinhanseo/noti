@@ -17,6 +17,7 @@ import com.hanseo.noti.ui.main.MainScreen
 import com.hanseo.noti.ui.main.MainViewModel
 import com.hanseo.noti.ui.onboarding.ImportantAppsScreen
 import com.hanseo.noti.ui.onboarding.ImportantKeywordsScreen
+import com.hanseo.noti.ui.onboarding.BatteryOptimizationScreen
 import com.hanseo.noti.ui.onboarding.NotificationAccessScreen
 import com.hanseo.noti.ui.onboarding.OnboardingScreen
 import com.hanseo.noti.ui.onboarding.OnboardingStage
@@ -122,11 +123,14 @@ private fun OnboardingRoute(
     LifecycleEventEffect(
         event = Lifecycle.Event.ON_RESUME
     ) {
-        if (
-            uiState.stage ==
-            OnboardingStage.NOTIFICATION_ACCESS
-        ) {
-            viewModel.refreshNotificationAccess()
+        when (uiState.stage) {
+            OnboardingStage.NOTIFICATION_ACCESS ->
+                viewModel.refreshNotificationAccess()
+
+            OnboardingStage.BATTERY_OPTIMIZATION ->
+                viewModel.refreshBatteryOptimizationStatus()
+
+            else -> Unit
         }
     }
 
@@ -153,6 +157,26 @@ private fun OnboardingRoute(
 
                 onDefer =
                     viewModel::onNotificationAccessDeferred
+            )
+        }
+
+        OnboardingStage.BATTERY_OPTIMIZATION -> {
+            BatteryOptimizationScreen(
+                isExempt =
+                    uiState.isBatteryOptimizationExempt,
+
+                onBackClick =
+                    viewModel::onBackToNotificationAccess,
+
+                onOpenSettings = {
+                    context.startActivity(
+                        viewModel
+                            .createBatterySettingsIntent()
+                    )
+                },
+
+                onDefer =
+                    viewModel::onBatteryOptimizationDeferred
             )
         }
 

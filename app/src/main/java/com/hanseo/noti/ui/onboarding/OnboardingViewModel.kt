@@ -3,6 +3,7 @@ package com.hanseo.noti.ui.onboarding
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hanseo.noti.battery.BatteryOptimizationManager
 import com.hanseo.noti.data.apps.InstalledAppProvider
 import com.hanseo.noti.data.preferences.ImportanceSettingsPreferences
 import com.hanseo.noti.data.preferences.OnboardingPreferences
@@ -20,6 +21,8 @@ import kotlinx.coroutines.launch
 class OnboardingViewModel @Inject constructor(
     private val notificationAccessManager:
     NotificationAccessManager,
+    private val batteryOptimizationManager:
+    BatteryOptimizationManager,
     private val onboardingPreferences:
     OnboardingPreferences,
     private val importanceSettingsPreferences:
@@ -33,7 +36,10 @@ class OnboardingViewModel @Inject constructor(
             OnboardingUiState(
                 hasNotificationAccess =
                     notificationAccessManager
-                        .hasNotificationAccess()
+                        .hasNotificationAccess(),
+                isBatteryOptimizationExempt =
+                    batteryOptimizationManager
+                        .isBatteryOptimizationExempt()
             )
         )
 
@@ -100,10 +106,15 @@ class OnboardingViewModel @Inject constructor(
     fun onIntroCompleted() {
         _uiState.update { currentState ->
             val nextStage =
-                if (currentState.hasNotificationAccess) {
-                    OnboardingStage.IMPORTANT_APPS
-                } else {
-                    OnboardingStage.NOTIFICATION_ACCESS
+                when {
+                    !currentState.hasNotificationAccess ->
+                        OnboardingStage.NOTIFICATION_ACCESS
+
+                    !currentState.isBatteryOptimizationExempt ->
+                        OnboardingStage.BATTERY_OPTIMIZATION
+
+                    else ->
+                        OnboardingStage.IMPORTANT_APPS
                 }
 
             currentState.copy(
@@ -135,7 +146,14 @@ class OnboardingViewModel @Inject constructor(
                 hasNotificationAccess = hasAccess,
                 stage =
                     if (hasAccess) {
-                        OnboardingStage.IMPORTANT_APPS
+                        if (
+                            currentState
+                                .isBatteryOptimizationExempt
+                        ) {
+                            OnboardingStage.IMPORTANT_APPS
+                        } else {
+                            OnboardingStage.BATTERY_OPTIMIZATION
+                        }
                     } else {
                         currentState.stage
                     }
@@ -144,6 +162,38 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun onNotificationAccessDeferred() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                stage =
+                    OnboardingStage.BATTERY_OPTIMIZATION
+            )
+        }
+    }
+
+    fun createBatterySettingsIntent(): Intent {
+        return batteryOptimizationManager
+            .createBatterySettingsIntent()
+    }
+
+    fun refreshBatteryOptimizationStatus() {
+        val isExempt =
+            batteryOptimizationManager
+                .isBatteryOptimizationExempt()
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                isBatteryOptimizationExempt = isExempt,
+                stage =
+                    if (isExempt) {
+                        OnboardingStage.IMPORTANT_APPS
+                    } else {
+                        currentState.stage
+                    }
+            )
+        }
+    }
+
+    fun onBatteryOptimizationDeferred() {
         _uiState.update { currentState ->
             currentState.copy(
                 stage = OnboardingStage.IMPORTANT_APPS

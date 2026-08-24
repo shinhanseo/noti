@@ -5,6 +5,7 @@ import com.hanseo.noti.data.apps.InstalledApp
 enum class OnboardingStage {
     INTRO,
     NOTIFICATION_ACCESS,
+    BATTERY_OPTIMIZATION,
     IMPORTANT_APPS,
     IMPORTANT_KEYWORDS
 }
@@ -14,6 +15,8 @@ data class OnboardingUiState(
         OnboardingStage.INTRO,
 
     val hasNotificationAccess: Boolean = false,
+
+    val isBatteryOptimizationExempt: Boolean = false,
 
     val installedApps: List<InstalledApp> =
         emptyList(),

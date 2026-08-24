@@ -80,8 +80,12 @@ fun MainNavHost(
             MyCriteriaRoute(
                 hasNotificationAccess =
                     hasNotificationAccess,
+                isBatteryOptimizationExempt =
+                    isBatteryOptimizationExempt,
                 onRequestNotificationAccess =
                     onRequestNotificationAccess,
+                onRequestBatterySettings =
+                    onRequestBatterySettings,
                 onImportantAppsClick = {
                     navController.navigate(
                         NotiRoutes.IMPORTANT_APPS_SETTINGS
@@ -135,7 +139,9 @@ fun MainNavHost(
 @Composable
 private fun MyCriteriaRoute(
     hasNotificationAccess: Boolean,
+    isBatteryOptimizationExempt: Boolean,
     onRequestNotificationAccess: () -> Unit,
+    onRequestBatterySettings: () -> Unit,
     onImportantAppsClick: () -> Unit,
     onImportantKeywordsClick: () -> Unit,
     onExclusionKeywordsClick: () -> Unit,
@@ -154,6 +160,8 @@ private fun MyCriteriaRoute(
             uiState.exclusionKeywordCount,
         hasNotificationAccess =
             hasNotificationAccess,
+        isBatteryOptimizationExempt =
+            isBatteryOptimizationExempt,
         onImportantAppsClick =
             onImportantAppsClick,
         onImportantKeywordsClick =
@@ -161,7 +169,9 @@ private fun MyCriteriaRoute(
         onExclusionKeywordsClick =
             onExclusionKeywordsClick,
         onNotificationAccessClick =
-            onRequestNotificationAccess
+            onRequestNotificationAccess,
+        onBatterySettingsClick =
+            onRequestBatterySettings
     )
 }
 

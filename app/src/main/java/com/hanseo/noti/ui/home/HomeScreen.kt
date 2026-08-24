@@ -148,6 +148,20 @@ fun HomeScreen(
                 )
             }
 
+            if (!isBatteryOptimizationExempt) {
+                BatteryOptimizationWarningCard(
+                    onOpenSettings =
+                        onRequestBatterySettings,
+                    modifier = Modifier.padding(
+                        horizontal = 24.dp
+                    )
+                )
+
+                Spacer(
+                    modifier = Modifier.height(20.dp)
+                )
+            }
+
             HomeHeader(
                 notificationCount =
                     importantNotifications.size,
@@ -303,6 +317,56 @@ fun HomeScreen(
                 onEditCriteria()
             }
         )
+    }
+}
+
+@Composable
+private fun BatteryOptimizationWarningCard(
+    onOpenSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor =
+                MaterialTheme.colorScheme.secondaryContainer,
+            contentColor =
+                MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.home_battery_warning_title
+                ),
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(
+                    R.string.home_battery_warning_description
+                ),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onOpenSettings,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.home_battery_warning_button
+                    )
+                )
+            }
+        }
     }
 }
 

@@ -35,10 +35,12 @@ fun MyCriteriaScreen(
     importantKeywordCount: Int = 0,
     exclusionKeywordCount: Int = 0,
     hasNotificationAccess: Boolean = false,
+    isBatteryOptimizationExempt: Boolean = false,
     onImportantAppsClick: () -> Unit = {},
     onImportantKeywordsClick: () -> Unit = {},
     onExclusionKeywordsClick: () -> Unit = {},
     onNotificationAccessClick: () -> Unit = {},
+    onBatterySettingsClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -164,12 +166,23 @@ fun MyCriteriaScreen(
                 shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.surface
             ) {
-                NotificationAccessMenuItem(
-                    hasNotificationAccess =
-                        hasNotificationAccess,
-                    onClick =
-                        onNotificationAccessClick
-                )
+                Column {
+                    NotificationAccessMenuItem(
+                        hasNotificationAccess =
+                            hasNotificationAccess,
+                        onClick =
+                            onNotificationAccessClick
+                    )
+
+                    CriteriaMenuDivider()
+
+                    BatteryOptimizationMenuItem(
+                        isExempt =
+                            isBatteryOptimizationExempt,
+                        onClick =
+                            onBatterySettingsClick
+                    )
+                }
             }
 
             Spacer(
@@ -314,6 +327,70 @@ private fun CriteriaMenuItem(
                 MaterialTheme.typography.headlineSmall,
             color =
                 MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@Composable
+private fun BatteryOptimizationMenuItem(
+    isExempt: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(
+                horizontal = 16.dp,
+                vertical = 16.dp
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CriteriaBadge(
+            iconResId = R.drawable.ic_criteria_battery
+        )
+
+        Spacer(modifier = Modifier.width(14.dp))
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement =
+                Arrangement.spacedBy(2.dp)
+        ) {
+            Text(
+                text = "배터리 사용 제한",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                text =
+                    if (isExempt) {
+                        "백그라운드 알림 수집을 허용했어요"
+                    } else {
+                        "안정적인 알림 수집을 위해 제한을 해제해주세요"
+                    },
+                style = MaterialTheme.typography.bodySmall,
+                color =
+                    MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        Text(
+            text =
+                if (isExempt) {
+                    "제한 없음"
+                } else {
+                    "설정 필요"
+                },
+            style = MaterialTheme.typography.labelMedium,
+            color =
+                if (isExempt) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                }
         )
     }
 }
