@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -95,6 +96,61 @@ fun HomeScreen(
         return
     }
 
+    var showBatteryOptimizationDialog by rememberSaveable(
+        isBatteryOptimizationExempt
+    ) {
+        mutableStateOf(!isBatteryOptimizationExempt)
+    }
+
+    if (showBatteryOptimizationDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showBatteryOptimizationDialog = false
+            },
+            title = {
+                Text(
+                    text = stringResource(
+                        R.string.home_battery_warning_title
+                    )
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(
+                        R.string.home_battery_warning_description
+                    )
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showBatteryOptimizationDialog = false
+                        onRequestBatterySettings()
+                    }
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.home_battery_warning_button
+                        )
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showBatteryOptimizationDialog = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.home_battery_warning_later
+                        )
+                    )
+                }
+            }
+        )
+    }
+
     val importantNotifications =
         uiState.importantNotifications
 
@@ -138,20 +194,6 @@ fun HomeScreen(
                         listenerConnectionStatus,
                     onOpenSettings =
                         onRequestNotificationAccess,
-                    modifier = Modifier.padding(
-                        horizontal = 24.dp
-                    )
-                )
-
-                Spacer(
-                    modifier = Modifier.height(20.dp)
-                )
-            }
-
-            if (!isBatteryOptimizationExempt) {
-                BatteryOptimizationWarningCard(
-                    onOpenSettings =
-                        onRequestBatterySettings,
                     modifier = Modifier.padding(
                         horizontal = 24.dp
                     )
@@ -317,56 +359,6 @@ fun HomeScreen(
                 onEditCriteria()
             }
         )
-    }
-}
-
-@Composable
-private fun BatteryOptimizationWarningCard(
-    onOpenSettings: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor =
-                MaterialTheme.colorScheme.secondaryContainer,
-            contentColor =
-                MaterialTheme.colorScheme.onSecondaryContainer
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(20.dp)
-        ) {
-            Text(
-                text = stringResource(
-                    R.string.home_battery_warning_title
-                ),
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(
-                    R.string.home_battery_warning_description
-                ),
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = onOpenSettings,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = stringResource(
-                        R.string.home_battery_warning_button
-                    )
-                )
-            }
-        }
     }
 }
 
