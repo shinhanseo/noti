@@ -1,7 +1,6 @@
 package com.hanseo.noti
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,16 +25,10 @@ import com.hanseo.noti.ui.app.AppStartDestination
 import com.hanseo.noti.ui.app.AppViewModel
 import com.hanseo.noti.ui.navigation.NotiNavHost
 import com.hanseo.noti.ui.theme.NotiTheme
-import com.hanseo.noti.notification.NotificationAccessManager
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var notificationAccessManager:
-        NotificationAccessManager
 
     private val appViewModel: AppViewModel by viewModels()
 
@@ -110,22 +103,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val rebindRequested =
-            notificationAccessManager
-                .requestRebindIfNeeded()
-
-        if (rebindRequested) {
-            Log.d(
-                TAG,
-                "Notification listener rebind requested"
-            )
-        }
-    }
-
-    private companion object {
-        const val TAG = "MainActivity"
-    }
 }

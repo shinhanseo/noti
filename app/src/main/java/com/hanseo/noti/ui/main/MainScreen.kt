@@ -78,6 +78,8 @@ fun MainScreen(
             navController = navController,
             hasNotificationAccess =
                 uiState.hasNotificationAccess,
+            listenerConnectionStatus =
+                uiState.listenerConnectionStatus,
             onRequestNotificationAccess =
                 onRequestNotificationAccess,
             modifier = Modifier.padding(

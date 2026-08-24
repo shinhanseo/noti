@@ -17,11 +17,14 @@ import com.hanseo.noti.ui.home.HomeScreen
 import com.hanseo.noti.ui.home.HomeViewModel
 import com.hanseo.noti.ui.notifications.NotificationsScreen
 import com.hanseo.noti.ui.notifications.NotificationsViewModel
+import com.hanseo.noti.notification.NotificationListenerConnectionStatus
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
     hasNotificationAccess: Boolean,
+    listenerConnectionStatus:
+        NotificationListenerConnectionStatus,
     onRequestNotificationAccess: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -34,6 +37,8 @@ fun MainNavHost(
             HomeRoute(
                 hasNotificationAccess =
                     hasNotificationAccess,
+                listenerConnectionStatus =
+                    listenerConnectionStatus,
                 onRequestNotificationAccess =
                     onRequestNotificationAccess,
                 onShowAllNotifications = {
@@ -233,6 +238,8 @@ private fun NotificationsRoute(
 @Composable
 private fun HomeRoute(
     hasNotificationAccess: Boolean,
+    listenerConnectionStatus:
+        NotificationListenerConnectionStatus,
     onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
     onEditCriteria: () -> Unit,
@@ -247,6 +254,9 @@ private fun HomeRoute(
 
         hasNotificationAccess =
             hasNotificationAccess,
+
+        listenerConnectionStatus =
+            listenerConnectionStatus,
 
         onRequestNotificationAccess =
             onRequestNotificationAccess,

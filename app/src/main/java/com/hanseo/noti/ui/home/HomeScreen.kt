@@ -64,11 +64,15 @@ import androidx.compose.ui.graphics.asImageBitmap
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.ui.model.NotificationUiModel
 import kotlinx.coroutines.launch
+import com.hanseo.noti.notification.NotificationListenerConnectionStatus
+import androidx.compose.material3.LinearProgressIndicator
 
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
     hasNotificationAccess: Boolean,
+    listenerConnectionStatus:
+        NotificationListenerConnectionStatus,
     onRequestNotificationAccess: () -> Unit,
     onShowAllNotifications: () -> Unit,
     onLessImportant: (ClassifiedNotification) -> Unit,
@@ -121,6 +125,25 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
+            if (
+                listenerConnectionStatus !=
+                NotificationListenerConnectionStatus.CONNECTED
+            ) {
+                NotificationListenerConnectionCard(
+                    connectionStatus =
+                        listenerConnectionStatus,
+                    onOpenSettings =
+                        onRequestNotificationAccess,
+                    modifier = Modifier.padding(
+                        horizontal = 24.dp
+                    )
+                )
+
+                Spacer(
+                    modifier = Modifier.height(20.dp)
+                )
+            }
+
             HomeHeader(
                 notificationCount =
                     importantNotifications.size,
@@ -276,6 +299,91 @@ fun HomeScreen(
                 onEditCriteria()
             }
         )
+    }
+}
+
+@Composable
+private fun NotificationListenerConnectionCard(
+    connectionStatus:
+        NotificationListenerConnectionStatus,
+    onOpenSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val reconnectRequired =
+        connectionStatus ==
+        NotificationListenerConnectionStatus.RECONNECT_REQUIRED
+
+    val containerColor =
+        if (reconnectRequired) {
+            MaterialTheme.colorScheme.errorContainer
+        } else {
+            MaterialTheme.colorScheme.secondaryContainer
+        }
+
+    val contentColor =
+        if (reconnectRequired) {
+            MaterialTheme.colorScheme.onErrorContainer
+        } else {
+            MaterialTheme.colorScheme.onSecondaryContainer
+        }
+
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Text(
+                text = stringResource(
+                    if (reconnectRequired) {
+                        R.string.listener_reconnect_required_title
+                    } else {
+                        R.string.listener_reconnecting_title
+                    }
+                ),
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(
+                    if (reconnectRequired) {
+                        R.string.listener_reconnect_required_description
+                    } else {
+                        R.string.listener_reconnecting_description
+                    }
+                ),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (reconnectRequired) {
+                Button(
+                    onClick = onOpenSettings,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.listener_reconnect_open_settings
+                        )
+                    )
+                }
+            } else {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = contentColor,
+                    trackColor =
+                        contentColor.copy(alpha = 0.2f)
+                )
+            }
+        }
     }
 }
 
