@@ -3,6 +3,7 @@ package com.hanseo.noti.ui.main
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hanseo.noti.battery.BatteryOptimizationManager
 import com.hanseo.noti.notification.NotificationAccessManager
 import com.hanseo.noti.notification.NotificationListenerConnectionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,10 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val notificationAccessManager:
-        NotificationAccessManager
+    NotificationAccessManager,
+
+    private val batteryOptimizationManager:
+    BatteryOptimizationManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -24,10 +28,15 @@ class MainViewModel @Inject constructor(
             hasNotificationAccess =
                 notificationAccessManager
                     .hasNotificationAccess(),
+
             listenerConnectionStatus =
                 notificationAccessManager
                     .connectionStatus
-                    .value
+                    .value,
+
+            isBatteryOptimizationExempt =
+                batteryOptimizationManager
+                    .isBatteryOptimizationExempt()
         )
     )
 
@@ -43,8 +52,9 @@ class MainViewModel @Inject constructor(
                         currentState.copy(
                             hasNotificationAccess =
                                 connectionStatus !=
-                                NotificationListenerConnectionStatus
-                                    .ACCESS_REQUIRED,
+                                        NotificationListenerConnectionStatus
+                                            .ACCESS_REQUIRED,
+
                             listenerConnectionStatus =
                                 connectionStatus
                         )
@@ -59,11 +69,32 @@ class MainViewModel @Inject constructor(
 
         notificationAccessManager
             .requestRebindIfNeeded()
+
+        refreshBatteryOptimizationStatus()
+    }
+
+    private fun refreshBatteryOptimizationStatus() {
+        val isExempt =
+            batteryOptimizationManager
+                .isBatteryOptimizationExempt()
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                isBatteryOptimizationExempt =
+                    isExempt
+            )
+        }
     }
 
     fun createNotificationAccessSettingsIntent():
-        Intent {
+            Intent {
         return notificationAccessManager
             .createNotificationAccessSettingsIntent()
+    }
+
+    fun createBatterySettingsIntent():
+            Intent {
+        return batteryOptimizationManager
+            .createBatterySettingsIntent()
     }
 }
