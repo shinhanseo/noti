@@ -71,9 +71,13 @@ import androidx.compose.material3.LinearProgressIndicator
 fun HomeScreen(
     uiState: HomeUiState,
     hasNotificationAccess: Boolean,
+
     listenerConnectionStatus:
-        NotificationListenerConnectionStatus,
+    NotificationListenerConnectionStatus,
+
+    isBatteryOptimizationExempt: Boolean,
     onRequestNotificationAccess: () -> Unit,
+    onRequestBatterySettings: () -> Unit,
     onShowAllNotifications: () -> Unit,
     onLessImportant: (ClassifiedNotification) -> Unit,
     onMarkAsRead: (String) -> Unit,

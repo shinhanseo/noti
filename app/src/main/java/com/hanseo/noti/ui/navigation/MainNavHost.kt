@@ -23,9 +23,13 @@ import com.hanseo.noti.notification.NotificationListenerConnectionStatus
 fun MainNavHost(
     navController: NavHostController,
     hasNotificationAccess: Boolean,
+
     listenerConnectionStatus:
-        NotificationListenerConnectionStatus,
+    NotificationListenerConnectionStatus,
+
+    isBatteryOptimizationExempt: Boolean,
     onRequestNotificationAccess: () -> Unit,
+    onRequestBatterySettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -37,10 +41,19 @@ fun MainNavHost(
             HomeRoute(
                 hasNotificationAccess =
                     hasNotificationAccess,
+
                 listenerConnectionStatus =
                     listenerConnectionStatus,
+
+                isBatteryOptimizationExempt =
+                    isBatteryOptimizationExempt,
+
                 onRequestNotificationAccess =
                     onRequestNotificationAccess,
+
+                onRequestBatterySettings =
+                    onRequestBatterySettings,
+
                 onShowAllNotifications = {
                     navController.navigate(
                         NotiRoutes.NOTIFICATIONS
@@ -48,6 +61,7 @@ fun MainNavHost(
                         launchSingleTop = true
                     }
                 },
+
                 onEditCriteria = {
                     navController.navigate(
                         NotiRoutes.MY_CRITERIA
@@ -238,9 +252,13 @@ private fun NotificationsRoute(
 @Composable
 private fun HomeRoute(
     hasNotificationAccess: Boolean,
+
     listenerConnectionStatus:
-        NotificationListenerConnectionStatus,
+    NotificationListenerConnectionStatus,
+
+    isBatteryOptimizationExempt: Boolean,
     onRequestNotificationAccess: () -> Unit,
+    onRequestBatterySettings: () -> Unit,
     onShowAllNotifications: () -> Unit,
     onEditCriteria: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
@@ -258,8 +276,14 @@ private fun HomeRoute(
         listenerConnectionStatus =
             listenerConnectionStatus,
 
+        isBatteryOptimizationExempt =
+            isBatteryOptimizationExempt,
+
         onRequestNotificationAccess =
             onRequestNotificationAccess,
+
+        onRequestBatterySettings =
+            onRequestBatterySettings,
 
         onShowAllNotifications =
             onShowAllNotifications,

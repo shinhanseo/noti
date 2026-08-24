@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 fun MainScreen(
     uiState: MainUiState,
     onRequestNotificationAccess: () -> Unit,
+    onRequestBatterySettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navController =
@@ -76,12 +77,22 @@ fun MainScreen(
     ) { innerPadding ->
         MainNavHost(
             navController = navController,
+
             hasNotificationAccess =
                 uiState.hasNotificationAccess,
+
             listenerConnectionStatus =
                 uiState.listenerConnectionStatus,
+
+            isBatteryOptimizationExempt =
+                uiState.isBatteryOptimizationExempt,
+
             onRequestNotificationAccess =
                 onRequestNotificationAccess,
+
+            onRequestBatterySettings =
+                onRequestBatterySettings,
+
             modifier = Modifier.padding(
                 innerPadding
             )

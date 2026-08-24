@@ -93,6 +93,12 @@ private fun MainRoute(
                 viewModel
                     .createNotificationAccessSettingsIntent()
             )
+        },
+        onRequestBatterySettings = {
+            context.startActivity(
+                viewModel
+                    .createBatterySettingsIntent()
+            )
         }
     )
 }
