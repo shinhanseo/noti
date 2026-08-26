@@ -84,6 +84,10 @@ dependencies {
     implementation(libs.litert)
     implementation(libs.onnxruntime.android)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    androidTestImplementation(libs.androidx.work.testing)
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 }
