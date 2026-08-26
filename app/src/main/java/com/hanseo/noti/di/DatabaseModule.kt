@@ -17,6 +17,7 @@ import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
 import com.hanseo.noti.data.local.migration.MIGRATION_4_5
 import com.hanseo.noti.data.local.migration.MIGRATION_5_6
 import com.hanseo.noti.data.local.migration.MIGRATION_6_7
+import com.hanseo.noti.data.local.migration.MIGRATION_7_8
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,7 +39,8 @@ object DatabaseModule {
                 MIGRATION_3_4,
                 MIGRATION_4_5,
                 MIGRATION_5_6,
-                MIGRATION_6_7
+                MIGRATION_6_7,
+                MIGRATION_7_8
             )
             .build()
     }

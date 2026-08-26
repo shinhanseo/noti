@@ -34,5 +34,11 @@ data class NotificationFeedbackEntity(
     val policyVersion: String,
 
     @ColumnInfo(name = "feedback_at")
-    val feedbackAt: Long
+    val feedbackAt: Long,
+
+    @ColumnInfo(name = "reason_code")
+    val reasonCode: String? = null,
+
+    @ColumnInfo(name = "reason_text")
+    val reasonText: String? = null
 )
