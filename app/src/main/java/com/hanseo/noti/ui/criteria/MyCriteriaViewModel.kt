@@ -62,6 +62,7 @@ class MyCriteriaViewModel @Inject constructor(
                                     ?: settings
                                         .importantApps
                                         .firstOrNull(),
+                            isLoadingSettings = false,
                             hasSaveError = false
                         )
                     }

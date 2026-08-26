@@ -165,6 +165,8 @@ private fun MyCriteriaRoute(
             uiState.importantKeywordCount,
         exclusionKeywordCount =
             uiState.exclusionKeywordCount,
+        isLoadingSettings =
+            uiState.isLoadingSettings,
         hasNotificationAccess =
             hasNotificationAccess,
         isBatteryOptimizationExempt =

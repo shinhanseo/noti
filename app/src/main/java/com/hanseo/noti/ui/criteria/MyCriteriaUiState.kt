@@ -12,6 +12,7 @@ data class MyCriteriaUiState(
     val keywordInput: String = "",
     val exclusionKeywordInput: String = "",
     val selectedExclusionAppPackage: String? = null,
+    val isLoadingSettings: Boolean = true,
     val isLoadingApps: Boolean = false,
     val hasAppLoadError: Boolean = false,
     val hasSaveError: Boolean = false

@@ -1,6 +1,11 @@
 package com.hanseo.noti.ui.criteria
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -26,6 +31,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hanseo.noti.R
 import com.hanseo.noti.ui.theme.NotiSuccess
@@ -44,6 +51,7 @@ fun MyCriteriaScreen(
     importantAppCount: Int = 0,
     importantKeywordCount: Int = 0,
     exclusionKeywordCount: Int = 0,
+    isLoadingSettings: Boolean = false,
     hasNotificationAccess: Boolean = false,
     isBatteryOptimizationExempt: Boolean = false,
     onImportantAppsClick: () -> Unit = {},
@@ -73,7 +81,8 @@ fun MyCriteriaScreen(
 
             CriteriaSummaryBanner(
                 importantAppCount = importantAppCount,
-                importantKeywordCount = importantKeywordCount
+                importantKeywordCount = importantKeywordCount,
+                isLoadingSettings = isLoadingSettings
             )
 
             Spacer(modifier = Modifier.height(26.dp))
@@ -90,6 +99,7 @@ fun MyCriteriaScreen(
                     iconResId = R.drawable.ic_criteria_keyword,
                     title = "중요 키워드",
                     count = importantKeywordCount,
+                    isLoadingSettings = isLoadingSettings,
                     onClick = onImportantKeywordsClick,
                     modifier = Modifier.weight(1f)
                 )
@@ -98,6 +108,7 @@ fun MyCriteriaScreen(
                     iconResId = R.drawable.ic_criteria_apps,
                     title = "중요 앱",
                     count = importantAppCount,
+                    isLoadingSettings = isLoadingSettings,
                     onClick = onImportantAppsClick,
                     modifier = Modifier.weight(1f)
                 )
@@ -107,6 +118,7 @@ fun MyCriteriaScreen(
 
             ExclusionSettingCard(
                 exclusionKeywordCount = exclusionKeywordCount,
+                isLoadingSettings = isLoadingSettings,
                 onClick = onExclusionKeywordsClick
             )
 
@@ -196,6 +208,7 @@ fun MyCriteriaScreen(
 private fun CriteriaSummaryBanner(
     importantAppCount: Int,
     importantKeywordCount: Int,
+    isLoadingSettings: Boolean,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -241,13 +254,21 @@ private fun CriteriaSummaryBanner(
                 color = Color.White
             )
 
-            Text(
-                text =
-                    "중요 앱 ${importantAppCount}개 · " +
-                        "중요 키워드 ${importantKeywordCount}개",
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White.copy(alpha = 0.82f)
-            )
+            if (isLoadingSettings) {
+                CriteriaSkeletonBlock(
+                    width = 196.dp,
+                    height = 20.dp,
+                    color = Color.White.copy(alpha = 0.55f)
+                )
+            } else {
+                Text(
+                    text =
+                        "중요 앱 ${importantAppCount}개 · " +
+                            "중요 키워드 ${importantKeywordCount}개",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White.copy(alpha = 0.82f)
+                )
+            }
         }
     }
 }
@@ -296,6 +317,7 @@ private fun QuickSettingCard(
     @DrawableRes iconResId: Int,
     title: String,
     count: Int,
+    isLoadingSettings: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -333,11 +355,18 @@ private fun QuickSettingCard(
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
-                    Text(
-                        text = "${count}개",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    if (isLoadingSettings) {
+                        CriteriaSkeletonBlock(
+                            width = 38.dp,
+                            height = 20.dp
+                        )
+                    } else {
+                        Text(
+                            text = "${count}개",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
 
                 NavigationArrow()
@@ -349,6 +378,7 @@ private fun QuickSettingCard(
 @Composable
 private fun ExclusionSettingCard(
     exclusionKeywordCount: Int,
+    isLoadingSettings: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -388,16 +418,23 @@ private fun ExclusionSettingCard(
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                Text(
-                    text =
-                        if (exclusionKeywordCount == 0) {
-                            "광고처럼 넘기고 싶은 표현을 설정해보세요"
-                        } else {
-                            "${exclusionKeywordCount}개 제외 키워드가 설정되어 있어요"
-                        },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                if (isLoadingSettings) {
+                    CriteriaSkeletonBlock(
+                        width = 210.dp,
+                        height = 15.dp
+                    )
+                } else {
+                    Text(
+                        text =
+                            if (exclusionKeywordCount == 0) {
+                                "광고처럼 넘기고 싶은 표현을 설정해보세요"
+                            } else {
+                                "${exclusionKeywordCount}개 제외 키워드가 설정되어 있어요"
+                            },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
 
             NavigationArrow()
@@ -566,6 +603,42 @@ private fun NavigationArrow(
         modifier = modifier,
         style = MaterialTheme.typography.headlineSmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+}
+
+@Composable
+private fun CriteriaSkeletonBlock(
+    width: Dp,
+    height: Dp,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary
+) {
+    val infiniteTransition =
+        rememberInfiniteTransition(
+            label = "criteriaSkeleton"
+        )
+
+    val skeletonAlpha by
+        infiniteTransition.animateFloat(
+            initialValue = 0.35f,
+            targetValue = 0.8f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 900),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "criteriaSkeletonAlpha"
+        )
+
+    Box(
+        modifier = modifier
+            .width(width)
+            .height(height)
+            .clip(RoundedCornerShape(7.dp))
+            .background(
+                color.copy(
+                    alpha = color.alpha * skeletonAlpha
+                )
+            )
     )
 }
 
