@@ -89,4 +89,9 @@
     <string name="home_battery_warning_description">삼성 등 일부 기기의 배터리 사용 제한으로 noti.가 종료되면 새 알림이 수집되지 않을 수 있어요. 배터리 사용을 ‘제한 없음’으로 설정해주세요.</string>
     <string name="home_battery_warning_button">배터리 설정 열기</string>
     <string name="home_battery_warning_later">나중에</string>
+
+    <string name="service_information_title">서비스 정보</string>
+    <string name="privacy_policy_title">개인정보처리방침</string>
+    <string name="privacy_policy_description">noti.의 개인정보 처리 기준을 확인해요</string>
+    <string name="privacy_policy_url" translatable="false">https://app.notion.com/p/noti-3c812450961b802dacedf0ddff3134a0?source=copy_link</string>
 </resources>

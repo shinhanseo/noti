@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.hanseo.noti.R
 
@@ -41,6 +42,7 @@ fun MyCriteriaScreen(
     onExclusionKeywordsClick: () -> Unit = {},
     onNotificationAccessClick: () -> Unit = {},
     onBatterySettingsClick: () -> Unit = {},
+    onPrivacyPolicyClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -183,6 +185,38 @@ fun MyCriteriaScreen(
                             onBatterySettingsClick
                     )
                 }
+            }
+
+            Spacer(
+                modifier = Modifier.height(28.dp)
+            )
+
+            CriteriaSectionTitle(
+                text = stringResource(
+                    R.string.service_information_title
+                )
+            )
+
+            Spacer(
+                modifier = Modifier.height(10.dp)
+            )
+
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.surface
+            ) {
+                CriteriaMenuItem(
+                    iconResId =
+                        R.drawable.ic_criteria_privacy,
+                    title = stringResource(
+                        R.string.privacy_policy_title
+                    ),
+                    description = stringResource(
+                        R.string.privacy_policy_description
+                    ),
+                    onClick = onPrivacyPolicyClick
+                )
             }
 
             Spacer(

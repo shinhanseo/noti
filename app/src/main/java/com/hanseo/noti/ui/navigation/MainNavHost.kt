@@ -3,6 +3,8 @@ package com.hanseo.noti.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -18,6 +20,7 @@ import com.hanseo.noti.ui.home.HomeViewModel
 import com.hanseo.noti.ui.notifications.NotificationsScreen
 import com.hanseo.noti.ui.notifications.NotificationsViewModel
 import com.hanseo.noti.notification.NotificationListenerConnectionStatus
+import com.hanseo.noti.R
 
 @Composable
 fun MainNavHost(
@@ -151,6 +154,10 @@ private fun MyCriteriaRoute(
         viewModel.uiState
             .collectAsStateWithLifecycle()
 
+    val uriHandler = LocalUriHandler.current
+    val privacyPolicyUrl =
+        stringResource(R.string.privacy_policy_url)
+
     MyCriteriaScreen(
         importantAppCount =
             uiState.importantAppCount,
@@ -171,7 +178,10 @@ private fun MyCriteriaRoute(
         onNotificationAccessClick =
             onRequestNotificationAccess,
         onBatterySettingsClick =
-            onRequestBatterySettings
+            onRequestBatterySettings,
+        onPrivacyPolicyClick = {
+            uriHandler.openUri(privacyPolicyUrl)
+        }
     )
 }
 
