@@ -1,8 +1,13 @@
 package com.hanseo.noti.ui.notifications
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -36,10 +42,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.hanseo.noti.R
 import com.hanseo.noti.ui.components.notification.NotificationReasonBottomSheet
 import com.hanseo.noti.ui.model.NotificationUiModel
 import java.time.Instant
@@ -91,7 +102,11 @@ fun NotificationsScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        if (uiState.notifications.isEmpty()) {
+        if (uiState.isLoading) {
+            NotificationsSkeletonContent(
+                modifier = Modifier.weight(1f)
+            )
+        } else if (uiState.notifications.isEmpty()) {
             EmptyNotificationsContent(
                 selectedFilter = uiState.selectedFilter,
                 modifier = Modifier.weight(1f)
@@ -181,14 +196,29 @@ private fun NotificationsHeader(
                 NotificationFilterChip(
                     filter = filter,
                     count = when (filter) {
-                        NotificationFilter.ALL ->
-                            uiState.totalCount
+                        NotificationFilter.ALL -> {
+                            if (uiState.isLoading) {
+                                null
+                            } else {
+                                uiState.totalCount
+                            }
+                        }
 
-                        NotificationFilter.UNREAD ->
-                            uiState.unreadCount
+                        NotificationFilter.UNREAD -> {
+                            if (uiState.isLoading) {
+                                null
+                            } else {
+                                uiState.unreadCount
+                            }
+                        }
 
-                        NotificationFilter.IMPORTANT ->
-                            uiState.importantCount
+                        NotificationFilter.IMPORTANT -> {
+                            if (uiState.isLoading) {
+                                null
+                            } else {
+                                uiState.importantCount
+                            }
+                        }
                     },
                     selected =
                         uiState.selectedFilter == filter,
@@ -204,7 +234,7 @@ private fun NotificationsHeader(
 @Composable
 private fun NotificationFilterChip(
     filter: NotificationFilter,
-    count: Int,
+    count: Int?,
     selected: Boolean,
     onClick: () -> Unit
 ) {
@@ -220,7 +250,12 @@ private fun NotificationFilterChip(
         onClick = onClick,
         label = {
             Text(
-                text = "$label $count",
+                text =
+                    if (count == null) {
+                        label
+                    } else {
+                        "$label $count"
+                    },
                 style = MaterialTheme.typography.labelLarge
             )
         },
@@ -237,6 +272,133 @@ private fun NotificationFilterChip(
         ),
         border = null
     )
+}
+
+@Composable
+private fun NotificationsSkeletonContent(
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition =
+        rememberInfiniteTransition(
+            label = "notificationsSkeleton"
+        )
+
+    val skeletonAlpha by
+        infiniteTransition.animateFloat(
+            initialValue = 0.45f,
+            targetValue = 0.9f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 900),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "notificationsSkeletonAlpha"
+        )
+
+    val skeletonColor =
+        MaterialTheme.colorScheme.surfaceVariant.copy(
+            alpha = skeletonAlpha
+        )
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                start = 24.dp,
+                end = 24.dp,
+                bottom = 24.dp
+            ),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(
+                    top = 12.dp,
+                    bottom = 6.dp
+                )
+                .width(62.dp)
+                .height(20.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(skeletonColor)
+        )
+
+        repeat(3) { index ->
+            NotificationSkeletonCard(
+                skeletonColor = skeletonColor,
+                bodyWidth =
+                    if (index == 1) {
+                        170.dp
+                    } else {
+                        210.dp
+                    }
+            )
+        }
+    }
+}
+
+@Composable
+private fun NotificationSkeletonCard(
+    skeletonColor: Color,
+    bodyWidth: Dp,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(46.dp)
+                    .clip(CircleShape)
+                    .background(skeletonColor)
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(9.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(104.dp)
+                        .height(17.dp)
+                        .clip(RoundedCornerShape(7.dp))
+                        .background(skeletonColor)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(15.dp)
+                        .clip(RoundedCornerShape(7.dp))
+                        .background(skeletonColor)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .width(bodyWidth)
+                        .height(15.dp)
+                        .clip(RoundedCornerShape(7.dp))
+                        .background(skeletonColor)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Box(
+                modifier = Modifier
+                    .width(38.dp)
+                    .height(14.dp)
+                    .clip(RoundedCornerShape(7.dp))
+                    .background(skeletonColor)
+            )
+        }
+    }
 }
 
 @Composable
@@ -634,27 +796,128 @@ private fun EmptyNotificationsContent(
     selectedFilter: NotificationFilter,
     modifier: Modifier = Modifier
 ) {
-    val message =
+    val title =
         when (selectedFilter) {
             NotificationFilter.ALL ->
-                "아직 수집된 알림이 없어요"
+                "아직 모아둔 알림이 없어요"
 
             NotificationFilter.UNREAD ->
-                "안 읽은 알림이 없어요"
+                "모든 알림을 확인했어요"
 
             NotificationFilter.IMPORTANT ->
-                "중요한 알림이 없어요"
+                "지금은 중요한 알림이 없어요"
+        }
+
+    val description =
+        when (selectedFilter) {
+            NotificationFilter.ALL ->
+                "새 알림이 도착하면 중요도를 정리해\n" +
+                    "이곳에 차곡차곡 보여드릴게요."
+
+            NotificationFilter.UNREAD ->
+                "새로 확인할 알림이 생기면\n" +
+                    "이곳에서 바로 알려드릴게요."
+
+            NotificationFilter.IMPORTANT ->
+                "중요 앱과 키워드에 맞는 알림이 생기면\n" +
+                    "놓치지 않도록 따로 모아드려요."
+        }
+
+    val helperText =
+        when (selectedFilter) {
+            NotificationFilter.ALL ->
+                "알림은 기기 안에서만 안전하게 정리돼요"
+
+            NotificationFilter.UNREAD ->
+                "지금까지 도착한 알림을 모두 확인했어요"
+
+            NotificationFilter.IMPORTANT ->
+                "중요 앱과 키워드는 내 기준에서 바꿀 수 있어요"
         }
 
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                start = 24.dp,
+                end = 24.dp,
+                bottom = 40.dp
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(
+                    R.drawable.empty_state_visual
+                ),
+                contentDescription = null,
+                modifier = Modifier.size(148.dp)
+            )
+
+            Spacer(modifier = Modifier.height(22.dp))
+
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Surface(
+                shape = RoundedCornerShape(18.dp),
+                color = MaterialTheme.colorScheme.primaryContainer
+                    .copy(alpha = 0.72f)
+            ) {
+                Row(
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 13.dp
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Surface(
+                        modifier = Modifier.size(34.dp),
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.surface
+                    ) {
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(
+                                    R.drawable.ic_nav_notifications
+                                ),
+                                contentDescription = null,
+                                modifier = Modifier.size(19.dp),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(
+                        text = helperText,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
     }
 }
 

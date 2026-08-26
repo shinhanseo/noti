@@ -159,7 +159,9 @@ class NotificationsViewModel @Inject constructor(
                     sortedNotifications.size,
 
                 importantCount =
-                    importantCount
+                    importantCount,
+
+                isLoading = false
             )
         }
             .stateIn(

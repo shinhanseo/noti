@@ -7,5 +7,6 @@ data class NotificationsUiState(
     val selectedFilter: NotificationFilter = NotificationFilter.ALL,
     val unreadCount: Int = 0,
     val totalCount: Int = 0,
-    val importantCount: Int = 0
+    val importantCount: Int = 0,
+    val isLoading: Boolean = true
 )
