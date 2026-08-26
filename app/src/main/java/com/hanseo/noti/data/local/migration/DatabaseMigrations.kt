@@ -186,3 +186,15 @@ val MIGRATION_7_8 = object : Migration(7, 8) {
         )
     }
 }
+
+val MIGRATION_8_9 = object : Migration(8, 9) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN channel_id TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+    }
+}

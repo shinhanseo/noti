@@ -9,6 +9,7 @@ fun NotificationItem.toImportanceInput(): ImportanceInput {
         title = title,
         body = body,
         category = category,
-        isOngoing = isOngoing
+        isOngoing = isOngoing,
+        channelId = channelId
     )
 }

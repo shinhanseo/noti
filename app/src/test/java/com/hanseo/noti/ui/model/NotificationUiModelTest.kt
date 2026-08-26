@@ -59,6 +59,7 @@ class NotificationUiModelTest {
             body = "알림 본문",
             postedAt = 1_000L,
             category = null,
+            channelId = null,
             isOngoing = false,
             isGroupSummary = false
         )

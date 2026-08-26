@@ -26,6 +26,7 @@ object NotificationParser {
             body = body,
             postedAt = sbn.postTime,
             category = notification.category,
+            channelId = notification.channelId,
             isOngoing = sbn.isOngoing,
             isGroupSummary = notification.flags and Notification.FLAG_GROUP_SUMMARY != 0
         )

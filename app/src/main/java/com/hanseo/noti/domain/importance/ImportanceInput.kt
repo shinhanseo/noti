@@ -5,5 +5,6 @@ data class ImportanceInput (
     val title: String?,
     val body: String?,
     val category: String?,
-    val isOngoing: Boolean
+    val isOngoing: Boolean,
+    val channelId: String? = null
 )

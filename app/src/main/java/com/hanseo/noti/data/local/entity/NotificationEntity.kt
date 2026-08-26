@@ -22,6 +22,12 @@ data class NotificationEntity(
 
     val category: String?,
 
+    @ColumnInfo(
+        name = "channel_id",
+        defaultValue = "NULL"
+    )
+    val channelId: String? = null,
+
     @ColumnInfo(name = "is_ongoing")
     val isOngoing: Boolean,
 

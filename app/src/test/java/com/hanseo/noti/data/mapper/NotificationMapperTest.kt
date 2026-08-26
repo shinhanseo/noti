@@ -26,6 +26,7 @@ class NotificationMapperTest {
                 body = "회의가 7시에 있습니다",
                 postedAt = 1_000L,
                 category = "event",
+                channelId = "calendar_reminders",
                 isOngoing = false,
                 isGroupSummary = false,
                 isRemoved = false,
