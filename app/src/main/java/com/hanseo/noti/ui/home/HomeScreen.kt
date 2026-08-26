@@ -378,6 +378,17 @@ fun HomeScreen(
 private fun HomeSkeletonContent(
     modifier: Modifier = Modifier
 ) {
+    val today = LocalDate.now()
+
+    val todayText = remember(today) {
+        today.format(
+            DateTimeFormatter.ofPattern(
+                "M월 d일 EEEE",
+                Locale.KOREAN
+            )
+        )
+    }
+
     val infiniteTransition =
         rememberInfiniteTransition(
             label = "homeSkeleton"
@@ -416,13 +427,13 @@ private fun HomeSkeletonContent(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        SkeletonBlock(
-            width = 118.dp,
-            height = 18.dp,
-            color = skeletonColor
+        Text(
+            text = todayText,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         SkeletonBlock(
             modifier = Modifier.fillMaxWidth(0.72f),
