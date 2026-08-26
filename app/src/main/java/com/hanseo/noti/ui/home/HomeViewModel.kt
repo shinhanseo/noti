@@ -143,7 +143,9 @@ class HomeViewModel @Inject constructor(
                     todayNotifications.size,
 
                 todayImportantNotificationCount =
-                    todayImportantNotifications.size
+                    todayImportantNotifications.size,
+
+                isLoading = false
             )
         }
             .stateIn(

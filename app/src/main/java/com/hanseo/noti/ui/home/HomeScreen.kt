@@ -3,8 +3,13 @@ package com.hanseo.noti.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,6 +57,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hanseo.noti.R
 import java.time.LocalDate
@@ -204,121 +210,127 @@ fun HomeScreen(
                 )
             }
 
-            HomeHeader(
-                notificationCount =
-                    importantNotifications.size,
-
-                totalNotificationCount =
-                    uiState.todayTotalNotificationCount,
-
-                modifier = Modifier.padding(
-                    horizontal = 24.dp
-                )
-            )
-
-            Spacer(
-                modifier = Modifier.height(28.dp)
-            )
-
-            if (importantNotifications.isEmpty()) {
-                HomeEmptyContent(
-                    todayTotalCount =
-                        uiState.todayTotalNotificationCount,
-
-                    todayImportantCount =
-                        uiState.todayImportantNotificationCount,
-
-                    onShowAllNotifications =
-                        onShowAllNotifications,
-
+            if (uiState.isLoading) {
+                HomeSkeletonContent(
                     modifier = Modifier.weight(1f)
                 )
             } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    contentPadding = PaddingValues(
-                        start = 24.dp,
-                        end = 24.dp,
-                        bottom = 24.dp
-                    ),
-                    verticalArrangement =
-                        Arrangement.spacedBy(12.dp)
-                ) {
-                    items(
-                        items = importantNotifications,
-                        key = { notificationUiModel ->
-                            notificationUiModel
-                                .classifiedNotification
-                                .notification
-                                .key
-                        }
-                    ) { notificationUiModel ->
-                        val notificationKey =
-                            notificationUiModel
-                                .classifiedNotification
-                                .notification
-                                .key
+                HomeHeader(
+                    notificationCount =
+                        importantNotifications.size,
 
-                        val isExpanded =
-                            expandedNotificationKey ==
-                                notificationKey
+                    totalNotificationCount =
+                        uiState.todayTotalNotificationCount,
 
-                        SwipeableNotificationCard(
-                            onMarkAsRead = {
-                                if (
-                                    expandedNotificationKey ==
+                    modifier = Modifier.padding(
+                        horizontal = 24.dp
+                    )
+                )
+
+                Spacer(
+                    modifier = Modifier.height(28.dp)
+                )
+
+                if (importantNotifications.isEmpty()) {
+                    HomeEmptyContent(
+                        todayTotalCount =
+                            uiState.todayTotalNotificationCount,
+
+                        todayImportantCount =
+                            uiState.todayImportantNotificationCount,
+
+                        onShowAllNotifications =
+                            onShowAllNotifications,
+
+                        modifier = Modifier.weight(1f)
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        contentPadding = PaddingValues(
+                            start = 24.dp,
+                            end = 24.dp,
+                            bottom = 24.dp
+                        ),
+                        verticalArrangement =
+                            Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(
+                            items = importantNotifications,
+                            key = { notificationUiModel ->
+                                notificationUiModel
+                                    .classifiedNotification
+                                    .notification
+                                    .key
+                            }
+                        ) { notificationUiModel ->
+                            val notificationKey =
+                                notificationUiModel
+                                    .classifiedNotification
+                                    .notification
+                                    .key
+
+                            val isExpanded =
+                                expandedNotificationKey ==
                                     notificationKey
-                                ) {
-                                    expandedNotificationKey = null
-                                }
 
-                                onMarkAsRead(notificationKey)
-
-                                coroutineScope.launch {
-                                    val result =
-                                        snackbarHostState
-                                            .showSnackbar(
-                                                message =
-                                                    "확인한 알림으로 옮겼어요",
-                                                actionLabel =
-                                                    "실행 취소",
-                                                duration =
-                                                    SnackbarDuration.Short
-                                            )
-
+                            SwipeableNotificationCard(
+                                onMarkAsRead = {
                                     if (
-                                        result ==
-                                        SnackbarResult.ActionPerformed
+                                        expandedNotificationKey ==
+                                        notificationKey
                                     ) {
-                                        onMarkAsUnread(
-                                            notificationKey
-                                        )
+                                        expandedNotificationKey = null
+                                    }
+
+                                    onMarkAsRead(notificationKey)
+
+                                    coroutineScope.launch {
+                                        val result =
+                                            snackbarHostState
+                                                .showSnackbar(
+                                                    message =
+                                                        "확인한 알림으로 옮겼어요",
+                                                    actionLabel =
+                                                        "실행 취소",
+                                                    duration =
+                                                        SnackbarDuration.Short
+                                                )
+
+                                        if (
+                                            result ==
+                                            SnackbarResult.ActionPerformed
+                                        ) {
+                                            onMarkAsUnread(
+                                                notificationKey
+                                            )
+                                        }
                                     }
                                 }
-                            }
-                        ) {
-                            NotificationCard(
-                                notificationUiModel =
-                                    notificationUiModel,
+                            ) {
+                                NotificationCard(
+                                    notificationUiModel =
+                                        notificationUiModel,
 
-                                isExpanded = isExpanded,
+                                    isExpanded = isExpanded,
 
-                                onCardClick = {
-                                    expandedNotificationKey =
-                                        if (isExpanded) {
-                                            null
-                                        } else {
+                                    onCardClick = {
+                                        expandedNotificationKey =
+                                            if (isExpanded) {
+                                                null
+                                            } else {
+                                                notificationKey
+                                            }
+                                    },
+
+                                    onReasonClick = {
+                                        selectedReasonNotificationKey =
                                             notificationKey
-                                        }
-                                },
-
-                                onReasonClick = {
-                                    selectedReasonNotificationKey =
-                                        notificationKey
-                                }
-                            )
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -360,6 +372,161 @@ fun HomeScreen(
             }
         )
     }
+}
+
+@Composable
+private fun HomeSkeletonContent(
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition =
+        rememberInfiniteTransition(
+            label = "homeSkeleton"
+        )
+
+    val skeletonAlpha by
+        infiniteTransition.animateFloat(
+            initialValue = 0.45f,
+            targetValue = 0.9f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 900),
+                repeatMode = RepeatMode.Reverse
+            ),
+            label = "homeSkeletonAlpha"
+        )
+
+    val skeletonColor =
+        MaterialTheme.colorScheme.surfaceVariant.copy(
+            alpha = skeletonAlpha
+        )
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                start = 24.dp,
+                end = 24.dp,
+                bottom = 24.dp
+            )
+    ) {
+        Text(
+            text = "noti.",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        SkeletonBlock(
+            width = 118.dp,
+            height = 18.dp,
+            color = skeletonColor
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SkeletonBlock(
+            modifier = Modifier.fillMaxWidth(0.72f),
+            height = 34.dp,
+            color = skeletonColor
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        SkeletonBlock(
+            width = 168.dp,
+            height = 34.dp,
+            color = skeletonColor
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SkeletonBlock(
+            width = 260.dp,
+            height = 18.dp,
+            color = skeletonColor
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        repeat(2) {
+            HomeNotificationSkeletonCard(
+                skeletonColor = skeletonColor
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+    }
+}
+
+@Composable
+private fun HomeNotificationSkeletonCard(
+    skeletonColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        Row(
+            modifier = Modifier.padding(18.dp),
+            verticalAlignment = Alignment.Top
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(skeletonColor)
+            )
+
+            Spacer(modifier = Modifier.width(14.dp))
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                SkeletonBlock(
+                    width = 110.dp,
+                    height = 17.dp,
+                    color = skeletonColor
+                )
+
+                SkeletonBlock(
+                    modifier = Modifier.fillMaxWidth(),
+                    height = 16.dp,
+                    color = skeletonColor
+                )
+
+                SkeletonBlock(
+                    modifier = Modifier.fillMaxWidth(0.68f),
+                    height = 16.dp,
+                    color = skeletonColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SkeletonBlock(
+    height: Dp,
+    color: Color,
+    modifier: Modifier = Modifier,
+    width: Dp? = null
+) {
+    Box(
+        modifier = modifier
+            .then(
+                if (width != null) {
+                    Modifier.width(width)
+                } else {
+                    Modifier
+                }
+            )
+            .height(height)
+            .clip(RoundedCornerShape(8.dp))
+            .background(color)
+    )
 }
 
 @Composable

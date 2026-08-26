@@ -8,5 +8,7 @@ data class HomeUiState(
 
     val todayTotalNotificationCount: Int = 0,
 
-    val todayImportantNotificationCount: Int = 0
+    val todayImportantNotificationCount: Int = 0,
+
+    val isLoading: Boolean = true
 )
