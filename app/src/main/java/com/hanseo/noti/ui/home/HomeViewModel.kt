@@ -6,6 +6,7 @@ import com.hanseo.noti.data.apps.InstalledAppProvider
 import com.hanseo.noti.data.repository.NotificationFeedbackRepository
 import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.feedback.FeedbackReasonCode
 import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.ui.model.NotificationUiModel
@@ -48,11 +49,11 @@ class HomeViewModel @Inject constructor(
         combine(
             notificationRepository.observeAll(),
             installedAppsByPackage,
-            feedbackRepository.observeAllLabels()
+            feedbackRepository.observeAll()
         ) {
                 notifications,
                 appsByPackage,
-                feedbackLabels ->
+                feedbackByKey ->
 
             val zoneId = ZoneId.systemDefault()
             val today = LocalDate.now(zoneId)
@@ -83,9 +84,9 @@ class HomeViewModel @Inject constructor(
                                 .key
 
                         val feedbackLabel =
-                            feedbackLabels[
+                            feedbackByKey[
                                 notificationKey
-                            ]
+                            ]?.label
 
                         when (feedbackLabel) {
                             FeedbackLabel.IMPORTANT ->
@@ -131,7 +132,14 @@ class HomeViewModel @Inject constructor(
                                     ?: packageName,
 
                             appIcon =
-                                installedApp?.icon
+                                installedApp?.icon,
+
+                            feedback =
+                                feedbackByKey[
+                                    classifiedNotification
+                                        .notification
+                                        .key
+                                ]
                         )
                     }
 
@@ -157,28 +165,6 @@ class HomeViewModel @Inject constructor(
                 initialValue = HomeUiState()
             )
 
-    fun markAsGeneral(
-        classifiedNotification:
-        ClassifiedNotification
-    ) {
-        saveFeedback(
-            classifiedNotification =
-                classifiedNotification,
-            label = FeedbackLabel.GENERAL
-        )
-    }
-
-    fun markAsImportant(
-        classifiedNotification:
-        ClassifiedNotification
-    ) {
-        saveFeedback(
-            classifiedNotification =
-                classifiedNotification,
-            label = FeedbackLabel.IMPORTANT
-        )
-    }
-
     fun markAsRead(notificationKey: String) {
         viewModelScope.launch {
             notificationRepository.markAsRead(
@@ -195,16 +181,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun saveFeedback(
+    fun saveFeedback(
         classifiedNotification:
         ClassifiedNotification,
-        label: FeedbackLabel
+        label: FeedbackLabel,
+        reasonCode: FeedbackReasonCode,
+        reasonText: String?
     ) {
         viewModelScope.launch {
             feedbackRepository.save(
                 classifiedNotification =
                     classifiedNotification,
-                label = label
+                label = label,
+                reasonCode = reasonCode,
+                reasonText = reasonText
             )
         }
     }

@@ -3,6 +3,8 @@ package com.hanseo.noti.data.repository
 import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
 import com.hanseo.noti.data.local.entity.NotificationFeedbackEntity
 import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.feedback.FeedbackReasonCode
+import com.hanseo.noti.domain.feedback.NotificationFeedback
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -17,6 +19,8 @@ class NotificationFeedbackRepository @Inject constructor(
     suspend fun save(
         classifiedNotification: ClassifiedNotification,
         label: FeedbackLabel,
+        reasonCode: FeedbackReasonCode,
+        reasonText: String? = null,
         feedbackAt: Long = System.currentTimeMillis()
     ) {
         val notification =
@@ -43,7 +47,17 @@ class NotificationFeedbackRepository @Inject constructor(
                     importance.policyVersion,
 
                 feedbackAt =
-                    feedbackAt
+                    feedbackAt,
+
+                reasonCode =
+                    reasonCode.name,
+
+                reasonText =
+                    reasonText
+                        ?.trim()
+                        ?.takeIf { text ->
+                            text.isNotEmpty()
+                        }
             )
 
         feedbackDao.upsert(
@@ -51,8 +65,8 @@ class NotificationFeedbackRepository @Inject constructor(
         )
     }
 
-    fun observeAllLabels():
-            Flow<Map<String, FeedbackLabel>> {
+    fun observeAll():
+            Flow<Map<String, NotificationFeedback>> {
 
         return feedbackDao
             .observeAll()
@@ -66,9 +80,32 @@ class NotificationFeedbackRepository @Inject constructor(
                             }
                             ?: return@mapNotNull null
 
-                    entity.notificationKey to label
+                    val reasonCode =
+                        entity.reasonCode?.let { code ->
+                            FeedbackReasonCode.entries
+                                .firstOrNull { reason ->
+                                    reason.name == code
+                                }
+                        }
+
+                    entity.notificationKey to
+                        NotificationFeedback(
+                            label = label,
+                            reasonCode = reasonCode,
+                            reasonText = entity.reasonText
+                        )
                 }.toMap()
             }
+    }
+
+    fun observeAllLabels():
+            Flow<Map<String, FeedbackLabel>> {
+
+        return observeAll().map { feedbackByKey ->
+            feedbackByKey.mapValues { entry ->
+                entry.value.label
+            }
+        }
     }
 
     fun observeLabel(

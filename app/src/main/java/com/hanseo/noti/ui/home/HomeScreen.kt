@@ -73,6 +73,9 @@ import com.hanseo.noti.ui.model.NotificationUiModel
 import kotlinx.coroutines.launch
 import com.hanseo.noti.notification.NotificationListenerConnectionStatus
 import androidx.compose.material3.LinearProgressIndicator
+import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.feedback.FeedbackReasonCode
+import com.hanseo.noti.ui.components.feedback.FeedbackReasonBottomSheet
 
 @Composable
 fun HomeScreen(
@@ -86,7 +89,12 @@ fun HomeScreen(
     onRequestNotificationAccess: () -> Unit,
     onRequestBatterySettings: () -> Unit,
     onShowAllNotifications: () -> Unit,
-    onLessImportant: (ClassifiedNotification) -> Unit,
+    onSaveFeedback: (
+        ClassifiedNotification,
+        FeedbackLabel,
+        FeedbackReasonCode,
+        String?
+    ) -> Unit,
     onMarkAsRead: (String) -> Unit,
     onMarkAsUnread: (String) -> Unit,
     onEditCriteria: () -> Unit,
@@ -174,6 +182,10 @@ fun HomeScreen(
         mutableStateOf<String?>(null)
     }
 
+    var pendingFeedbackNotificationKey by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
     val selectedReasonNotification =
         importantNotifications.firstOrNull {
             notificationUiModel ->
@@ -182,6 +194,16 @@ fun HomeScreen(
                 .classifiedNotification
                 .notification
                 .key == selectedReasonNotificationKey
+        }
+
+    val pendingFeedbackNotification =
+        importantNotifications.firstOrNull {
+                notificationUiModel ->
+
+            notificationUiModel
+                .classifiedNotification
+                .notification
+                .key == pendingFeedbackNotificationKey
         }
 
     Box(
@@ -356,10 +378,11 @@ fun HomeScreen(
             },
 
             onLessImportantClick = {
-                onLessImportant(
+                pendingFeedbackNotificationKey =
                     notificationUiModel
                         .classifiedNotification
-                )
+                        .notification
+                        .key
 
                 selectedReasonNotificationKey = null
                 expandedNotificationKey = null
@@ -369,6 +392,28 @@ fun HomeScreen(
                 selectedReasonNotificationKey = null
                 expandedNotificationKey = null
                 onEditCriteria()
+            }
+        )
+    }
+
+    pendingFeedbackNotification?.let {
+            notificationUiModel ->
+
+        FeedbackReasonBottomSheet(
+            feedbackLabel = FeedbackLabel.GENERAL,
+            onDismiss = {
+                pendingFeedbackNotificationKey = null
+            },
+            onApply = { reasonCode, reasonText ->
+                onSaveFeedback(
+                    notificationUiModel
+                        .classifiedNotification,
+                    FeedbackLabel.GENERAL,
+                    reasonCode,
+                    reasonText
+                )
+
+                pendingFeedbackNotificationKey = null
             }
         )
     }

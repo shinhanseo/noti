@@ -51,6 +51,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hanseo.noti.R
+import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.feedback.FeedbackReasonCode
+import com.hanseo.noti.domain.model.ClassifiedNotification
+import com.hanseo.noti.ui.components.feedback.FeedbackReasonBottomSheet
 import com.hanseo.noti.ui.components.notification.NotificationReasonBottomSheet
 import com.hanseo.noti.ui.model.NotificationUiModel
 import java.time.Instant
@@ -65,6 +69,12 @@ fun NotificationsScreen(
     onFilterSelected: (NotificationFilter) -> Unit,
     onMarkAsRead: (String) -> Unit,
     onMarkAllAsRead: (LocalDate) -> Unit,
+    onSaveFeedback: (
+        ClassifiedNotification,
+        FeedbackLabel,
+        FeedbackReasonCode,
+        String?
+    ) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expandedNotificationKey by rememberSaveable {
@@ -72,6 +82,14 @@ fun NotificationsScreen(
     }
 
     var selectedReasonNotificationKey by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
+    var pendingFeedbackNotificationKey by rememberSaveable {
+        mutableStateOf<String?>(null)
+    }
+
+    var pendingFeedbackLabelName by rememberSaveable {
         mutableStateOf<String?>(null)
     }
 
@@ -83,6 +101,23 @@ fun NotificationsScreen(
                 .classifiedNotification
                 .notification
                 .key == selectedReasonNotificationKey
+        }
+
+    val pendingFeedbackNotification =
+        uiState.notifications.firstOrNull {
+                notificationUiModel ->
+
+            notificationUiModel
+                .classifiedNotification
+                .notification
+                .key == pendingFeedbackNotificationKey
+        }
+
+    val pendingFeedbackLabel =
+        pendingFeedbackLabelName?.let { name ->
+            FeedbackLabel.entries.firstOrNull { label ->
+                label.name == name
+            }
         }
 
     Column(
@@ -157,6 +192,63 @@ fun NotificationsScreen(
 
                 onMarkAsRead(notificationKey)
                 selectedReasonNotificationKey = null
+            },
+            secondaryActionText =
+                if (
+                    notificationUiModel
+                        .isEffectivelyImportant
+                ) {
+                    "덜 중요하게 보기"
+                } else {
+                    "중요하게 보기"
+                },
+            onSecondaryActionClick = {
+                val targetLabel =
+                    if (
+                        notificationUiModel
+                            .isEffectivelyImportant
+                    ) {
+                        FeedbackLabel.GENERAL
+                    } else {
+                        FeedbackLabel.IMPORTANT
+                    }
+
+                pendingFeedbackNotificationKey =
+                    notificationUiModel
+                        .classifiedNotification
+                        .notification
+                        .key
+
+                pendingFeedbackLabelName =
+                    targetLabel.name
+
+                selectedReasonNotificationKey = null
+                expandedNotificationKey = null
+            }
+        )
+    }
+
+    if (
+        pendingFeedbackNotification != null &&
+        pendingFeedbackLabel != null
+    ) {
+        FeedbackReasonBottomSheet(
+            feedbackLabel = pendingFeedbackLabel,
+            onDismiss = {
+                pendingFeedbackNotificationKey = null
+                pendingFeedbackLabelName = null
+            },
+            onApply = { reasonCode, reasonText ->
+                onSaveFeedback(
+                    pendingFeedbackNotification
+                        .classifiedNotification,
+                    pendingFeedbackLabel,
+                    reasonCode,
+                    reasonText
+                )
+
+                pendingFeedbackNotificationKey = null
+                pendingFeedbackLabelName = null
             }
         )
     }

@@ -30,9 +30,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.hanseo.noti.domain.importance.ImportanceLevel
+import com.hanseo.noti.domain.feedback.FeedbackLabel
 import com.hanseo.noti.domain.importance.ImportanceReason
 import com.hanseo.noti.domain.importance.ImportanceReasonType
+import com.hanseo.noti.ui.components.feedback.feedbackReasonTitle
 import com.hanseo.noti.ui.model.NotificationUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,11 +56,42 @@ fun NotificationReasonBottomSheet(
             .importance
 
     val title =
-        if (importance.level == ImportanceLevel.IMPORTANT) {
+        if (notificationUiModel.isEffectivelyImportant) {
             "왜 중요한 알림인가요?"
         } else {
             "왜 일반 알림인가요?"
         }
+
+    val feedbackReason =
+        when (val feedback = notificationUiModel.feedback) {
+            null -> null
+
+            else ->
+                ImportanceReason(
+                    type =
+                        ImportanceReasonType.USER_FEEDBACK,
+                    scoreDelta = 0,
+                    description =
+                        feedback.reasonText
+                            ?.takeIf { text ->
+                                text.isNotBlank()
+                            }
+                            ?: feedback.reasonCode?.let(
+                                ::feedbackReasonTitle
+                            )
+                            ?: when (feedback.label) {
+                                FeedbackLabel.IMPORTANT ->
+                                    "사용자가 중요하게 표시했어요"
+
+                                FeedbackLabel.GENERAL ->
+                                    "사용자가 일반 알림으로 표시했어요"
+                            }
+                )
+        }
+
+    val displayReasons =
+        listOfNotNull(feedbackReason) +
+            importance.reasons
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -113,14 +145,14 @@ fun NotificationReasonBottomSheet(
 
             Spacer(modifier = Modifier.height(18.dp))
 
-            if (importance.reasons.isEmpty()) {
+            if (displayReasons.isEmpty()) {
                 EmptyReasonRow()
             } else {
                 Column(
                     verticalArrangement =
                         Arrangement.spacedBy(18.dp)
                 ) {
-                    importance.reasons.forEach { reason ->
+                    displayReasons.forEach { reason ->
                         NotificationReasonRow(
                             reason = reason
                         )

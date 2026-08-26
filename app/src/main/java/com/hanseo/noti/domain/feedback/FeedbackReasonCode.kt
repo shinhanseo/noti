@@ -1,0 +1,15 @@
+package com.hanseo.noti.domain.feedback
+
+enum class FeedbackReasonCode {
+    SCHEDULE_DEADLINE,
+    ACTION_REQUEST,
+    FINANCE_SECURITY,
+    DELIVERY_RESERVATION,
+    IMPORTANT_SOURCE,
+    PROMOTIONAL,
+    INFORMATIONAL,
+    REPEATED,
+    UNIMPORTANT_SOURCE,
+    NOT_TIME_SENSITIVE,
+    OTHER
+}

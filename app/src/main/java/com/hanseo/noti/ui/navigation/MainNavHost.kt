@@ -267,7 +267,9 @@ private fun NotificationsRoute(
         onMarkAsRead =
             viewModel::markAsRead,
         onMarkAllAsRead =
-            viewModel::markAllAsRead
+            viewModel::markAllAsRead,
+        onSaveFeedback =
+            viewModel::saveFeedback
     )
 }
 
@@ -310,8 +312,8 @@ private fun HomeRoute(
         onShowAllNotifications =
             onShowAllNotifications,
 
-        onLessImportant =
-            viewModel::markAsGeneral,
+        onSaveFeedback =
+            viewModel::saveFeedback,
 
         onMarkAsRead =
             viewModel::markAsRead,

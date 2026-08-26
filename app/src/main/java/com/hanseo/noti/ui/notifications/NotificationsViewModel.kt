@@ -6,6 +6,7 @@ import com.hanseo.noti.data.apps.InstalledAppProvider
 import com.hanseo.noti.data.repository.NotificationRepository
 import com.hanseo.noti.data.repository.NotificationFeedbackRepository
 import com.hanseo.noti.domain.feedback.FeedbackLabel
+import com.hanseo.noti.domain.feedback.FeedbackReasonCode
 import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.ui.model.NotificationUiModel
@@ -51,12 +52,12 @@ class NotificationsViewModel @Inject constructor(
         combine(
             notificationRepository.observeAll(),
             installedAppsByPackage,
-            feedbackRepository.observeAllLabels(),
+            feedbackRepository.observeAll(),
             selectedFilter
         ) {
                 notifications,
                 appsByPackage,
-                feedbackLabels,
+                feedbackByKey,
                 filter ->
 
             val sortedNotifications =
@@ -78,7 +79,7 @@ class NotificationsViewModel @Inject constructor(
                         .key
 
                 return when (
-                    feedbackLabels[notificationKey]
+                    feedbackByKey[notificationKey]?.label
                 ) {
                     FeedbackLabel.IMPORTANT -> true
                     FeedbackLabel.GENERAL -> false
@@ -141,7 +142,14 @@ class NotificationsViewModel @Inject constructor(
                                     ?: packageName,
 
                             appIcon =
-                                installedApp?.icon
+                                installedApp?.icon,
+
+                            feedback =
+                                feedbackByKey[
+                                    classifiedNotification
+                                        .notification
+                                        .key
+                                ]
                         )
                     }
 
@@ -208,6 +216,24 @@ class NotificationsViewModel @Inject constructor(
             notificationRepository.markAllAsReadBetween(
                 startMillis = startMillis,
                 endMillis = endMillis
+            )
+        }
+    }
+
+    fun saveFeedback(
+        classifiedNotification:
+        ClassifiedNotification,
+        label: FeedbackLabel,
+        reasonCode: FeedbackReasonCode,
+        reasonText: String?
+    ) {
+        viewModelScope.launch {
+            feedbackRepository.save(
+                classifiedNotification =
+                    classifiedNotification,
+                label = label,
+                reasonCode = reasonCode,
+                reasonText = reasonText
             )
         }
     }
