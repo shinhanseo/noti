@@ -7,11 +7,14 @@ import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.importance.ImportanceResult
 import com.hanseo.noti.domain.importance.ImportanceSettings
 import com.hanseo.noti.domain.importance.ImportanceTextPreprocessor
+import com.hanseo.noti.domain.topic.NotificationTopicExtractor
+import com.hanseo.noti.domain.topic.NotificationTopicResult
 import javax.inject.Inject
 
 data class ImportanceDecision(
     val importance: ImportanceResult,
-    val aiPrediction: AiImportancePrediction?
+    val aiPrediction: AiImportancePrediction?,
+    val topicResult: NotificationTopicResult
 )
 
 class ImportanceDecisionCoordinator
@@ -26,16 +29,27 @@ class ImportanceDecisionCoordinator
     private val predictionMapper =
         ActionabilityPredictionMapper()
 
+    private val topicExtractor =
+        NotificationTopicExtractor()
+
     fun evaluate(
         input: ImportanceInput,
         settings: ImportanceSettings,
         evaluatedAtMillis: Long = System.currentTimeMillis()
     ): ImportanceDecision {
-        val baseResult =
-            importanceClassifier.classify(
+        val classification =
+            importanceClassifier.analyze(
                 input = input,
                 settings = settings,
                 evaluatedAtMillis = evaluatedAtMillis
+            )
+
+        val baseResult =
+            classification.result
+
+        val topicResult =
+            topicExtractor.extract(
+                reasons = classification.automaticReasons
             )
 
         if (
@@ -44,7 +58,8 @@ class ImportanceDecisionCoordinator
         ) {
             return ImportanceDecision(
                 importance = baseResult,
-                aiPrediction = null
+                aiPrediction = null,
+                topicResult = topicResult
             )
         }
 
@@ -54,7 +69,8 @@ class ImportanceDecisionCoordinator
         if (normalizedText.isBlank()) {
             return ImportanceDecision(
                 importance = baseResult,
-                aiPrediction = null
+                aiPrediction = null,
+                topicResult = topicResult
             )
         }
 
@@ -77,7 +93,8 @@ class ImportanceDecisionCoordinator
             }.getOrElse {
                 return ImportanceDecision(
                     importance = baseResult,
-                    aiPrediction = null
+                    aiPrediction = null,
+                    topicResult = topicResult
                 )
             }
 
@@ -98,7 +115,8 @@ class ImportanceDecisionCoordinator
 
         return ImportanceDecision(
             importance = finalImportance,
-            aiPrediction = aiPrediction
+            aiPrediction = aiPrediction,
+            topicResult = topicResult
         )
     }
 

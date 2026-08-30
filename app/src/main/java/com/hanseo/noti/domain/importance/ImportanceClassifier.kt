@@ -1,49 +1,55 @@
 package com.hanseo.noti.domain.importance
 
 class ImportanceClassifier {
-    fun classify (
+    fun classify(
         input: ImportanceInput,
         settings: ImportanceSettings,
         evaluatedAtMillis: Long = System.currentTimeMillis()
-    ) : ImportanceResult {
+    ): ImportanceResult {
+        return analyze(
+            input = input,
+            settings = settings,
+            evaluatedAtMillis = evaluatedAtMillis
+        ).result
+    }
+
+    fun analyze(
+        input: ImportanceInput,
+        settings: ImportanceSettings,
+        evaluatedAtMillis: Long = System.currentTimeMillis()
+    ): ImportanceClassification {
         val normalizedText =
             ImportanceTextPreprocessor.normalize(input)
 
-        val globalKeywordResult = classifyGlobalImportantKeyword(
-            settings = settings,
-            normalizedText = normalizedText,
-            evaluatedAtMillis = evaluatedAtMillis
-        )
+        val automaticResult =
+            calculateAutomaticScore(
+                input = input,
+                normalizedText = normalizedText,
+                evaluatedAtMillis = evaluatedAtMillis
+            )
 
-        if (globalKeywordResult != null) {
-            return globalKeywordResult
-        }
+        val finalResult =
+            classifyGlobalImportantKeyword(
+                settings = settings,
+                normalizedText = normalizedText,
+                evaluatedAtMillis = evaluatedAtMillis
+            )
+                ?: classifyAppExclusion(
+                    input = input,
+                    settings = settings,
+                    normalizedText = normalizedText,
+                    evaluatedAtMillis = evaluatedAtMillis
+                )
+                ?: classifyImportantApp(
+                    input = input,
+                    settings = settings,
+                    evaluatedAtMillis = evaluatedAtMillis
+                )
+                ?: automaticResult
 
-        val exclusionResult = classifyAppExclusion(
-            input = input,
-            settings = settings,
-            normalizedText = normalizedText,
-            evaluatedAtMillis = evaluatedAtMillis
-        )
-
-        if (exclusionResult != null) {
-            return exclusionResult
-        }
-
-        val importantAppResult = classifyImportantApp(
-            input = input,
-            settings = settings,
-            evaluatedAtMillis = evaluatedAtMillis
-        )
-
-        if (importantAppResult != null) {
-            return importantAppResult
-        }
-
-        return calculateAutomaticScore(
-            input = input,
-            normalizedText = normalizedText,
-            evaluatedAtMillis = evaluatedAtMillis
+        return ImportanceClassification(
+            result = finalResult,
+            automaticReasons = automaticResult.reasons
         )
     }
 

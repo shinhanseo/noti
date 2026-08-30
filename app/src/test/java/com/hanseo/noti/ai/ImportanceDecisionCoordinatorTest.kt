@@ -3,12 +3,61 @@ package com.hanseo.noti.ai
 import com.hanseo.noti.domain.importance.ImportanceInput
 import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.importance.ImportanceSettings
+import com.hanseo.noti.domain.topic.NotificationTopic
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 
 class ImportanceDecisionCoordinatorTest {
+
+    @Test
+    fun forcedImportantApp_keepsForcedResultAndExtractsDeliveryTopic() {
+        val failingProvider =
+            ActionabilityClassifierProvider {
+                error(
+                    "강제 판정에서는 AI가 실행되면 안 됩니다"
+                )
+            }
+
+        val coordinator =
+            ImportanceDecisionCoordinator(
+                actionabilityClassifierProvider = failingProvider
+            )
+
+        val decision =
+            coordinator.evaluate(
+                input = ImportanceInput(
+                    packageName = "com.example.shopping",
+                    title = "배송 안내",
+                    body = "주문한 상품의 배송이 출발했습니다",
+                    category = null,
+                    isOngoing = false
+                ),
+                settings = ImportanceSettings(
+                    importantApps = setOf(
+                        "com.example.shopping"
+                    )
+                ),
+                evaluatedAtMillis = 500L
+            )
+
+        assertEquals(100, decision.importance.score)
+        assertEquals(
+            ImportanceLevel.IMPORTANT,
+            decision.importance.level
+        )
+        assertEquals(true, decision.importance.isForced)
+        assertNull(decision.aiPrediction)
+        assertEquals(
+            NotificationTopic.DELIVERY,
+            decision.topicResult.primaryTopic
+        )
+        assertEquals(
+            setOf(NotificationTopic.DELIVERY),
+            decision.topicResult.topics
+        )
+    }
 
     @Test
     fun reviewWithPositiveAiScore_becomesImportant() {
