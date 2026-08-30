@@ -77,5 +77,23 @@ data class NotificationEntity(
     val aiModelVersion: String? = null,
 
     @ColumnInfo(name = "ai_evaluated_at")
-    val aiEvaluatedAt: Long? = null
+    val aiEvaluatedAt: Long? = null,
+
+    @ColumnInfo(
+        name = "primary_topic",
+        defaultValue = "NULL"
+    )
+    val primaryTopic: String? = null,
+
+    @ColumnInfo(
+        name = "topic_names",
+        defaultValue = "NULL"
+    )
+    val topicNames: String? = null,
+
+    @ColumnInfo(
+        name = "topic_policy_version",
+        defaultValue = "NULL"
+    )
+    val topicPolicyVersion: String? = null
 )

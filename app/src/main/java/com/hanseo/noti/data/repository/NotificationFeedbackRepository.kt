@@ -57,7 +57,24 @@ class NotificationFeedbackRepository @Inject constructor(
                         ?.trim()
                         ?.takeIf { text ->
                             text.isNotEmpty()
-                        }
+                        },
+
+                packageName =
+                    notification.packageName,
+
+                channelId =
+                    notification.channelId,
+
+                primaryTopic =
+                    classifiedNotification
+                        .topicResult
+                        .primaryTopic
+                        .name,
+
+                topicPolicyVersion =
+                    classifiedNotification
+                        .topicResult
+                        .policyVersion
             )
 
         feedbackDao.upsert(

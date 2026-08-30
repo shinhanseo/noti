@@ -13,6 +13,8 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 import com.hanseo.noti.domain.importance.AiImportanceLabel
 import com.hanseo.noti.domain.importance.AiImportancePrediction
+import com.hanseo.noti.domain.topic.NotificationTopic
+import com.hanseo.noti.domain.topic.NotificationTopicResult
 
 class NotificationMapperTest {
 
@@ -59,6 +61,14 @@ class NotificationMapperTest {
                 scoreDelta = 15,
                 modelVersion = "noti_embeddinggemma_actionability_v1",
                 evaluatedAtMillis = 2_100L
+            ),
+            topicResult = NotificationTopicResult(
+                primaryTopic = NotificationTopic.SCHEDULE,
+                topics = setOf(
+                    NotificationTopic.SCHEDULE,
+                    NotificationTopic.ACTION_REQUEST
+                ),
+                policyVersion = "1"
             )
         )
 
@@ -92,5 +102,44 @@ class NotificationMapperTest {
             notificationWithReasons.toClassifiedNotification()
 
         assertNull(restored)
+    }
+
+    @Test
+    fun legacyNotificationWithoutTopic_restoresUnknownTopic() {
+        val notificationWithReasons =
+            NotificationWithReasons(
+                notification = NotificationEntity(
+                    notificationKey = "legacy-topic-key",
+                    packageName = "com.example.legacy",
+                    title = "기존 알림",
+                    body = "기존 데이터",
+                    postedAt = 4_000L,
+                    category = null,
+                    isOngoing = false,
+                    importanceScore = 0,
+                    importanceLevel = "GENERAL",
+                    importanceForced = false,
+                    importancePolicyVersion = "1",
+                    importanceEvaluatedAt = 4_000L
+                ),
+                reasons = emptyList()
+            )
+
+        val restored =
+            notificationWithReasons
+                .toClassifiedNotification()
+
+        assertEquals(
+            NotificationTopic.UNKNOWN,
+            restored?.topicResult?.primaryTopic
+        )
+        assertEquals(
+            setOf(NotificationTopic.UNKNOWN),
+            restored?.topicResult?.topics
+        )
+        assertEquals(
+            "legacy",
+            restored?.topicResult?.policyVersion
+        )
     }
 }

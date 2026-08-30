@@ -40,5 +40,29 @@ data class NotificationFeedbackEntity(
     val reasonCode: String? = null,
 
     @ColumnInfo(name = "reason_text")
-    val reasonText: String? = null
+    val reasonText: String? = null,
+
+    @ColumnInfo(
+        name = "package_name",
+        defaultValue = "NULL"
+    )
+    val packageName: String? = null,
+
+    @ColumnInfo(
+        name = "channel_id",
+        defaultValue = "NULL"
+    )
+    val channelId: String? = null,
+
+    @ColumnInfo(
+        name = "primary_topic",
+        defaultValue = "NULL"
+    )
+    val primaryTopic: String? = null,
+
+    @ColumnInfo(
+        name = "topic_policy_version",
+        defaultValue = "NULL"
+    )
+    val topicPolicyVersion: String? = null
 )

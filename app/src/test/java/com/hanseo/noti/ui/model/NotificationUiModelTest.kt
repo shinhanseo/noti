@@ -6,6 +6,7 @@ import com.hanseo.noti.domain.importance.ImportanceLevel
 import com.hanseo.noti.domain.importance.ImportanceResult
 import com.hanseo.noti.domain.model.ClassifiedNotification
 import com.hanseo.noti.domain.model.NotificationItem
+import com.hanseo.noti.domain.topic.NotificationTopicResult
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -83,7 +84,11 @@ class NotificationUiModelTest {
             classifiedNotification =
                 ClassifiedNotification(
                     notification = notification,
-                    importance = importance
+                    importance = importance,
+                    topicResult =
+                        NotificationTopicResult.unknown(
+                            policyVersion = "test-topic-policy"
+                        )
                 ),
             appName = "테스트 앱",
             appIcon = null,

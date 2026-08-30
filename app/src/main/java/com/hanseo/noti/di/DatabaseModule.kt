@@ -19,6 +19,7 @@ import com.hanseo.noti.data.local.migration.MIGRATION_5_6
 import com.hanseo.noti.data.local.migration.MIGRATION_6_7
 import com.hanseo.noti.data.local.migration.MIGRATION_7_8
 import com.hanseo.noti.data.local.migration.MIGRATION_8_9
+import com.hanseo.noti.data.local.migration.MIGRATION_9_10
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -42,7 +43,8 @@ object DatabaseModule {
                 MIGRATION_5_6,
                 MIGRATION_6_7,
                 MIGRATION_7_8,
-                MIGRATION_8_9
+                MIGRATION_8_9,
+                MIGRATION_9_10
             )
             .build()
     }

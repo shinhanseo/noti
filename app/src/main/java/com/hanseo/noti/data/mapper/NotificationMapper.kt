@@ -11,6 +11,8 @@ import com.hanseo.noti.domain.importance.ImportanceReasonType
 import com.hanseo.noti.domain.importance.ImportanceResult
 import com.hanseo.noti.domain.importance.AiImportanceLabel
 import com.hanseo.noti.domain.importance.AiImportancePrediction
+import com.hanseo.noti.domain.topic.NotificationTopic
+import com.hanseo.noti.domain.topic.NotificationTopicResult
 
 fun NotificationEntity.toDomain(): NotificationItem {
     return NotificationItem(
@@ -53,7 +55,13 @@ fun ClassifiedNotification.toEntity(): NotificationEntity {
         aiImportantProbability = aiPrediction?.importantProbability,
         aiScoreDelta = aiPrediction?.scoreDelta,
         aiModelVersion = aiPrediction?.modelVersion,
-        aiEvaluatedAt = aiPrediction?.evaluatedAtMillis
+        aiEvaluatedAt = aiPrediction?.evaluatedAtMillis,
+
+        primaryTopic = topicResult.primaryTopic.name,
+        topicNames = topicResult.topics
+            .sortedBy { topic -> topic.name }
+            .joinToString(",") { topic -> topic.name },
+        topicPolicyVersion = topicResult.policyVersion
     )
 }
 
@@ -113,7 +121,54 @@ fun NotificationWithReasons.toClassifiedNotification():
     return ClassifiedNotification(
         notification = notification.toDomain(),
         importance = importanceResult,
-        aiPrediction = notification.toAiPrediction()
+        aiPrediction = notification.toAiPrediction(),
+        topicResult = notification.toTopicResult()
+    )
+}
+
+private fun NotificationEntity.toTopicResult():
+        NotificationTopicResult {
+
+    val policyVersion =
+        topicPolicyVersion ?: LEGACY_TOPIC_POLICY_VERSION
+
+    val storedTopics =
+        topicNames
+            ?.split(",")
+            ?.mapNotNull { topicName ->
+                NotificationTopic.entries
+                    .firstOrNull { topic ->
+                        topic.name == topicName
+                    }
+            }
+            ?.toSet()
+            .orEmpty()
+
+    val storedPrimaryTopic =
+        primaryTopic?.let { topicName ->
+            NotificationTopic.entries
+                .firstOrNull { topic ->
+                    topic.name == topicName
+                }
+        }
+
+    if (
+        storedPrimaryTopic == null &&
+        storedTopics.isEmpty()
+    ) {
+        return NotificationTopicResult.unknown(
+            policyVersion = policyVersion
+        )
+    }
+
+    val resolvedPrimaryTopic =
+        storedPrimaryTopic
+            ?: storedTopics.first()
+
+    return NotificationTopicResult(
+        primaryTopic = resolvedPrimaryTopic,
+        topics = storedTopics + resolvedPrimaryTopic,
+        policyVersion = policyVersion
     )
 }
 
@@ -143,3 +198,5 @@ private fun NotificationEntity.toAiPrediction():
         evaluatedAtMillis = evaluatedAtMillis
     )
 }
+
+private const val LEGACY_TOPIC_POLICY_VERSION = "legacy"

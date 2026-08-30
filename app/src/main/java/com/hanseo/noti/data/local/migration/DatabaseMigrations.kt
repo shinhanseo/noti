@@ -198,3 +198,57 @@ val MIGRATION_8_9 = object : Migration(8, 9) {
         )
     }
 }
+
+val MIGRATION_9_10 = object : Migration(9, 10) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN primary_topic TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN topic_names TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notifications
+            ADD COLUMN topic_policy_version TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notification_feedback
+            ADD COLUMN package_name TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notification_feedback
+            ADD COLUMN channel_id TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notification_feedback
+            ADD COLUMN primary_topic TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            ALTER TABLE notification_feedback
+            ADD COLUMN topic_policy_version TEXT DEFAULT NULL
+            """.trimIndent()
+        )
+    }
+}

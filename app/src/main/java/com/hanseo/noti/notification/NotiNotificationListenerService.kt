@@ -119,7 +119,8 @@ class NotiNotificationListenerService :
                 val classifiedNotification = ClassifiedNotification(
                     notification = notificationItem,
                     importance = decision.importance,
-                    aiPrediction = decision.aiPrediction
+                    aiPrediction = decision.aiPrediction,
+                    topicResult = decision.topicResult
                 )
 
                 notificationRepository.save(classifiedNotification)
