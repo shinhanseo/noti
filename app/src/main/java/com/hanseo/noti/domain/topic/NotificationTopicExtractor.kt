@@ -34,7 +34,7 @@ class NotificationTopicExtractor {
                 .firstOrNull { topic ->
                     topic in topics
                 }
-                ?: NotificationTopic.UNKNOWN
+                ?: topics.first()
 
         return NotificationTopicResult(
             primaryTopic = primaryTopic,
