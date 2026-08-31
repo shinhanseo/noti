@@ -26,6 +26,18 @@ interface NotificationFeedbackDao {
 
     @Query(
         """
+    SELECT *
+    FROM notification_feedback
+    WHERE notification_key = :notificationKey
+    LIMIT 1
+    """
+    )
+    suspend fun findByNotificationKey(
+        notificationKey: String
+    ): NotificationFeedbackEntity?
+
+    @Query(
+        """
         SELECT *
         FROM notification_feedback
         WHERE notification_key = :notificationKey
