@@ -7,14 +7,17 @@ import com.hanseo.noti.data.local.entity.NotificationEntity
 import com.hanseo.noti.data.local.entity.ImportanceReasonEntity
 import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
 import com.hanseo.noti.data.local.entity.NotificationFeedbackEntity
+import com.hanseo.noti.data.local.dao.PersonalizationProfileDao
+import com.hanseo.noti.data.local.entity.PersonalizationProfileEntity
 
 @Database(
     entities = [
         NotificationEntity::class,
         ImportanceReasonEntity::class,
-        NotificationFeedbackEntity::class
+        NotificationFeedbackEntity::class,
+        PersonalizationProfileEntity::class
     ],
-    version = 10,
+    version = 11,
     exportSchema = false
 )
 abstract class NotiDatabase : RoomDatabase() {
@@ -23,4 +26,7 @@ abstract class NotiDatabase : RoomDatabase() {
 
     abstract fun notificationFeedbackDao():
             NotificationFeedbackDao
+
+    abstract fun personalizationProfileDao():
+            PersonalizationProfileDao
 }

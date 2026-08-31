@@ -252,3 +252,37 @@ val MIGRATION_9_10 = object : Migration(9, 10) {
         )
     }
 }
+
+val MIGRATION_10_11 = object : Migration(10, 11) {
+
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS personalization_profiles (
+                scope TEXT NOT NULL,
+                package_name TEXT NOT NULL,
+                channel_key TEXT NOT NULL,
+                topic_key TEXT NOT NULL,
+                important_count INTEGER NOT NULL,
+                general_count INTEGER NOT NULL,
+                last_feedback_at INTEGER NOT NULL,
+                profile_version TEXT NOT NULL,
+                PRIMARY KEY (
+                    scope,
+                    package_name,
+                    channel_key,
+                    topic_key
+                )
+            )
+            """.trimIndent()
+        )
+
+        db.execSQL(
+            """
+            CREATE INDEX IF NOT EXISTS
+                index_personalization_profiles_package_name
+            ON personalization_profiles(package_name)
+            """.trimIndent()
+        )
+    }
+}

@@ -14,12 +14,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.hanseo.noti.data.local.dao.NotificationFeedbackDao
+import com.hanseo.noti.data.local.dao.PersonalizationProfileDao
 import com.hanseo.noti.data.local.migration.MIGRATION_4_5
 import com.hanseo.noti.data.local.migration.MIGRATION_5_6
 import com.hanseo.noti.data.local.migration.MIGRATION_6_7
 import com.hanseo.noti.data.local.migration.MIGRATION_7_8
 import com.hanseo.noti.data.local.migration.MIGRATION_8_9
 import com.hanseo.noti.data.local.migration.MIGRATION_9_10
+import com.hanseo.noti.data.local.migration.MIGRATION_10_11
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,7 +46,8 @@ object DatabaseModule {
                 MIGRATION_6_7,
                 MIGRATION_7_8,
                 MIGRATION_8_9,
-                MIGRATION_9_10
+                MIGRATION_9_10,
+                MIGRATION_10_11
             )
             .build()
     }
@@ -61,6 +64,13 @@ object DatabaseModule {
         database: NotiDatabase
     ): NotificationFeedbackDao {
         return database.notificationFeedbackDao()
+    }
+
+    @Provides
+    fun providePersonalizationProfileDao(
+        database: NotiDatabase
+    ): PersonalizationProfileDao {
+        return database.personalizationProfileDao()
     }
 
     private const val DATABASE_NAME = "noti.db"
