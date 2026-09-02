@@ -7,13 +7,15 @@ import com.hanseo.noti.domain.personalization.PersonalizationScope
 import com.hanseo.noti.domain.topic.NotificationTopic
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.hanseo.noti.domain.personalization.PersonalizationProfileProvider
 
 @Singleton
 class PersonalizationProfileRepository
 @Inject constructor(
     private val profileDao: PersonalizationProfileDao
-) {
+) : PersonalizationProfileProvider {
 
+    override
     suspend fun findMatchingProfiles(
         packageName: String,
         channelId: String?,
