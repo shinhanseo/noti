@@ -2,6 +2,7 @@ package com.hanseo.noti.domain.personalization
 
 import kotlin.math.abs
 import kotlin.math.roundToInt
+import javax.inject.Inject
 
 data class PersonalizationAdjustment(
     val scoreDelta: Int,
@@ -30,7 +31,7 @@ data class PersonalizationAdjustment(
     }
 }
 
-class PersonalizationScoreCalculator {
+class PersonalizationScoreCalculator @Inject constructor() {
 
     fun calculate(
         profiles: List<PersonalizationProfile>

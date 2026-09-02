@@ -1,0 +1,21 @@
+package com.hanseo.noti.di
+
+import com.hanseo.noti.data.repository.PersonalizationProfileRepository
+import com.hanseo.noti.domain.personalization.PersonalizationProfileProvider
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class PersonalizationModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindPersonalizationProfileProvider(
+        implementation:
+        PersonalizationProfileRepository
+    ): PersonalizationProfileProvider
+}
