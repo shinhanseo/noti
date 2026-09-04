@@ -60,28 +60,9 @@
 
 ## Importance Decision Flow
 
-```text
-Android Notification
-        ↓
-Parse · Normalize · Filter
-        ↓
-Explainable Rule Engine
-        ↓
-Forced decision? ── yes ──→ Final result
-        │ no
-        ↓
-On-device Personalization
-(app · channel · topic)
-        ↓
-Still REVIEW? ── no ──────→ Final result
-        │ yes
-        ↓
-KoEn-E5-Tiny INT8 ONNX Classifier
-        ↓
-Score · Reasons · Feedback → Room
-        ↓
-Flow → ViewModel → Jetpack Compose UI
-```
+<p align="center">
+  <img src="./docs/diagrams/importance-decision-flow.svg" width="100%" alt="noti. 중요도 판단 흐름: 규칙, 개인화, AI 순서로 최종 중요도를 결정" />
+</p>
 
 명시적인 중요 앱·키워드처럼 확실한 사용자 규칙을 가장 먼저 적용합니다. 개인화까지 거친 뒤에도 판단이 애매한 `REVIEW` 구간에서만 AI를 실행해 불필요한 추론과 과도한 AI 의존을 줄였습니다.
 
@@ -89,17 +70,9 @@ Flow → ViewModel → Jetpack Compose UI
 
 피드백은 공통 AI 모델을 휴대폰에서 다시 학습시키는 방식이 아닙니다. 알림의 앱, 채널과 Topic을 조합한 개인화 프로필을 Room에 누적하고 다음 알림의 중요도 점수를 보정합니다.
 
-```text
-사용자가 분류 결과 수정
-        ↓
-중요하거나 중요하지 않은 이유 선택
-        ↓
-App · Channel · Topic 조합 추출
-        ↓
-기기 내부 개인화 프로필 갱신
-        ↓
-다음 유사 알림의 점수 보정 (-15 ~ +15)
-```
+<p align="center">
+  <img src="./docs/diagrams/personalization-flow.svg" width="100%" alt="noti. 사용자 피드백 기반 온디바이스 개인화 흐름" />
+</p>
 
 - 구체적인 `앱 + 채널 + Topic` 피드백을 넓은 앱 단위 피드백보다 우선합니다.
 - 같은 방향의 피드백이 반복되면 영향력이 커지고, 서로 충돌하면 보정 강도가 낮아집니다.
@@ -130,6 +103,12 @@ App · Channel · Topic 조합 추출
 WorkManager 실행 시각은 Android 시스템 정책에 따라 달라질 수 있으며, 제조사가 앱 프로세스를 강제로 중지한 상황까지 즉시 복구하는 수단은 아닙니다.
 
 ## Architecture
+
+<p align="center">
+  <img src="./docs/diagrams/architecture-overview.svg" width="100%" alt="noti. Android 앱 전체 아키텍처" />
+</p>
+
+수집, 판단, 저장과 화면 표시를 단방향 데이터 흐름으로 구성했습니다. 사용자 피드백은 Room의 개인화 프로필로 되돌아가며, WorkManager 기반 복구 경로는 핵심 분류 흐름과 분리해 백그라운드 안정성을 보완합니다.
 
 | Layer | Responsibility |
 | --- | --- |

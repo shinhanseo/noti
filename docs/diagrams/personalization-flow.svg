@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-labelledby="title desc">
+  <title id="title">noti. 온디바이스 개인화 흐름</title>
+  <desc id="desc">사용자 피드백을 앱, 채널, 토픽 조합의 로컬 프로필로 저장하고 다음 알림 점수를 보정하는 과정</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FBFCFF"/><stop offset="1" stop-color="#F1F4FF"/></linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2475F5"/><stop offset="1" stop-color="#745FE5"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#233B68" flood-opacity="0.10"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8295B5"/></marker>
+    <style>.t{font-family:Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#14213D}.h{font-size:42px;font-weight:800}.sub{font-size:20px;fill:#64748B}.n{font-size:21px;font-weight:750}.b{font-size:16px;fill:#64748B}.tag{font-size:14px;font-weight:750}.light{fill:#FFFFFF}.lightSub{fill:#EEF2FF}.line{fill:none;stroke:#8295B5;stroke-width:3;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1600" height="820" rx="36" fill="url(#bg)"/>
+  <text x="76" y="82" class="t h">피드백은 기기 안에서 개인화됩니다</text>
+  <text x="76" y="120" class="t sub">공통 AI를 다시 학습하지 않고, 사용자의 선택을 다음 유사 알림의 점수에 반영합니다.</text>
+  <g transform="translate(1190 54)"><rect width="334" height="92" rx="22" fill="#E9F8F1" stroke="#8BD2B3"/><circle cx="44" cy="46" r="18" fill="#2BA66F"/><path d="M36 46l6 6 11-13" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="76" y="40" class="t n" fill="#126A4D">Local-first</text><text x="76" y="65" class="t b">서버 전송 없음 · 재학습 없음</text></g>
+
+  <g filter="url(#shadow)">
+    <g transform="translate(76 218)"><rect width="252" height="154" rx="24" fill="#FFFFFF" stroke="#DCE6F4"/><circle cx="34" cy="34" r="16" fill="#E7F0FF"/><text x="34" y="40" text-anchor="middle" class="t tag" fill="#246FEB">1</text><text x="62" y="41" class="t n">분류 결과 수정</text><text x="24" y="90" class="t b">중요하게 보기</text><text x="24" y="116" class="t b">또는 덜 중요하게 보기</text></g>
+    <g transform="translate(374 218)"><rect width="252" height="154" rx="24" fill="#FFFFFF" stroke="#DCE6F4"/><circle cx="34" cy="34" r="16" fill="#E7F0FF"/><text x="34" y="40" text-anchor="middle" class="t tag" fill="#246FEB">2</text><text x="62" y="41" class="t n">이유 선택</text><text x="24" y="90" class="t b">일정 · 관계 · 결제</text><text x="24" y="116" class="t b">광고 · 반복 등</text></g>
+    <g transform="translate(672 218)"><rect width="252" height="154" rx="24" fill="#FFFFFF" stroke="#B9A9F2"/><circle cx="34" cy="34" r="16" fill="#F0ECFF"/><text x="34" y="40" text-anchor="middle" class="t tag" fill="#6C55D9">3</text><text x="62" y="41" class="t n">문맥 추출</text><g transform="translate(24 78)"><rect width="52" height="29" rx="14" fill="#EEF4FF"/><text x="26" y="20" text-anchor="middle" class="t tag">App</text><rect x="60" width="76" height="29" rx="14" fill="#EEF4FF"/><text x="98" y="20" text-anchor="middle" class="t tag">Channel</text><rect x="144" width="67" height="29" rx="14" fill="#F0ECFF"/><text x="177" y="20" text-anchor="middle" class="t tag">Topic</text></g><text x="24" y="130" class="t b">알림을 구체적인 범위로 식별</text></g>
+    <g transform="translate(970 218)"><rect width="252" height="154" rx="24" fill="#FFFFFF" stroke="#B9A9F2"/><circle cx="34" cy="34" r="16" fill="#F0ECFF"/><text x="34" y="40" text-anchor="middle" class="t tag" fill="#6C55D9">4</text><text x="62" y="41" class="t n">프로필 갱신</text><text x="24" y="90" class="t b">구체적 조합을 먼저 반영</text><text x="24" y="116" class="t b">충돌 시 영향력 완화</text></g>
+    <g transform="translate(1268 218)"><rect width="256" height="154" rx="24" fill="url(#brand)"/><circle cx="34" cy="34" r="16" fill="#FFFFFF" opacity=".22"/><text x="34" y="40" text-anchor="middle" class="t tag light">5</text><text x="62" y="41" class="t n light">다음 알림 보정</text><text x="24" y="90" class="t b lightSub">유사 알림의 기본 점수에</text><text x="24" y="116" class="t b lightSub">-15 ~ +15 반영</text></g>
+  </g>
+  <path d="M328 295H362" class="line"/><path d="M626 295H660" class="line"/><path d="M924 295H958" class="line"/><path d="M1222 295H1256" class="line"/>
+
+  <g transform="translate(76 472)">
+    <rect width="1448" height="218" rx="28" fill="#FFFFFF" stroke="#DCE6F4"/>
+    <text x="32" y="52" class="t n">보정 범위는 넓게 퍼지지 않습니다</text>
+    <text x="32" y="83" class="t b">더 구체적인 문맥일수록 우선순위가 높고, 정보가 부족할 때만 넓은 범위의 프로필을 사용합니다.</text>
+    <g transform="translate(32 116)"><rect width="260" height="62" rx="18" fill="#ECE8FF"/><text x="130" y="27" text-anchor="middle" class="t tag" fill="#5C46C7">가장 구체적</text><text x="130" y="49" text-anchor="middle" class="t b">App + Channel + Topic</text></g>
+    <path d="M306 147H354" class="line"/>
+    <g transform="translate(366 116)"><rect width="210" height="62" rx="18" fill="#F2EFFF"/><text x="105" y="27" text-anchor="middle" class="t tag">App + Topic</text><text x="105" y="49" text-anchor="middle" class="t b">문맥 중심</text></g>
+    <path d="M590 147H638" class="line"/>
+    <g transform="translate(650 116)"><rect width="210" height="62" rx="18" fill="#EEF4FF"/><text x="105" y="27" text-anchor="middle" class="t tag">App + Channel</text><text x="105" y="49" text-anchor="middle" class="t b">채널 중심</text></g>
+    <path d="M874 147H922" class="line"/>
+    <g transform="translate(934 116)"><rect width="178" height="62" rx="18" fill="#F4F7FB"/><text x="89" y="27" text-anchor="middle" class="t tag">App</text><text x="89" y="49" text-anchor="middle" class="t b">가장 넓은 범위</text></g>
+    <g transform="translate(1160 103)"><rect width="256" height="88" rx="20" fill="#FFF8E8" stroke="#F0CB77"/><text x="128" y="34" text-anchor="middle" class="t tag" fill="#9A6400">강제 규칙은 유지</text><text x="128" y="59" text-anchor="middle" class="t b">개인화가 덮어쓰지 않음</text></g>
+  </g>
+</svg>

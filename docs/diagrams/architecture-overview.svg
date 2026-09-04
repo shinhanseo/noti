@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">noti. Android 아키텍처</title>
+  <desc id="desc">Android 알림 수집, 중요도 판단, 데이터 저장, 화면 표시와 리스너 복구로 구성된 noti 앱 아키텍처</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F9FBFF"/><stop offset="1" stop-color="#EFF4FF"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#233B68" flood-opacity="0.09"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7E92B2"/></marker>
+    <style>.t{font-family:Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#14213D}.h{font-size:42px;font-weight:800}.sub{font-size:19px;fill:#64748B}.lane{font-size:18px;font-weight:800;letter-spacing:.7px}.n{font-size:18px;font-weight:750}.b{font-size:14px;fill:#64748B}.line{fill:none;stroke:#7E92B2;stroke-width:2.7;marker-end:url(#arrow)}.dash{fill:none;stroke:#9A87DF;stroke-width:2.7;stroke-dasharray:8 7;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1600" height="1040" rx="36" fill="url(#bg)"/>
+  <text x="70" y="78" class="t h">noti. Android Architecture</text>
+  <text x="70" y="115" class="t sub">수집부터 판정, 저장, UI까지는 단방향으로 흐르고 피드백과 복구는 별도의 순환 경로를 가집니다.</text>
+
+  <g transform="translate(70 160)">
+    <rect width="1460" height="170" rx="28" fill="#EAF4EE" stroke="#B5DCC3"/>
+    <text x="28" y="38" class="t lane" fill="#347557">ANDROID PLATFORM</text>
+    <g filter="url(#shadow)" transform="translate(30 62)"><rect width="260" height="78" rx="20" fill="#FFFFFF"/><text x="130" y="34" text-anchor="middle" class="t n">System Notifications</text><text x="130" y="58" text-anchor="middle" class="t b">StatusBarNotification</text></g>
+    <g filter="url(#shadow)" transform="translate(370 62)"><rect width="306" height="78" rx="20" fill="#FFFFFF"/><text x="153" y="34" text-anchor="middle" class="t n">NotificationListenerService</text><text x="153" y="58" text-anchor="middle" class="t b">백그라운드 알림 수신</text></g>
+    <g filter="url(#shadow)" transform="translate(756 62)"><rect width="300" height="78" rx="20" fill="#FFFFFF"/><text x="150" y="34" text-anchor="middle" class="t n">WorkManager</text><text x="150" y="58" text-anchor="middle" class="t b">15분 주기 연결 상태 점검</text></g>
+    <g filter="url(#shadow)" transform="translate(1136 62)"><rect width="294" height="78" rx="20" fill="#FFFFFF"/><text x="147" y="34" text-anchor="middle" class="t n">Recovery Worker</text><text x="147" y="58" text-anchor="middle" class="t b">필요 시 listener rebind</text></g>
+    <path d="M290 101H358" class="line"/><path d="M1056 101H1124" class="line"/><path d="M1136 84C1010 20 720 22 664 62" class="dash"/>
+  </g>
+
+  <g transform="translate(70 356)">
+    <rect width="1460" height="252" rx="28" fill="#EEF3FF" stroke="#BDCEF1"/>
+    <text x="28" y="38" class="t lane" fill="#2B64BB">COLLECTION &amp; DECISION</text>
+    <g filter="url(#shadow)" transform="translate(30 70)"><rect width="252" height="112" rx="20" fill="#FFFFFF"/><text x="126" y="35" text-anchor="middle" class="t n">Parser · Filter</text><text x="126" y="63" text-anchor="middle" class="t b">파싱 · 정규화 · 제외</text><text x="126" y="86" text-anchor="middle" class="t b">channelId 포함</text></g>
+    <g filter="url(#shadow)" transform="translate(332 70)"><rect width="330" height="112" rx="20" fill="#FFFFFF" stroke="#8DB8FF"/><text x="165" y="35" text-anchor="middle" class="t n">Importance Coordinator</text><text x="165" y="63" text-anchor="middle" class="t b">규칙 → 개인화 → AI</text><text x="165" y="86" text-anchor="middle" class="t b">최종 점수와 근거 결합</text></g>
+    <g filter="url(#shadow)" transform="translate(712 70)"><rect width="260" height="112" rx="20" fill="#FFFFFF"/><text x="130" y="35" text-anchor="middle" class="t n">Rule Engine</text><text x="130" y="63" text-anchor="middle" class="t b">명시적 사용자 기준</text><text x="130" y="86" text-anchor="middle" class="t b">설명 가능한 점수 정책</text></g>
+    <g filter="url(#shadow)" transform="translate(1022 70)"><rect width="260" height="112" rx="20" fill="#FFFFFF"/><text x="130" y="35" text-anchor="middle" class="t n">Personalization</text><text x="130" y="63" text-anchor="middle" class="t b">App · Channel · Topic</text><text x="130" y="86" text-anchor="middle" class="t b">-15 ~ +15 점수 보정</text></g>
+    <g filter="url(#shadow)" transform="translate(1332 70)"><rect width="98" height="112" rx="20" fill="#5F70E8"/><text x="49" y="42" text-anchor="middle" class="t n" fill="#FFFFFF">ONNX</text><text x="49" y="68" text-anchor="middle" class="t b" fill="#EEF1FF">REVIEW</text><text x="49" y="89" text-anchor="middle" class="t b" fill="#EEF1FF">only</text></g>
+    <path d="M282 126H320" class="line"/><path d="M662 126H700" class="line"/><path d="M972 126H1010" class="line"/><path d="M1282 126H1320" class="line"/>
+    <text x="730" y="220" class="t b">Coordinator가 단계별 우선순위를 통제하며 앞 단계에서 확정되면 뒤 단계는 건너뜁니다.</text>
+  </g>
+  <path d="M593 330V344" class="line"/>
+
+  <g transform="translate(70 634)">
+    <rect width="1460" height="176" rx="28" fill="#FFF7E8" stroke="#F1D6A1"/>
+    <text x="28" y="38" class="t lane" fill="#956516">LOCAL DATA</text>
+    <g filter="url(#shadow)" transform="translate(30 66)"><rect width="310" height="80" rx="20" fill="#FFFFFF"/><text x="155" y="34" text-anchor="middle" class="t n">NotificationRepository</text><text x="155" y="59" text-anchor="middle" class="t b">ClassifiedNotification 저장</text></g>
+    <g filter="url(#shadow)" transform="translate(404 66)"><rect width="260" height="80" rx="20" fill="#FFFFFF"/><text x="130" y="34" text-anchor="middle" class="t n">Room</text><text x="130" y="59" text-anchor="middle" class="t b">알림 · 피드백 · 개인화</text></g>
+    <g filter="url(#shadow)" transform="translate(728 66)"><rect width="260" height="80" rx="20" fill="#FFFFFF"/><text x="130" y="34" text-anchor="middle" class="t n">DataStore</text><text x="130" y="59" text-anchor="middle" class="t b">사용자 설정과 상태</text></g>
+    <g filter="url(#shadow)" transform="translate(1052 66)"><rect width="378" height="80" rx="20" fill="#FFFFFF"/><text x="189" y="34" text-anchor="middle" class="t n">Feedback Repository</text><text x="189" y="59" text-anchor="middle" class="t b">피드백 → 개인화 contribution</text></g>
+    <path d="M340 106H392" class="line"/><path d="M1052 122C930 168 730 168 652 144" class="dash"/>
+  </g>
+  <path d="M568 608V622H255V688" class="line"/>
+
+  <g transform="translate(70 836)">
+    <rect width="1460" height="148" rx="28" fill="#F2EEFF" stroke="#CFC3F4"/>
+    <text x="28" y="38" class="t lane" fill="#6951C6">PRESENTATION</text>
+    <g filter="url(#shadow)" transform="translate(30 60)"><rect width="260" height="62" rx="18" fill="#FFFFFF"/><text x="130" y="38" text-anchor="middle" class="t n">Room Flow</text></g>
+    <g filter="url(#shadow)" transform="translate(398 60)"><rect width="260" height="62" rx="18" fill="#FFFFFF"/><text x="130" y="38" text-anchor="middle" class="t n">ViewModel</text></g>
+    <g filter="url(#shadow)" transform="translate(766 60)"><rect width="300" height="62" rx="18" fill="#FFFFFF"/><text x="150" y="38" text-anchor="middle" class="t n">Jetpack Compose UI</text></g>
+    <g filter="url(#shadow)" transform="translate(1174 60)"><rect width="256" height="62" rx="18" fill="#FFFFFF"/><text x="128" y="38" text-anchor="middle" class="t n">User Feedback</text></g>
+    <path d="M290 91H386" class="line"/><path d="M658 91H754" class="line"/><path d="M1066 91H1162" class="line"/>
+  </g>
+  <path d="M604 810V824H230V896" class="line"/>
+  <path d="M1372 896V824H1311V792" class="dash"/>
+
+  <g transform="translate(1310 100)"><rect width="220" height="36" rx="18" fill="#FFFFFF" stroke="#D8E1EE"/><text x="110" y="24" text-anchor="middle" class="t b">Hilt Dependency Injection</text></g>
+</svg>
