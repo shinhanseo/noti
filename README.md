@@ -14,12 +14,13 @@
 </p>
 
 <p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.hanseo.noti"><img src="https://img.shields.io/badge/Google_Play-414141?style=flat-square&logo=googleplay&logoColor=white" alt="Google Play에서 noti. 다운로드" /></a>
   <a href="https://velog.io/@imkara/series/noti."><img src="https://img.shields.io/badge/Velog-Series-20C997?style=flat-square&logo=velog&logoColor=white" alt="noti. Velog Series" /></a>
   <a href="https://quiet-lifter-473.notion.site/noti-3c812450961b802dacedf0ddff3134a0"><img src="https://img.shields.io/badge/Privacy-Policy-475569?style=flat-square" alt="noti. Privacy Policy" /></a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Closed_Test_Preparation-2563EB?style=flat-square" alt="Closed Test Preparation" />
+  <img src="https://img.shields.io/badge/Status-Released_on_Google_Play-20A464?style=flat-square" alt="Released on Google Play" />
   <img src="https://img.shields.io/badge/Android_8.0+-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 8.0 or later" />
   <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Jetpack_Compose-4285F4?style=flat-square&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose" />
@@ -34,7 +35,7 @@
 
 사용자가 지정한 앱과 키워드를 우선하고, 규칙만으로 판단하기 애매한 알림에만 온디바이스 AI를 사용합니다. 잘못 분류된 알림은 사용자가 직접 수정할 수 있으며, 그 피드백은 이후 비슷한 알림의 점수에 반영됩니다.
 
-> 개인 프로젝트로 제품 기획, UI/UX, Android 구현, 데이터 정책, ML 실험과 모바일 배포 전 과정을 진행하고 있습니다.
+> 개인 프로젝트로 제품 기획, UI/UX, Android 구현, 데이터 정책, ML 실험과 Google Play 심사·배포 전 과정을 진행했습니다.
 
 ## Screens
 
@@ -182,6 +183,6 @@ noti/
 - [x] 알림 리스너 상태 점검과 배터리 제한 안내
 - [x] Google Play 스토어 등록정보 및 개인정보처리방침 준비
 - [x] Google Play 비공개 테스트
-- [ ] 프로덕션 출시
+- [x] Google Play 프로덕션 출시
 
-현재 Google Play 비공개 테스트 배포를 준비하고 있습니다. 실제 사용자 환경에서 분류 품질과 장시간 알림 수집 안정성을 검증한 뒤 프로덕션 출시를 진행할 예정입니다.
+**Google Play에 출시되었습니다.** [스토어에서 noti. 다운로드](https://play.google.com/store/apps/details?id=com.hanseo.noti)
